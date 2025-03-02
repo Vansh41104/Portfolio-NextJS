@@ -82,27 +82,10 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
               )}
             </Link>
           ))}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            aria-label="Toggle theme"
-          >
-            {theme === "dark" ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
-          </Button>
         </nav>
 
         {/* Mobile Navigation Toggle */}
         <div className="flex items-center md:hidden">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            aria-label="Toggle theme"
-            className="mr-2"
-          >
-            {theme === "dark" ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
-          </Button>
           <Button variant="ghost" size="icon" onClick={toggleMenu} aria-label="Toggle menu">
             {isMenuOpen ? <XIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
           </Button>

@@ -4,48 +4,30 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
+    /* Dark Mode Backgrounds: Using dark grey tones */
+    --background: 0 0% 5%; /* Dark grey */
     --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
+    --card: 0 0% 12.5%; /* Slightly lighter dark grey for cards */
     --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
+    --popover: 0 0% 15%;
     --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
+    --primary: 8 100% 55%;
+    --primary-foreground: 0 0% 0.2%;
+    --secondary: 15 100% 55%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
+    --muted: 0 0% 10%;
     --muted-foreground: 215 20.2% 65.1%;
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
+    --border: 217.2 32.6% 10.5%;   
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
+    
+    /* New grid colors */
+    --grid-line: 0 0% 40%; /* Medium gray for grid lines */
+    --grid-line-light: 0 0% 25%; /* Lighter gray for subtle grid lines */
   }
 }
 
@@ -54,6 +36,7 @@
     @apply border-border;
   }
   body {
+    /* The body now uses our updated grey background */
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
@@ -109,4 +92,105 @@ section {
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+/* Background Effects */
+.bg-grid-pattern {
+  background-size: 50px 50px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+.bg-radial-gradient {
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.4) 80%);
+}
+
+/* Enhanced Grid Background - with higher contrast */
+.bg-grid-pattern-enhanced {
+  background-size: 50px 50px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+}
+
+/* Additional background effects */
+.bg-dot-pattern {
+  background-size: 20px 20px;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.1) 1px,
+    transparent 1px
+  );
+}
+
+/* Glow effect for accent elements */
+.glow {
+  box-shadow: 0 0 15px 0 rgba(var(--primary), 0.3);
+}
+
+/* Animated grid effect - for more dynamic appearance */
+.bg-grid-animated {
+  background-size: 50px 50px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  animation: gridFloat 20s infinite linear;
+}
+
+@keyframes gridFloat {
+  0% {
+    background-position: 0px 0px;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+/* New Grid Styles */
+
+/* Highly visible gray grid with sharper lines */
+.visible-grid {
+  background-size: 50px 50px;
+  background-image:
+    linear-gradient(to right, hsl(var(--grid-line)) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--grid-line)) 1px, transparent 1px);
+  opacity: 0.2;
+}
+
+/* Grid element styles for manual grid construction */
+.grid-element {
+  @apply border border-gray-500;
+}
+
+/* Progressive grid that fades toward the edges */
+.fade-grid {
+  position: relative;
+}
+
+.fade-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: 50px 50px;
+  background-image:
+    linear-gradient(to right, rgba(128, 128, 128, 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(128, 128, 128, 0.3) 1px, transparent 1px);
+  mask-image: radial-gradient(circle at center, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 70%);
+}
+
+/* Hero-specific grid that's made to stand out */
+.hero-grid {
+  position: relative;
+}
+
+.hero-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: 5vw 5vw;
+  background-image:
+    linear-gradient(to right, rgba(128, 128, 128, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(128, 128, 128, 0.4) 1px, transparent 1px);
+  z-index: 5;
 }

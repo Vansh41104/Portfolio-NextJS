@@ -29,7 +29,7 @@ const projects: Project[] = [
     tags: ["NLP", "Python", "spaCy", "TextBlob", "Groq AI", "Gradio"],
     github: "https://github.com/Vansh41104/News_Semantic_Summarizer",
     demo: "",
-    icon: <NewspaperIcon className="h-10 w-10 text-primary" />,
+    icon: <NewspaperIcon className="h-10 w-10 text-secondary" />,
   },
   {
     title: "AI Based Grass and Milk Production Predictor",
@@ -39,7 +39,7 @@ const projects: Project[] = [
     tags: ["Computer Vision", "Machine Learning", "Image Processing", "Python", "PyTorch"],
     github: "https://github.com/Vansh41104/FarmML_Project",
     demo: "",
-    icon: <ActivityIcon className="h-10 w-10 text-primary" />,
+    icon: <ActivityIcon className="h-10 w-10 text-secondary" />,
   },
   {
     title: "AI Based Disease Detector",
@@ -49,7 +49,7 @@ const projects: Project[] = [
     tags: ["Deep Learning", "CNN", "Medical Imaging", "TensorFlow", "Healthcare AI"],
     github: "https://github.com/Vansh41104/AI-Based-Disease-Detector",
     demo: "",
-    icon: <BrainIcon className="h-10 w-10 text-primary" />,
+    icon: <BrainIcon className="h-10 w-10 text-secondary" />,
   },
   {
     title: "Customer Feedback Chatbot",
@@ -59,7 +59,7 @@ const projects: Project[] = [
     tags: ["NLP", "Chatbot", "Sentiment Analysis", "Python", "Machine Learning"],
     github: "https://github.com/Vansh41104/Customer_Feedback_Chatbot",
     demo: "",
-    icon: <MessageSquareIcon className="h-10 w-10 text-primary" />,
+    icon: <MessageSquareIcon className="h-10 w-10 text-secondary" />,
   },
   {
     title: "MCHN Monitoring App",
@@ -69,7 +69,7 @@ const projects: Project[] = [
     tags: ["React Native", "ExpressJS", "Android", "Gradle", "Linux"],
     github: "https://github.com/Vansh41104/",
     demo: "",
-    icon: <AppWindow className="h-10 w-10 text-primary" />,
+    icon: <AppWindow className="h-10 w-10 text-secondary" />,
   },
   {
     title: "LangGraph CyberSecurity Agent",
@@ -79,7 +79,7 @@ const projects: Project[] = [
     tags: ["LangGraph", "CyberSecurity", "Groq", "Nmap", "GoBuster"],
     github: "https://github.com/Vansh41104/LangGraph-CyberSecurity-Agent",
     demo: "",
-    icon: <Fingerprint className="h-10 w-10 text-primary" />,
+    icon: <Fingerprint className="h-10 w-10 text-secondary" />,
   },
 ]
 
@@ -105,7 +105,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
       <div className="relative aspect-video">
         <Image src={project.image || "/placeholder.svg"} alt={project.title} fill className="object-cover" />
         <motion.div
-          className="absolute inset-0 bg-primary/80 flex items-center justify-center"
+          className="absolute inset-0 bg-background/80 flex items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: isHovered ? 1 : 0 }}
           transition={{ duration: 0.3 }}
@@ -143,7 +143,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
                   size="sm"
                   variant="outline"
                   asChild
-                  className="bg-background/20 border-white text-white hover:bg-white hover:text-primary"
+                  className="bg-background/20 border-white text-white hover:bg-white hover:text-secondary"
                 >
                   <a href={project.github} target="_blank" rel="noopener noreferrer">
                     <GithubIcon className="h-4 w-4 mr-2" />
@@ -156,7 +156,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
                   size="sm"
                   variant="outline"
                   asChild
-                  className="bg-background/20 border-white text-white hover:bg-white hover:text-primary"
+                  className="bg-background/20 border-white text-white hover:bg-white hover:text-secondary"
                 >
                   <a href={project.demo} target="_blank" rel="noopener noreferrer">
                     <ExternalLinkIcon className="h-4 w-4 mr-2" />
@@ -197,7 +197,7 @@ const Projects: React.FC = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Projects</h2>
-          <div className="h-1 w-20 bg-primary mx-auto mb-6"></div>
+          <div className="h-1 w-20 bg-secondary mx-auto mb-6"></div>
           <p className="max-w-2xl mx-auto text-foreground/70">
             A showcase of my recent work in AI/ML and full-stack development
           </p>

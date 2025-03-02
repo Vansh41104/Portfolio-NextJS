@@ -58,9 +58,9 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, index, i
           animate={isVisible ? { rotate: 0, opacity: 1 } : { rotate: -20, opacity: 0 }}
           transition={{ duration: 0.5, delay: index * 0.2 + 0.3 }}
         >
-          <TrophyIcon className="h-6 w-6 text-primary mr-3 mt-1" />
+          <TrophyIcon className="h-6 w-6 text-secondary mr-3 mt-1" />
         </motion.div>
-        <h3 className="text-xl font-bold text-foreground">{achievement.title}</h3>
+        <h3 className="text-xl font-bold text-primary">{achievement.title}</h3>
       </div>
       <ul className="space-y-3 ml-9">
         {achievement.description.map((item, idx) => (
