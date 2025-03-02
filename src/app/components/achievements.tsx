@@ -14,14 +14,14 @@ interface Achievement {
 
 const achievements: Achievement[] = [
   {
-    title: "Recieved a Letter of Appreciation from the World Health Organization",
+    title: "Letter of Recommendation from WHO",
     description: [
       "Developed an interactive monitoring platform with geo-tagging for un-vaccinated children.",
       "Created a comprehensive monitoring system to track day-to-day vaccination drives.",
     ],
   },
   {
-    title: "2nd Place in CodeRed 4.0 Hackathon",
+    title: "Runner Up in Code Red 4.0 Hackathon",
     description: [
       "Led a team in creating an AI-driven medical diagnostic system for rural societies.",
       "Developed and implemented an artificial intelligence model for the analysis of X-rays and CT scans to predict potential diseases.",
@@ -29,7 +29,7 @@ const achievements: Achievement[] = [
     ],
   },
   {
-    title: "1st Prize in Smart India Hackathon 2023 (College Round)",
+    title: "Winners SIH 2023 (Internal Round)",
     description: [
       "Developed an interactive dashboard for monitoring and plotting air and water quality parameters efficiently.",
       "Created a comprehensive monitoring system to track environmental quality indices in near-real-time.",

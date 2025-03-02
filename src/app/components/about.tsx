@@ -64,7 +64,7 @@ const About = () => {
               transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
             ></motion.div>
             <div className="relative h-full w-full overflow-hidden rounded-lg bg-muted">
-              <Image src="/image.jpg" alt="Vansh Bhatnagar" width={500} height={500} className="object-cover" />
+              <Image src="/image.jpg" alt="Vansh Bhatnagar" width={350} height={400} className="object-cover" />
             </div>
           </motion.div>
 
