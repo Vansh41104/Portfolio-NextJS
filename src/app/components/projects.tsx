@@ -36,7 +36,7 @@ const projects: Project[] = [
     description:
       "Improved a ML-based computer vision system to scan farm photos to evaluate the quality of the grass and forecast yield. The solution uses image processing algorithms to scan important features such as colour, texture, and morphology to produce quality indexes and weight prediction with high accuracy.",
     image: "/2.tiff",
-    tags: ["Computer Vision", "Machine Learning", "Image Processing", "Python", "TensorFlow"],
+    tags: ["Computer Vision", "Machine Learning", "Image Processing", "Python", "PyTorch"],
     github: "https://github.com/Vansh41104/FarmML_Project",
     demo: "",
     icon: <ActivityIcon className="h-10 w-10 text-primary" />,
@@ -46,7 +46,7 @@ const projects: Project[] = [
     description:
       "Built an AI-based diagnostic system based on deep learning models that identify respiratory illness (lung cancer, tuberculosis, pneumonia) from chest X-rays. Integrated convolutional neural networks to process medical images with high accuracy across a large patient population while following strict validation procedures and reducing false negatives.",
     image: "/3.jpeg",
-    tags: ["Deep Learning", "CNN", "Medical Imaging", "PyTorch", "Healthcare AI"],
+    tags: ["Deep Learning", "CNN", "Medical Imaging", "TensorFlow", "Healthcare AI"],
     github: "https://github.com/Vansh41104/AI-Based-Disease-Detector",
     demo: "",
     icon: <BrainIcon className="h-10 w-10 text-primary" />,
@@ -66,7 +66,7 @@ const projects: Project[] = [
     description:
       "A React Native-powered child vaccination tracking system was rolled out to monitor unvaccinated children across Udaipur. This cutting-edge system elegantly integrates Google Maps for geo-tagging, enabling accurate location tracking and easy visualization of vaccination coverage. Leveraging cutting-edge mobile development practices and hosting the app on a Linux server instance, the system improved data accuracy by 45% and increased the effectiveness of vaccination campaigns by a whopping 60%. This solution minimizes manual record-keeping considerably, improves tracking, and provides healthcare workers with actionable insights that can drive vaccination rates higher, leading to better public health outcomes.",
     image: "/5.png",
-    tags: ["React Native", "ExpressJS", "Android", "JavaScript", "Linux"],
+    tags: ["React Native", "ExpressJS", "Android", "Gradle", "Linux"],
     github: "https://github.com/Vansh41104/",
     demo: "",
     icon: <AppWindow className="h-10 w-10 text-primary" />,
@@ -75,7 +75,7 @@ const projects: Project[] = [
     title: "LangGraph CyberSecurity Agent",
     description:
       "LangGraph CyberSecurity Agent was developed and designed as a robust multi-agent cybersecurity tool on the basis of the LangGraph framework to deal with stateful, large-scale applications using LLMs. The agent offers high-level protection by executing detailed vulnerability scans using tools such as Nmap, Gobuster, ffuf, and SQLMap, completing all the scans within 2 minutes. It supports real-time system monitoring, complete reporting, and remediation, all aimed at securing infrastructures against possible attacks. With an interactive Streamlit-based GUI, it offers simple configuration and policy management. It can be customized to the core using environment variables and deployable across multiple platforms, thus an efficient and flexible solution to cybersecurity problems of today.",
-    image: "/5.png",
+    image: "/6.jpg",
     tags: ["LangGraph", "CyberSecurity", "Groq", "Nmap", "GoBuster"],
     github: "https://github.com/Vansh41104/LangGraph-CyberSecurity-Agent",
     demo: "",
