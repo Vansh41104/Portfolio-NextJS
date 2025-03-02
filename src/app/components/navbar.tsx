@@ -13,17 +13,23 @@ interface NavbarProps {
 }
 
 const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
+  const [mounted, setMounted] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const { theme, setTheme } = useTheme()
 
   useEffect(() => {
+    setMounted(true)
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10)
     }
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  // Prevent rendering until after mounting
+  if (!mounted) return null
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
@@ -137,4 +143,3 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
 }
 
 export default Navbar
-

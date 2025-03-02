@@ -67,13 +67,13 @@ export default function Home() {
 
       <div ref={sectionsRef} className="scroll-container">
         <AnimatePresence>
-          <Hero />
-          <About />
-          <Skills />
-          <Experience />
-          <Projects />
-          <Achievements />
-          <Contact />
+          <Hero key="hero" />
+          <About key="about" />
+          <Skills key="skills" />
+          <Experience key="experience" />
+          <Projects key="projects" />
+          <Achievements key="achievements" />
+          <Contact key="contact" />
         </AnimatePresence>
         <Footer />
       </div>

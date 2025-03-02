@@ -25,7 +25,7 @@ const projects: Project[] = [
     title: "News Webpage Semantic Analysis Tool",
     description:
       "Built an NLP-based web app for analysis of news articles utilising Python, spaCy, and TextBlob which extracts text and generates output such as entities, sentiment, and keywords. Integrated Groq's AI API to generate refined article summaries and built an intuitive Gradio interface for seamless user interaction.",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/1.png",
     tags: ["NLP", "Python", "spaCy", "TextBlob", "Groq AI", "Gradio"],
     github: "https://github.com/Vansh41104/News_Semantic_Summarizer",
     demo: "",
@@ -35,7 +35,7 @@ const projects: Project[] = [
     title: "AI Based Grass and Milk Production Predictor",
     description:
       "Improved a ML-based computer vision system to scan farm photos to evaluate the quality of the grass and forecast yield. The solution uses image processing algorithms to scan important features such as colour, texture, and morphology to produce quality indexes and weight prediction with high accuracy.",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/2.tiff",
     tags: ["Computer Vision", "Machine Learning", "Image Processing", "Python", "TensorFlow"],
     github: "https://github.com/Vansh41104/FarmML_Project",
     demo: "",
@@ -45,7 +45,7 @@ const projects: Project[] = [
     title: "AI Based Disease Detector",
     description:
       "Built an AI-based diagnostic system based on deep learning models that identify respiratory illness (lung cancer, tuberculosis, pneumonia) from chest X-rays. Integrated convolutional neural networks to process medical images with high accuracy across a large patient population while following strict validation procedures and reducing false negatives.",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/3.jpeg",
     tags: ["Deep Learning", "CNN", "Medical Imaging", "PyTorch", "Healthcare AI"],
     github: "https://github.com/Vansh41104/AI-Based-Disease-Detector",
     demo: "",
@@ -55,7 +55,7 @@ const projects: Project[] = [
     title: "Customer Feedback Chatbot",
     description:
       "Enhanced an AI-powered customer feedback analysis system with NLP and AI technologies to analyse customer interactions via a sophisticated chatbot. The system minimizes the need for manual sentiment analysis and provides actionable insights, which can be used for data-driven decision-making in customer experience optimization. This optimisation helped increase the productivity by 36%.",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/4.png",
     tags: ["NLP", "Chatbot", "Sentiment Analysis", "Python", "Machine Learning"],
     github: "https://github.com/Vansh41104/Customer_Feedback_Chatbot",
     demo: "",
