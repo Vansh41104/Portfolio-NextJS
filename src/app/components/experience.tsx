@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 import { BriefcaseIcon, CalendarIcon, CheckCircleIcon } from "lucide-react"
 import { useScrollTrigger } from "@/app/hooks/use-scroll-trigger"
 
+
 // Define the experience type
 interface Experience {
   title: string;

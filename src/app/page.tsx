@@ -62,6 +62,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background relative">
+      
       <Navbar activeSection={activeSection} onSectionChange={scrollToSection} />
       <ScrollProgress />
 
@@ -80,4 +81,3 @@ export default function Home() {
     </main>
   )
 }
-

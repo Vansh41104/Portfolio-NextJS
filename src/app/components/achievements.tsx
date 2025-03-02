@@ -14,6 +14,13 @@ interface Achievement {
 
 const achievements: Achievement[] = [
   {
+    title: "Recieved a Letter of Appreciation from the World Health Organization",
+    description: [
+      "Developed an interactive monitoring platform with geo-tagging for un-vaccinated children.",
+      "Created a comprehensive monitoring system to track day-to-day vaccination drives.",
+    ],
+  },
+  {
     title: "2nd Place in CodeRed 4.0 Hackathon",
     description: [
       "Led a team in creating an AI-driven medical diagnostic system for rural societies.",
@@ -27,7 +34,7 @@ const achievements: Achievement[] = [
       "Developed an interactive dashboard for monitoring and plotting air and water quality parameters efficiently.",
       "Created a comprehensive monitoring system to track environmental quality indices in near-real-time.",
     ],
-  },
+  }
 ]
 
 // Define props for AchievementCard component
