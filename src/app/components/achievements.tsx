@@ -14,7 +14,7 @@ interface Achievement {
 
 const achievements: Achievement[] = [
   {
-    title: "Letter of Recommendation from WHO",
+    title: "Letter of Recognition from WHO",
     description: [
       "Developed an interactive monitoring platform with geo-tagging for un-vaccinated children.",
       "Created a comprehensive monitoring system to track day-to-day vaccination drives.",

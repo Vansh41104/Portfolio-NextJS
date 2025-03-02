@@ -119,10 +119,14 @@ const Hero = () => {
           transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
           className="flex flex-wrap gap-4 justify-center mb-12 relative"
         >
-          <Button asChild size="lg">
+            <Button 
+            asChild 
+            size="lg" 
+            className="transition-transform hover:scale-105 hover:shadow-lg hover:shadow-primary-foreground/20"
+            >
             <a href="#contact">Get in Touch</a>
-          </Button>
-          <Button variant="outline" size="lg" asChild>
+            </Button>
+          <Button variant="outline" size="lg" asChild className="transition-transform hover:scale-105 hover:shadow-lg hover:shadow-primary-foreground/20">
             <a href="#projects">View Projects</a>
           </Button>
         </motion.div>
