@@ -28,17 +28,18 @@ const skillCategories: SkillCategory[] = [
       "CatBoost",
       "LightGBM",
       "Deep Neural Networks",
+      "Recurrent Neural Networks",  
     ],
   },
   {
     title: "Cloud & Infrastructure",
     icon: <CloudIcon className="h-8 w-8 text-primary" />,
-    skills: ["AWS", "GCP", "Azure", "Terraform", "Ansible", "Cloud Security Protocols"],
+    skills: ["AWS", "GCP", "Azure", "Terraform", "Ansible", "Cloud Security Protocols","Linux"],
   },
   {
     title: "DevOps & Automation",
     icon: <GitBranchIcon className="h-8 w-8 text-primary" />,
-    skills: ["Jenkins", "Git", "Docker", "Orchestration & Configuration Management"],
+    skills: ["Jenkins", "Git", "Docker","Ansible", "Orchestration & Configuration Management","Kubernetes","Linux"],
   },
   {
     title: "Backend Development",
@@ -48,12 +49,12 @@ const skillCategories: SkillCategory[] = [
   {
     title: "Database Management",
     icon: <DatabaseIcon className="h-8 w-8 text-primary" />,
-    skills: ["MongoDB", "PostgreSQL", "pgAdmin", "Lucidchart", "ER/Studio"],
+    skills: ["MongoDB", "PostgreSQL", "pgAdmin", "Lucidchart", "ER/Studio","SQLServer"],
   },
   {
     title: "Testing & Quality Assurance",
     icon: <TestTubeIcon className="h-8 w-8 text-primary" />,
-    skills: ["Selenium", "Jenkins", "Grafana", "CI/CD"],
+    skills: ["Selenium", "Jenkins", "Grafana", "CI/CD","Pytest"],
   },
 ]
 
