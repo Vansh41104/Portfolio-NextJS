@@ -28,7 +28,7 @@ const projects: Project[] = [
     image: "/1.png",
     tags: ["NLP", "Python", "spaCy", "TextBlob", "Groq AI", "Gradio"],
     github: "https://github.com/Vansh41104/News_Semantic_Summarizer",
-    demo: "",
+    demo: "https://news-semantic-summarizer.onrender.com",
     icon: <NewspaperIcon className="h-10 w-10 text-secondary" />,
   },
   {
