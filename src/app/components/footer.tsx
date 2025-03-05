@@ -18,7 +18,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
             <Link href="/" className="text-2xl font-bold text-primary">
-              Vansh<span className="text-primary/70">.dev</span>
+              Vanshbhatnagar<span className="text-primary/70">.space</span>
             </Link>
             <p className="mt-2 text-foreground/70 max-w-md">
               Full-stack developer and machine learning engineer specializing in AI systems and scalable backends.
