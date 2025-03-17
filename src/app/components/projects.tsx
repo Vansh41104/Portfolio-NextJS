@@ -78,7 +78,7 @@ const projects: Project[] = [
     image: "/6.jpg",
     tags: ["LangGraph", "CyberSecurity", "Groq", "Nmap", "GoBuster"],
     github: "https://github.com/Vansh41104/LangGraph-CyberSecurity-Agent",
-    demo: "https://langgraph-cybersecurity-agent-latest.onrender.com",
+    demo: "https://hub.docker.com/repository/docker/vansh41104/langgraph-cybersecurity-agent/general",
     icon: <Fingerprint className="h-10 w-10 text-secondary" />,
   },
 ]
