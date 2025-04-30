@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/app/components/navbar";
 import Hero from "@/app/components/hero";
 import About from "@/app/components/about";
@@ -11,72 +11,58 @@ import Achievements from "@/app/components/achievements";
 import Contact from "@/app/components/contact";
 import Footer from "@/app/components/footer";
 import ScrollProgress from "@/app/components/scroll-progress";
-import { AnimatePresence } from "framer-motion";
+import LoadingScreen from "@/app/components/loading-screen";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState("hero");
-  const [isScrolling, setIsScrolling] = useState(false);
-  const sectionsRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(true);
+  const [activeSection, setActiveSection] = useState<string>("hero");
 
-  // Track active section based on scroll position
   useEffect(() => {
-    const handleScroll = () => {
-      if (isScrolling) return;
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
-      const sections = document.querySelectorAll("section[id]");
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
-
-      sections.forEach((section) => {
-        const sectionTop = (section as HTMLElement).offsetTop;
-        const sectionHeight = section.clientHeight;
-        const sectionId = section.getAttribute("id") || "";
-
-        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-          setActiveSection(sectionId);
-        }
-      });
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isScrolling]);
-
-  // Smooth scroll to section when navigation is clicked
-  const scrollToSection = (sectionId: string) => {
-    setIsScrolling(true);
-    setActiveSection(sectionId);
-
-    const section = document.getElementById(sectionId);
-    if (section) {
-      window.scrollTo({
-        top: section.offsetTop,
-        behavior: "smooth",
-      });
-
-      // Allow scrolling again after animation completes
-      setTimeout(() => {
-        setIsScrolling(false);
-      }, 1000);
-    }
+  const handleLoadingComplete = () => {
+    setLoading(false);
   };
 
   return (
-    <main className="min-h-screen bg-background relative overflow-x-hidden">
-      <Navbar activeSection={activeSection} onSectionChange={scrollToSection} />
-      <ScrollProgress />
-
-      <div ref={sectionsRef} className="scroll-container overflow-x-hidden">
-        <AnimatePresence>
-          <Hero key="hero" />
-          <About key="about" />
-          <Skills key="skills" />
-          <Experience key="experience" />
-          <Projects key="projects" />
-          <Achievements key="achievements" />
-          <Contact key="contact" />
-        </AnimatePresence>
-        <Footer />
-      </div>
+    <main>
+      <AnimatePresence>
+        {loading ? (
+          <LoadingScreen onComplete={handleLoadingComplete} />
+        ) : (
+          <>
+            <Navbar activeSection={activeSection} onSectionChange={setActiveSection} />
+            <ScrollProgress />
+            <Hero />
+            <About />
+            <Skills />
+            <Experience />
+            <Projects />
+            <Achievements />
+            <Contact />
+            <Footer />
+          </>
+        )}
+      </AnimatePresence>
+      
+      {/* Moving gradient background - improved z-index to ensure it's behind everything */}
+      <motion.div 
+        className="fixed inset-0 -z-40"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, delay: 0.5 }}
+      >
+        <div className="absolute top-0 -left-40 w-96 h-96 bg-primary/5 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob" />
+        <div className="absolute top-0 -right-40 w-96 h-96 bg-secondary/5 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
+        <div className="absolute bottom-40 left-20 w-96 h-96 bg-primary/5 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000" />
+      </motion.div>
     </main>
   );
 }

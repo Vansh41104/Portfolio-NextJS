@@ -3,8 +3,7 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import { Button } from "@/app/components/ui/button"
-import { motion } from "framer-motion"
-import { ArrowDownIcon, GithubIcon, LinkedinIcon, MailIcon } from "lucide-react"
+import { GithubIcon, LinkedinIcon, MailIcon, FileTextIcon, ExternalLinkIcon, ArrowDownIcon } from "lucide-react"
 import { useScrollTrigger } from "@/app/hooks/use-scroll-trigger"
 
 const Hero = () => {
@@ -26,49 +25,23 @@ const Hero = () => {
     return () => clearInterval(typingInterval)
   }, [])
 
-  // Create grid element divs for better control
-  const gridElements = []
-  const gridSize = 20
-  for (let i = 0; i < gridSize; i++) {
-    for (let j = 0; j < gridSize; j++) {
-      gridElements.push(
-        <div
-          key={`grid-${i}-${j}`}
-          className="absolute grid-element"
-          style={{
-            left: `${(j * 100) / gridSize}%`,
-            top: `${(i * 100) / gridSize}%`,
-            width: `${100 / gridSize}%`,
-            height: `${100 / gridSize}%`,
-          }}
-        />
-      )
-    }
-  }
-
   return (
     <section
       id="hero"
       ref={ref as React.RefObject<HTMLElement>}
-      className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden snap-start"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden snap-start"
     >
-      {/* Background with grid effect */}
+      {/* Dark background with subtle gradient */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        {/* Gradient overlays - bottom layer */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-background/80 -z-10" />
-        <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-primary/10 to-transparent -z-10" />
-
-        {/* CSS Grid as a base layer */}
-        <div className="absolute inset-0 hero-grid z-1"></div>
-
-        {/* Grid elements - as an additional layer for more definition */}
-        <div className="absolute inset-0 opacity-80 z-2">
-          {gridElements}
-        </div>
-
-        {/* Dark spotlight effect - top layer */}
+        {/* Dark background with subtle gradient */}
+        <div className="absolute inset-0 bg-background/95"></div>
+        
+        {/* Subtle gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-background/80"></div>
+        
+        {/* Radial gradient for spotlight effect */}
         <div 
-          className="absolute inset-0 z-10"
+          className="absolute inset-0"
           style={{
             background: 'radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.6) 80%)'
           }}
@@ -76,67 +49,66 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto px-4 py-12 flex flex-col items-center text-center relative z-20">
-        {/* Integrated Red Blur Effect */}
-        <div 
-          className="absolute z-0 pointer-events-none"
+        {/* Animated glow effect */}
+        <div
+          className="absolute pointer-events-none"
           style={{
-            width: '90%',  
-            height: '600px',
-            background: 'radial-gradient(ellipse at center, rgba(220, 38, 38, 0.2) 0%, rgba(220, 38, 38, 0.05) 60%, transparent 80%)',
-            filter: 'blur(60px)',
-            top: '40%',
+            width: '300px',  
+            height: '300px',
+            borderRadius: '50%',
+            filter: 'blur(80px)',
+            background: 'radial-gradient(circle, rgba(255, 59, 48, 0.15) 0%, rgba(255, 59, 48, 0) 70%)',
+            top: '35%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
           }}
         />
 
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="mb-6 relative"
-        >
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-foreground">Vansh Bhatnagar</h1>
-          <h2 className="text-xl md:text-2xl text-foreground/80 h-8">
+        <div className="mb-6 relative">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary/90 to-foreground bg-clip-text text-transparent">
+            Vansh Bhatnagar
+          </h1>
+          <h2 className="text-xl md:text-2xl bg-gradient-to-r from-primary/70 to-foreground/80 bg-clip-text text-transparent h-8">
             {typedText}
-            <span className="animate-pulse">|</span>
+            <span className="animate-pulse text-primary">|</span>
           </h2>
-        </motion.div>
+        </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 50 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="max-w-2xl text-foreground/70 mb-8 text-lg relative"
-        >
-          Building AI systems and scalable backends with expertise in PyTorch, TensorFlow, and cloud technologies.
-          Specializing in neural networks, retrieval-augmented generation, and generative AI.
-        </motion.p>
+        <p className="max-w-2xl text-foreground/70 mb-8 text-lg relative">
+          Building AI systems and scalable backends with expertise in PyTorch, 
+          TensorFlow, and cloud technologies. Specializing in neural networks, retrieval-augmented 
+          generation, and generative AI.
+        </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
-          className="flex flex-wrap gap-4 justify-center mb-12 relative"
-        >
-            <Button 
+        <div className="flex flex-wrap gap-4 justify-center mb-12 relative">
+          <Button 
             asChild 
-            size="lg" 
-            className="transition-transform hover:scale-105 hover:shadow-lg hover:shadow-primary-foreground/20"
-            >
+            className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded pulse-glow"
+          >
             <a href="#contact">Get in Touch</a>
-            </Button>
-          <Button variant="outline" size="lg" asChild className="transition-transform hover:scale-105 hover:shadow-lg hover:shadow-primary-foreground/20">
+          </Button>
+          
+          <Button 
+            variant="outline" 
+            asChild 
+            className="border border-primary text-primary hover:bg-primary/10 px-6 py-2 rounded"
+          >
             <a href="#projects">View Projects</a>
           </Button>
-        </motion.div>
+          
+          <Button 
+            asChild 
+            className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded flex items-center pulse-glow"
+          >
+            <a href="/Resume-VANSH-BHATNAGAR.pdf" target="_blank" rel="noopener noreferrer">
+              <FileTextIcon className="mr-2 h-4 w-4" />
+              View Resume
+              <ExternalLinkIcon className="ml-1 h-3 w-3" />
+            </a>
+          </Button>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-          transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
-          className="flex gap-6 mb-16 relative"
-        >
+        <div className="flex gap-6 mb-16 relative">
           <a
             href="https://github.com/Vansh41104"
             target="_blank"
@@ -162,25 +134,13 @@ const Hero = () => {
             <MailIcon size={24} />
             <span className="sr-only">Email</span>
           </a>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{
-            opacity: [0, 1, 0],
-            y: [0, 10, 0],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Number.POSITIVE_INFINITY,
-            repeatType: "loop",
-          }}
-          className="absolute bottom-8"
-        >
-          <a href="#about" aria-label="Scroll down">
-            <ArrowDownIcon size={24} className="text-primary" />
+        <div className="absolute bottom-8">
+          <a href="#about" aria-label="Scroll down" className="text-primary hover:text-primary/80 transition-colors">
+            <ArrowDownIcon size={24} className="animate-float" />
           </a>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

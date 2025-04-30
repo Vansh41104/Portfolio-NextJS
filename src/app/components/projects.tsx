@@ -176,41 +176,37 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
   )
 }
 
-const Projects: React.FC = () => {
-  const { ref, isVisible } = useScrollTrigger({
-    threshold: 0.1,
-    rootMargin: "-100px 0px",
-    once: true,
-  })
+const Projects = () => {
+  const { ref, isVisible } = useScrollTrigger({ threshold: 0.1, once: true });
 
   return (
     <section
       id="projects"
+      className="py-20 bg-background relative overflow-hidden"
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-20 bg-muted/30 min-h-screen flex items-center snap-start"
     >
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          initial={{ opacity: 0, y: 50 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Projects</h2>
-          <div className="h-1 w-20 bg-secondary mx-auto mb-6"></div>
-          <p className="max-w-2xl mx-auto text-foreground/70">
-            A showcase of my recent work in AI/ML and full-stack development
+          <h2 className="section-header">Projects</h2>
+          <div className="h-1 w-20 bg-primary mx-auto mb-6"></div>
+          <p className="section-description">
+            Explore my recent work spanning AI, machine learning, and web development
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <ProjectCard key={index} project={project} index={index} isVisible={isVisible} />
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 export default Projects

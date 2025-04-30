@@ -101,30 +101,25 @@ const SkillCard: React.FC<SkillCardProps> = ({ category, index, isVisible }) => 
 }
 
 const Skills = () => {
-  const { ref, isVisible } = useScrollTrigger({
-    threshold: 0.1,
-    rootMargin: "-100px 0px",
-    once: true,
-  })
-
+  const { ref, isVisible } = useScrollTrigger({ threshold: 0.1, once: true });
+  
   return (
     <section
       id="skills"
+      className="py-20 bg-background relative overflow-hidden"
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-20 bg-muted/30 min-h-screen flex items-center snap-start"
     >
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          initial={{ opacity: 0, y: 50 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Technical Skills</h2>
+          <h2 className="section-header">Skills & Technologies</h2>
           <div className="h-1 w-20 bg-primary mx-auto mb-6"></div>
-          <p className="max-w-2xl mx-auto text-foreground/70">
-            My technical expertise spans across various domains, from AI/ML development to cloud infrastructure and
-            backend systems.
+          <p className="section-description">
+            My expertise spans machine learning, data science, and full-stack development
           </p>
         </motion.div>
 

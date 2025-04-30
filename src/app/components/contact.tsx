@@ -11,11 +11,7 @@ import { MailIcon, PhoneIcon, MapPinIcon, LinkedinIcon, GithubIcon, SendIcon, Ch
 import { useScrollTrigger } from "@/app/hooks/use-scroll-trigger"
 
 const Contact = () => {
-  const { ref, isVisible } = useScrollTrigger({
-    threshold: 0.2,
-    rootMargin: "-100px 0px",
-    once: true,
-  })
+  const { ref, isVisible } = useScrollTrigger({ threshold: 0.2, once: true })
 
   const [formState, setFormState] = useState({
     name: "",
@@ -77,20 +73,20 @@ const Contact = () => {
   return (
     <section
       id="contact"
+      className="py-20 bg-background relative overflow-hidden"
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-20 bg-muted/30 min-h-screen flex items-center snap-start"
     >
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          initial={{ opacity: 0, y: 50 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
+          <h2 className="section-header">Get In Touch</h2>
           <div className="h-1 w-20 bg-primary mx-auto mb-6"></div>
-          <p className="max-w-2xl mx-auto text-foreground/70">
-            Have a project in mind or want to discuss a potential collaboration? Feel free to reach out!
+          <p className="section-description">
+            Have a question or want to work together? Feel free to reach out!
           </p>
         </motion.div>
 

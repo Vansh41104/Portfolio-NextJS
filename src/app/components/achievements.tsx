@@ -80,29 +80,25 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, index, i
   )
 }
 
-const Achievements: React.FC = () => {
-  const { ref, isVisible } = useScrollTrigger({
-    threshold: 0.2,
-    rootMargin: "-100px 0px",
-    once: true,
-  })
+const Achievements = () => {
+  const { ref, isVisible } = useScrollTrigger({ threshold: 0.2, once: true });
 
   return (
     <section
       id="achievements"
+      className="py-20 bg-background relative overflow-hidden"
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-20 bg-background min-h-screen flex items-center snap-start"
     >
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          initial={{ opacity: 0, y: 50 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Achievements</h2>
+          <h2 className="section-header">Achievements</h2>
           <div className="h-1 w-20 bg-primary mx-auto mb-6"></div>
-          <p className="max-w-2xl mx-auto text-foreground/70">
+          <p className="section-description">
             Recognition and awards for my work in technology and innovation
           </p>
         </motion.div>

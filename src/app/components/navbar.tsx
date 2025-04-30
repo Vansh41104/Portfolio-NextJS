@@ -68,6 +68,10 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
               onClick={(e) => {
                 e.preventDefault()
                 onSectionChange(link.href)
+                const element = document.getElementById(link.href)
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' })
+                }
               }}
             >
               {link.name}
@@ -113,6 +117,10 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
                   e.preventDefault()
                   onSectionChange(link.href)
                   setIsMenuOpen(false)
+                  const element = document.getElementById(link.href)
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' })
+                  }
                 }}
               >
                 {link.name}
