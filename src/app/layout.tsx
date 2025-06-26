@@ -6,7 +6,7 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Vansh Bhatnagar | AI/ML Engineer & Full Stack Developer",
+  title: "Vansh Bhatnagar | AI/ML Engineer &  Developer",
   description:
     "Portfolio of Vansh Bhatnagar, a full-stack developer and machine learning engineer specializing in AI systems and scalable backends.",
 }
@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-radial-gradient`}>
+      <body className={`${inter.className} bg-background antialiased`}>
           {children}
       </body>
     </html>

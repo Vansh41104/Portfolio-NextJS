@@ -3,9 +3,8 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/app/components/ui/button"
-import { MoonIcon, SunIcon, MenuIcon, XIcon } from "lucide-react"
-import { useTheme } from "next-themes"
-import { motion } from "framer-motion"
+import { MenuIcon, XIcon, SparklesIcon } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
 interface NavbarProps {
   activeSection: string
@@ -16,13 +15,12 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
   const [mounted, setMounted] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const { theme, setTheme } = useTheme()
 
   useEffect(() => {
     setMounted(true)
 
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
+      setIsScrolled(window.scrollY > 50)
     }
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
@@ -42,93 +40,181 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
     { name: "Contact", href: "contact" },
   ]
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    onSectionChange(href)
+    setIsMenuOpen(false)
+    document.getElementById(href)?.scrollIntoView({ behavior: "smooth" })
+  }
+
   return (
     <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-background/80 backdrop-blur-md shadow-sm" : "bg-transparent"
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled
+          ? "glass backdrop-blur-2xl border-b border-foreground/5 shadow-lg shadow-primary/5"
+          : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-bold text-primary" onClick={() => onSectionChange("hero")}>
-          Vanshbhatnagar<span className="text-primary/70">.space</span>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
-          {navLinks.map((link) => (
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <motion.div
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             <Link
-              key={link.name}
-              href={`#${link.href}`}
-              className={`relative text-foreground/80 hover:text-primary transition-colors ${
-                activeSection === link.href ? "text-primary" : ""
-              }`}
-              onClick={(e) => {
-                e.preventDefault()
-                onSectionChange(link.href)
-                const element = document.getElementById(link.href)
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth' })
-                }
-              }}
+              href="/"
+              onClick={() => onSectionChange("hero")}
+              className="group flex items-center space-x-2"
             >
-              {link.name}
-              {activeSection === link.href && (
-                <motion.span
-                  layoutId="activeSection"
-                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
-              )}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Mobile Navigation Toggle */}
-        <div className="flex items-center md:hidden">
-          <Button variant="ghost" size="icon" onClick={toggleMenu} aria-label="Toggle menu">
-            {isMenuOpen ? <XIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
-          </Button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden bg-background/95 backdrop-blur-md shadow-md"
-        >
-          <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={`#${link.href}`}
-                className={`text-foreground/80 hover:text-primary transition-colors py-2 ${
-                  activeSection === link.href ? "text-primary font-medium" : ""
-                }`}
-                onClick={(e) => {
-                  e.preventDefault()
-                  onSectionChange(link.href)
-                  setIsMenuOpen(false)
-                  const element = document.getElementById(link.href)
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' })
-                  }
-                }}
+              <motion.div
+                className="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
+                whileHover={{ rotate: 10 }}
               >
-                {link.name}
-              </Link>
+                <SparklesIcon className="w-5 h-5 text-white" />
+              </motion.div>
+              <div className="text-xl font-bold">
+                <span className="text-gradient-primary">Vansh</span>
+                <span className="text-foreground/70">Bhatnagar</span>
+              </div>
+            </Link>
+          </motion.div>
+
+          {/* Desktop Navigation */}
+          <motion.nav
+            className="hidden md:flex items-center space-x-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            {navLinks.map((link, index) => (
+              <motion.div
+                key={link.name}
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+              >
+                <Link
+                  href={`#${link.href}`}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                    activeSection === link.href
+                      ? "text-primary bg-primary/10 shadow-lg shadow-primary/20"
+                      : "text-foreground/70 hover:text-primary hover:bg-foreground/5"
+                  }`}
+                >
+                  {link.name}
+
+                  {/* Active indicator */}
+                  {activeSection === link.href && (
+                    <motion.div
+                      layoutId="activeSection"
+                      className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-lg -z-10"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  )}
+                </Link>
+              </motion.div>
             ))}
-          </div>
-        </motion.div>
-      )}
+          </motion.nav>
+
+          {/* CTA Button */}
+          <motion.div
+            className="hidden md:block"
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            <Button
+              asChild
+              className="bg-gradient-to-r from-primary to-secondary text-white hover:scale-105 transition-all duration-300 px-6 py-2 rounded-full font-semibold shadow-lg shadow-primary/20"
+            >
+              <Link href="#contact">Hire Me</Link>
+            </Button>
+          </motion.div>
+
+          {/* Mobile Menu Toggle */}
+          <motion.div
+            className="md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleMenu}
+              className="text-foreground/70 hover:text-primary hover:bg-primary/10 transition-colors rounded-lg"
+            >
+              <motion.div
+                animate={{ rotate: isMenuOpen ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {isMenuOpen ? <XIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
+              </motion.div>
+            </Button>
+          </motion.div>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0, y: -20 }}
+              animate={{ opacity: 1, height: "auto", y: 0 }}
+              exit={{ opacity: 0, height: 0, y: -20 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="md:hidden mt-4 glass rounded-2xl border border-foreground/10 overflow-hidden"
+            >
+              <div className="p-4 space-y-2">
+                {navLinks.map((link, index) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                  >
+                    <Link
+                      href={`#${link.href}`}
+                      onClick={(e) => handleNavClick(e, link.href)}
+                      className={`block px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
+                        activeSection === link.href
+                          ? "text-primary bg-primary/10 shadow-lg shadow-primary/10"
+                          : "text-foreground/70 hover:text-primary hover:bg-foreground/5"
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
+
+                {/* Mobile CTA */}
+                <motion.div
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.3, delay: navLinks.length * 0.05 }}
+                  className="pt-2"
+                >
+                  <Button
+                    asChild
+                    className="w-full bg-gradient-to-r from-primary to-secondary text-white hover:scale-105 transition-all duration-300 py-3 rounded-lg font-semibold"
+                  >
+                    <Link href="#contact" onClick={() => setIsMenuOpen(false)}>
+                      Hire Me
+                    </Link>
+                  </Button>
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </motion.header>
   )
 }

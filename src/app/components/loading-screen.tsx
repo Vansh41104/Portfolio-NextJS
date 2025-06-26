@@ -11,110 +11,211 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
   const [progress, setProgress] = useState(0)
   
   useEffect(() => {
-    // Simulate loading progress
+    // Simulate loading progress with smoother increments
     const timer = setInterval(() => {
       setProgress((prevProgress) => {
-        // Increase progress by random amount between 1-5%
-        const newProgress = Math.min(prevProgress + Math.random() * 5 + 1, 100)
+        const newProgress = Math.min(prevProgress + Math.random() * 4 + 1, 100)
         
-        // When we reach 100%, trigger onComplete
         if (newProgress >= 100) {
           clearInterval(timer)
-          setTimeout(() => onComplete(), 500) // Slight delay before dismissing
+          setTimeout(() => onComplete(), 1200)
         }
         
         return newProgress
       })
-    }, 100)
+    }, 180)
     
     return () => clearInterval(timer)
   }, [onComplete])
   
   return (
     <motion.div 
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-background"
       initial={{ opacity: 1 }}
       exit={{ 
         opacity: 0,
+        scale: 0.95,
+        filter: "blur(10px)",
         transition: {
-          duration: 0.8,
-          ease: "easeInOut"
+          duration: 1.2,
+          ease: [0.76, 0, 0.24, 1]
         }
       }}
     >
+      {/* Ambient floating particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute"
+            style={{
+              left: `${15 + Math.random() * 70}%`,
+              top: `${15 + Math.random() * 70}%`,
+            }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ 
+              opacity: [0, 0.6, 0],
+              scale: [0, 1, 0],
+              y: [0, -30, 0],
+              rotate: [0, 360]
+            }}
+            transition={{
+              duration: 6 + Math.random() * 4,
+              repeat: Infinity,
+              delay: Math.random() * 3,
+              ease: "easeInOut"
+            }}
+          >
+            <div className={`w-1 h-1 ${i % 2 === 0 ? 'bg-primary/40' : 'bg-secondary/30'} rounded-full`} />
+          </motion.div>
+        ))}
+      </div>
+
       <div className="relative flex flex-col items-center">
-        {/* Animated logo */}
+        {/* Elegant monogram with theme colors */}
         <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="mb-6 relative"
+          initial={{ opacity: 0, scale: 0.5, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-12 relative"
         >
-          <div className="text-4xl md:text-6xl font-bold text-primary relative">
-            <span className="relative z-10">VB</span>
-            <div className="absolute -inset-1 blur-md bg-primary/30 z-0 rounded-full"></div>
+          <motion.div
+            className="w-24 h-24 glass-premium rounded-full flex items-center justify-center relative overflow-hidden group"
+            animate={{ 
+              rotate: [0, 360]
+            }}
+            transition={{ 
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          >
+            {/* Gradient border */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-secondary to-primary p-[1px]">
+              <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
+                <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">VB</span>
+              </div>
+            </div>
+            
+            {/* Glow effect */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 blur-xl animate-pulse" />
+          </motion.div>
+          
+          {/* Orbiting rings */}
+          <motion.div 
+            className="absolute inset-0 rounded-full border border-primary/20 scale-125"
+            animate={{ 
+              rotate: [360, 0],
+              opacity: [0.2, 0.6, 0.2]
+            }}
+            transition={{ 
+              rotate: { duration: 15, repeat: Infinity, ease: "linear" },
+              opacity: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+            }}
+          />
+          <motion.div 
+            className="absolute inset-0 rounded-full border border-secondary/20 scale-150"
+            animate={{ 
+              rotate: [0, 360],
+              opacity: [0.1, 0.4, 0.1]
+            }}
+            transition={{ 
+              rotate: { duration: 25, repeat: Infinity, ease: "linear" },
+              opacity: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+            }}
+          />
+        </motion.div>
+        
+        {/* Hero-style identity */}
+        <motion.div 
+          className="text-center mb-10"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary/90 to-foreground bg-clip-text text-transparent mb-3">
+            VANSH BHATNAGAR
+          </h1>
+          <div className="w-20 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent mx-auto mb-4" />
+          <p className="text-sm text-foreground/60 tracking-wide">
+            AI/ML Engineer Portfolio
+          </p>
+        </motion.div>
+        
+        {/* Modern progress bar with theme colors */}
+        <motion.div 
+          className="w-80 md:w-96"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.8, ease: "easeOut" }}
+        >
+          <div className="relative h-1 bg-muted rounded-full overflow-hidden mb-4">
+            <motion.div 
+              className="absolute top-0 left-0 h-full bg-gradient-to-r from-primary via-secondary to-primary rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: `${progress}%` }}
+              transition={{ ease: [0.25, 0.46, 0.45, 0.94], duration: 0.4 }}
+            />
+            
+            {/* Shimmer effect */}
+            <motion.div
+              className="absolute inset-y-0 left-0 w-full bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-full"
+              animate={{ x: ["-100%", "100%"] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          
+          <div className="flex justify-between text-xs text-foreground/50 font-medium">
+            <span>{Math.round(progress)}%</span>
+            <span>Loading Experience</span>
           </div>
         </motion.div>
         
-        {/* Loading text with typewriter effect */}
+        {/* Loading dots with theme colors */}
         <motion.div 
-          className="text-foreground/80 text-lg md:text-xl mb-8"
+          className="flex space-x-2 mt-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
+          transition={{ delay: 1.2, duration: 0.6 }}
         >
-          Loading Portfolio...
+          {[0, 1, 2].map((i) => (
+            <motion.div
+              key={i}
+              className="w-2 h-2 rounded-full bg-gradient-to-r from-primary to-secondary"
+              animate={{ 
+                scale: [1, 1.3, 1],
+                opacity: [0.4, 1, 0.4] 
+              }}
+              transition={{ 
+                duration: 1.5, 
+                repeat: Infinity, 
+                delay: i * 0.2,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
         </motion.div>
         
-        {/* Progress bar */}
-        <div className="w-64 md:w-80 h-1 bg-muted/30 rounded-full overflow-hidden">
-          <motion.div 
-            className="h-full bg-gradient-to-r from-primary to-secondary"
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            transition={{ ease: "easeInOut" }}
-          />
-        </div>
-        
-        {/* Percentage */}
-        <motion.div 
-          className="mt-2 text-sm text-foreground/60"
+        {/* Status with theme typography */}
+        <motion.div
+          className="mt-8 text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
         >
-          {Math.round(progress)}%
+          <motion.p 
+            className="text-xs text-foreground/40 font-medium tracking-wide"
+            animate={{ opacity: [0.4, 0.8, 0.4] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            {progress < 25 && "Initializing AI Systems"}
+            {progress >= 25 && progress < 50 && "Loading Components"}
+            {progress >= 50 && progress < 75 && "Configuring Interface"}
+            {progress >= 75 && progress < 95 && "Finalizing Experience"}
+            {progress >= 95 && "Ready to Explore"}
+          </motion.p>
         </motion.div>
-        
-        {/* Grid background for aesthetics - FIXED: Applied higher z-index to ensure proper layering */}
-        <div className="absolute inset-0 -z-10 bg-grid-animated opacity-20" />
-      </div>
-      
-      {/* Particle animation in background */}
-      <div className="particles absolute inset-0 -z-10">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 md:w-2 md:h-2 rounded-full bg-primary/40"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, Math.random() * -100 - 50],
-              x: [0, (Math.random() - 0.5) * 50],
-              opacity: [0, 0.8, 0],
-              scale: [0, Math.random() + 0.5, 0]
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Infinity,
-              repeatType: "loop",
-              ease: "easeInOut",
-              delay: Math.random() * 2
-            }}
-          />
-        ))}
       </div>
     </motion.div>
   )

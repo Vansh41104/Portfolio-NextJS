@@ -1,12 +1,11 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { Button } from "@/app/components/ui/button"
-import { ExternalLinkIcon, GithubIcon, BrainIcon, NewspaperIcon, ActivityIcon, MessageSquareIcon, AppWindow, Fingerprint } from "lucide-react"
+import { ExternalLinkIcon, GithubIcon, BrainIcon, NewspaperIcon, ActivityIcon, MessageSquareIcon, AppWindowIcon, FingerprintIcon, ShoppingBag, School} from "lucide-react"
 import { useScrollTrigger } from "@/app/hooks/use-scroll-trigger"
 
 // Define the project type
@@ -18,58 +17,28 @@ interface Project {
   github: string;
   demo: string;
   icon: React.ReactNode;
+  gradient: string;
 }
 
 const projects: Project[] = [
   {
-    title: "News Webpage Semantic Analysis Tool",
-    description:
-      "Built an NLP-based web app for analysis of news articles utilising Python, spaCy, and TextBlob which extracts text and generates output such as entities, sentiment, and keywords. Integrated Groq's AI API to generate refined article summaries and built an intuitive Gradio interface for seamless user interaction.",
-    image: "/1.png",
-    tags: ["NLP", "Python", "spaCy", "TextBlob", "Groq AI", "Gradio"],
-    github: "https://github.com/Vansh41104/News_Semantic_Summarizer",
-    demo: "https://news-semantic-summarizer.onrender.com",
-    icon: <NewspaperIcon className="h-10 w-10 text-secondary" />,
-  },
-  {
-    title: "AI Based Grass and Milk Production Predictor",
-    description:
-      "Improved a ML-based computer vision system to scan farm photos to evaluate the quality of the grass and forecast yield. The solution uses image processing algorithms to scan important features such as colour, texture, and morphology to produce quality indexes and weight prediction with high accuracy.",
-    image: "/2.tiff",
-    tags: ["Computer Vision", "Machine Learning", "Image Processing", "Python", "PyTorch"],
-    github: "https://github.com/Vansh41104/FarmML_Project",
+    title:"SaleSpeak- A Conversational Agent ",
+    description: "A sophisticated conversational agent that helps users make better decisions while buying products online through natural voice interactions and intelligent product recommendations.",
+    image: "/7.png",
+    tags: ["Retrieval Augmented Generation", "Conversational AI", "LangChain", "Groq", "Web Scraping"],
+    github: "https://github.com/Vansh41104/SaleSpeak",
     demo: "",
-    icon: <ActivityIcon className="h-10 w-10 text-secondary" />,
+    icon: <ShoppingBag className="h-6 w-6 sm:h-8 sm:w-8" />,
+    gradient: "from-red-500 to-orange-500",
   },
-  {
-    title: "AI Based Disease Detector",
-    description:
-      "Built an AI-based diagnostic system based on deep learning models that identify respiratory illness (lung cancer, tuberculosis, pneumonia) from chest X-rays. Integrated convolutional neural networks to process medical images with high accuracy across a large patient population while following strict validation procedures and reducing false negatives.",
-    image: "/3.jpeg",
-    tags: ["Deep Learning", "CNN", "Medical Imaging", "TensorFlow", "Healthcare AI"],
-    github: "https://github.com/Vansh41104/AI-Based-Disease-Detector",
-    demo: "",
-    icon: <BrainIcon className="h-10 w-10 text-secondary" />,
-  },
-  {
-    title: "Customer Feedback Chatbot",
-    description:
-      "Enhanced an AI-powered customer feedback analysis system with NLP and AI technologies to analyse customer interactions via a sophisticated chatbot. The system minimizes the need for manual sentiment analysis and provides actionable insights, which can be used for data-driven decision-making in customer experience optimization. This optimisation helped increase the productivity by 36%.",
-    image: "/4.png",
-    tags: ["NLP", "Chatbot", "Sentiment Analysis", "Python", "Machine Learning"],
-    github: "https://github.com/Vansh41104/Customer_Feedback_Chatbot",
-    demo: "",
-    icon: <MessageSquareIcon className="h-10 w-10 text-secondary" />,
-  },
-  {
-    title: "MCHN Monitoring App",
-    description:
-      "A React Native-powered child vaccination tracking system was rolled out to monitor unvaccinated children across Udaipur. This cutting-edge system elegantly integrates Google Maps for geo-tagging, enabling accurate location tracking and easy visualization of vaccination coverage. Leveraging cutting-edge mobile development practices and hosting the app on a Linux server instance, the system improved data accuracy by 45% and increased the effectiveness of vaccination campaigns by a whopping 60%. This solution minimizes manual record-keeping considerably, improves tracking, and provides healthcare workers with actionable insights that can drive vaccination rates higher, leading to better public health outcomes.",
-    image: "/5.png",
-    tags: ["React Native", "ExpressJS", "Android", "Gradle", "Linux"],
+  {title:"AI-Tutor ",
+    description: "AI-Tutor is an educational platform that leverages web scraping and AI to provide curated learning resources. It uses LangChain to scrape educational content from various sources, processes it with Gemini AI, and delivers personalized learning experiences through a user-friendly interactive 3-d model built with Three.js.",
+    image: "/8.png",
+    tags: ["Gemini", "Eduactional AI", "Python", "3-D Learning", "ThreeJS", "Web Scraping"],
     github: "https://github.com/Vansh41104/",
     demo: "",
-    icon: <AppWindow className="h-10 w-10 text-secondary" />,
+    icon: <School className="h-6 w-6 sm:h-8 sm:w-8" />,
+    gradient: "from-indigo-500 to-purple-500",
   },
   {
     title: "LangGraph CyberSecurity Agent",
@@ -79,7 +48,63 @@ const projects: Project[] = [
     tags: ["LangGraph", "CyberSecurity", "Groq", "Nmap", "GoBuster"],
     github: "https://github.com/Vansh41104/LangGraph-CyberSecurity-Agent",
     demo: "https://hub.docker.com/repository/docker/vansh41104/langgraph-cybersecurity-agent/general",
-    icon: <Fingerprint className="h-10 w-10 text-secondary" />,
+    icon: <MessageSquareIcon className="h-6 w-6 sm:h-8 sm:w-8" />,
+    gradient: "from-slate-500 to-gray-500",
+  },
+  {
+    title: "MCHN Monitoring App",
+    description:
+      "A React Native-powered child vaccination tracking system was rolled out to monitor unvaccinated children across Udaipur. This cutting-edge system elegantly integrates Google Maps for geo-tagging, enabling accurate location tracking and easy visualization of vaccination coverage. Leveraging cutting-edge mobile development practices and hosting the app on a Linux server instance, the system improved data accuracy by 45% and increased the effectiveness of vaccination campaigns by a whopping 60%. This solution minimizes manual record-keeping considerably, improves tracking, and provides healthcare workers with actionable insights that can drive vaccination rates higher, leading to better public health outcomes.",
+    image: "/5.png",
+    tags: ["React Native", "ExpressJS", "Android", "Gradle", "Linux"],
+    github: "https://github.com/Vansh41104/",
+    demo: "",
+    icon: <FingerprintIcon className="h-6 w-6 sm:h-8 sm:w-8" />,
+    gradient: "from-emerald-500 to-teal-500",
+  },
+  {
+    title: "News Webpage Semantic Analysis Tool",
+    description:
+      "Built an NLP-based web app for analysis of news articles utilising Python, spaCy, and TextBlob which extracts text and generates output such as entities, sentiment, and keywords. Integrated Groq's AI API to generate refined article summaries and built an intuitive Gradio interface for seamless user interaction.",
+    image: "/1.png",
+    tags: ["NLP", "Python", "spaCy", "TextBlob", "Groq AI", "Gradio"],
+    github: "https://github.com/Vansh41104/News_Semantic_Summarizer",
+    demo: "https://news-semantic-summarizer.onrender.com",
+    icon: <NewspaperIcon className="h-6 w-6 sm:h-8 sm:w-8" />,
+    gradient: "from-blue-500 to-cyan-500",
+  },
+  {
+    title: "AI Based Grass and Milk Production Predictor",
+    description:
+      "Improved a ML-based computer vision system to scan farm photos to evaluate the quality of the grass and forecast yield. The solution uses image processing algorithms to scan important features such as colour, texture, and morphology to produce quality indexes and weight prediction with high accuracy.",
+    image: "/2.tiff",
+    tags: ["Computer Vision", "Machine Learning", "Image Processing", "Python", "PyTorch"],
+    github: "https://github.com/Vansh41104/FarmML_Project",
+    demo: "",
+    icon: <ActivityIcon className="h-6 w-6 sm:h-8 sm:w-8" />,
+    gradient: "from-green-500 to-lime-500",
+  },
+  {
+    title: "AI Based Disease Detector",
+    description:
+      "Built an AI-based diagnostic system based on deep learning models that identify respiratory illness (lung cancer, tuberculosis, pneumonia) from chest X-rays. Integrated convolutional neural networks to process medical images with high accuracy across a large patient population while following strict validation procedures and reducing false negatives.",
+    image: "/3.jpeg",
+    tags: ["Deep Learning", "CNN", "Medical Imaging", "TensorFlow", "Healthcare AI"],
+    github: "https://github.com/Vansh41104/AI-Based-Disease-Detector",
+    demo: "",
+    icon: <BrainIcon className="h-6 w-6 sm:h-8 sm:w-8" />,
+    gradient: "from-pink-500 to-rose-500",
+  },
+  {
+    title: "Customer Feedback Chatbot",
+    description:
+      "Enhanced an AI-powered customer feedback analysis system with NLP and AI technologies to analyse customer interactions via a sophisticated chatbot. The system minimizes the need for manual sentiment analysis and provides actionable insights, which can be used for data-driven decision-making in customer experience optimization. This optimisation helped increase the productivity by 36%.",
+    image: "/4.png",
+    tags: ["NLP", "Chatbot", "Sentiment Analysis", "Python", "Embeddngs", "Re-Rankers"],
+    github: "https://github.com/Vansh41104/Customer_Feedback_Chatbot",
+    demo: "",
+    icon: <AppWindowIcon className="h-6 w-6 sm:h-8 sm:w-8" />,
+    gradient: "from-violet-500 to-fuchsia-500",
   },
 ]
 
@@ -95,118 +120,214 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.7, delay: index * 0.15, ease: "easeOut" }}
-      className="bg-card rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-500"
+      initial={{ opacity: 0, y: 60, scale: 0.9 }}
+      animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 60, scale: 0.9 }}
+      transition={{ duration: 0.8, delay: index * 0.2, ease: "easeOut" }}
+      className="group relative h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative aspect-video">
-        <Image src={project.image || "/placeholder.svg"} alt={project.title} fill className="object-cover" />
-        <motion.div
-          className="absolute inset-0 bg-background/80 flex items-center justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <div className="text-center p-6">
-            <motion.div
-              className="mb-4 flex justify-center"
-              initial={{ scale: 0.8 }}
-              animate={{ scale: isHovered ? 1 : 0.8 }}
-              transition={{ duration: 0.3 }}
+      {/* Gradient border effect */}
+      <div className={`absolute -inset-0.5 bg-gradient-to-r ${project.gradient} rounded-2xl blur opacity-0 group-hover:opacity-75 transition-all duration-500`}></div>
+      
+      <div className="relative glass rounded-2xl overflow-hidden h-full hover:scale-105 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500">
+        {/* Image section */}
+        <div className="relative h-32 sm:h-40 md:h-48 overflow-hidden">
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent"></div>
+          
+          {/* Floating icon */}
+          <motion.div
+            className={`absolute top-2 right-2 sm:top-4 sm:right-4 p-2 sm:p-3 rounded-xl bg-gradient-to-r ${project.gradient} text-white shadow-lg`}
+            initial={{ scale: 0, rotate: -180 }}
+            animate={isVisible ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }}
+            transition={{ duration: 0.6, delay: index * 0.2 + 0.3 }}
+            whileHover={{ scale: 1.1, rotate: 10 }}
+          >
+            {project.icon}
+          </motion.div>
+        </div>
+
+        {/* Content */}
+        <div className="p-3 sm:p-4 md:p-6 space-y-3 sm:space-y-4">
+          <motion.h3 
+            className="text-base sm:text-lg md:text-xl font-bold text-gradient-primary group-hover:text-primary transition-colors line-clamp-2"
+            initial={{ opacity: 0, x: -20 }}
+            animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+            transition={{ duration: 0.6, delay: index * 0.2 + 0.4 }}
+          >
+            {project.title}
+          </motion.h3>
+
+          <motion.p 
+            className="text-foreground/70 text-xs sm:text-sm leading-relaxed line-clamp-3 sm:line-clamp-4"
+            initial={{ opacity: 0 }}
+            animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.2 + 0.5 }}
+          >
+            {project.description}
+          </motion.p>
+
+          {/* Tags */}
+          <motion.div 
+            className="flex flex-wrap gap-1 sm:gap-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: index * 0.2 + 0.6 }}
+          >
+            {project.tags.slice(0, 3).map((tag, tagIndex) => (
+              <span
+                key={tagIndex}
+                className="px-2 sm:px-3 py-1 text-xs bg-foreground/5 hover:bg-foreground/10 rounded-full text-foreground/80 transition-colors"
+              >
+                {tag}
+              </span>
+            ))}
+            {project.tags.length > 3 && (
+              <span className="px-2 sm:px-3 py-1 text-xs bg-primary/10 rounded-full text-primary/80">
+                +{project.tags.length - 3} more
+              </span>
+            )}
+          </motion.div>
+
+          {/* Action buttons */}
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: index * 0.2 + 0.7 }}
+          >
+            <Button
+              asChild
+              size="sm"
+              className="flex-1 bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300 text-xs sm:text-sm"
             >
-              {project.icon}
-            </motion.div>
-            <div className="flex flex-wrap gap-2 justify-center">
-              {project.tags.map((tag, idx) => (
-                <motion.span
-                  key={idx}
-                  className="bg-background/20 text-white px-2 py-1 rounded-full text-xs"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 10 }}
-                  transition={{ duration: 0.3, delay: idx * 0.05 }}
-                >
-                  {tag}
-                </motion.span>
-              ))}
-            </div>
-            <motion.div
-              className="mt-6 flex justify-center space-x-3"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
-            >
-              {project.github && (
-                <Button
-                  size="sm"
-                  variant="outline"
-                  asChild
-                  className="bg-background/20 border-white text-white hover:bg-white hover:text-secondary"
-                >
-                  <a href={project.github} target="_blank" rel="noopener noreferrer">
-                    <GithubIcon className="h-4 w-4 mr-2" />
-                    GitHub
-                  </a>
-                </Button>
-              )}
-              {project.demo && (
-                <Button
-                  size="sm"
-                  variant="outline"
-                  asChild
-                  className="bg-background/20 border-white text-white hover:bg-white hover:text-secondary"
-                >
-                  <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                    <ExternalLinkIcon className="h-4 w-4 mr-2" />
-                    Demo
-                  </a>
-                </Button>
-              )}
-            </motion.div>
-          </div>
-        </motion.div>
-      </div>
-      <div className="p-6">
-        <h3 className="text-xl font-bold mb-2 text-foreground">{project.title}</h3>
-        <p className="text-foreground/70 mb-4 line-clamp-3">{project.description}</p>
+              <a href={project.github} target="_blank" rel="noopener noreferrer">
+                <GithubIcon className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                Code
+              </a>
+            </Button>
+            
+            {project.demo && (
+              <Button
+                asChild
+                size="sm"
+                className={`flex-1 bg-gradient-to-r ${project.gradient} text-white hover:scale-105 transition-all duration-300 text-xs sm:text-sm`}
+              >
+                <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                  <ExternalLinkIcon className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                  Demo
+                </a>
+              </Button>
+            )}
+          </motion.div>
+        </div>
+
       </div>
     </motion.div>
   )
 }
 
 const Projects = () => {
-  const { ref, isVisible } = useScrollTrigger({ threshold: 0.1, once: true });
+  const { ref, isVisible } = useScrollTrigger({ threshold: 0.1, once: true })
 
   return (
     <section
       id="projects"
-      className="py-20 bg-background relative overflow-hidden"
+      className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden"
       ref={ref as React.RefObject<HTMLElement>}
     >
-      <div className="container mx-auto px-4">
+      {/* Enhanced background elements matching other sections */}
+      <div className="absolute inset-0 -z-10">
+        {/* Animated grid pattern */}
+        <div className="absolute inset-0 opacity-[0.08]">
+          <motion.div
+            className="absolute inset-0"
+            animate={{ backgroundPosition: ["0px 0px", "120px 120px"] }}
+            transition={{ duration: 40, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(135, 206, 235, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(64, 224, 208, 0.3) 1px, transparent 1px)
+              `,
+              backgroundSize: "120px 120px",
+            }}
+          />
+        </div>
+        
+        {/* Project-themed floating elements */}
+        {Array.from({ length: 15 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute opacity-[0.12]"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: `${16 + Math.random() * 28}px`,
+              height: `${16 + Math.random() * 28}px`,
+              background: i % 5 === 0 
+                ? "linear-gradient(45deg, rgba(135, 206, 235, 0.6), transparent)"
+                : i % 5 === 1
+                ? "linear-gradient(45deg, rgba(64, 224, 208, 0.6), transparent)"
+                : i % 5 === 2
+                ? "linear-gradient(45deg, rgba(236, 72, 153, 0.6), transparent)"
+                : i % 5 === 3
+                ? "linear-gradient(45deg, rgba(34, 197, 94, 0.6), transparent)"
+                : "linear-gradient(45deg, rgba(168, 85, 247, 0.6), transparent)",
+              borderRadius: i % 4 === 0 ? "50%" : i % 4 === 1 ? "25%" : "0%",
+            }}
+            animate={{
+              y: [0, -70, 0],
+              x: [0, Math.random() * 50 - 25, 0],
+              rotate: [0, 360],
+              opacity: [0.08, 0.18, 0.08],
+            }}
+            transition={{
+              duration: 12 + Math.random() * 12,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+              delay: Math.random() * 6,
+            }}
+          />
+        ))}
+        
+        <div className="absolute top-1/4 left-0 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-primary/[0.05] rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 bg-secondary/[0.05] rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="text-center mb-16"
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="section-header">Projects</h2>
-          <div className="h-1 w-20 bg-primary mx-auto mb-6"></div>
-          <p className="section-description">
-            Explore my recent work spanning AI, machine learning, and web development
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl
+                         font-bold bg-gradient-to-r from-primary via-secondary to-primary 
+                         bg-clip-text text-transparent
+                         mb-4 sm:mb-6 leading-tight tracking-tight">
+            Featured Projects
+          </h2>
+          <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mb-4 sm:mb-6"></div>
+          <p className="max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-foreground/70 leading-relaxed px-4">
+            A showcase of innovative solutions combining AI/ML expertise with modern web technologies 
+            to solve real-world problems.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {projects.map((project, index) => (
             <ProjectCard key={index} project={project} index={index} isVisible={isVisible} />
           ))}
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 export default Projects
