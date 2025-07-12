@@ -445,8 +445,8 @@ const Hero = () => {
           transition={{ duration: 1, delay: 1.8 }}
         >
           {[
-            { icon: GithubIcon, href: "https://github.com/vanshbhatnagar", label: "GitHub" },
-            { icon: LinkedinIcon, href: "https://linkedin.com/in/vanshbhatnagar", label: "LinkedIn" },
+            { icon: GithubIcon, href: "https://github.com/Vansh41104", label: "GitHub" },
+            { icon: LinkedinIcon, href: "https://www.linkedin.com/in/vansh-bhatnagar-66465225b/", label: "LinkedIn" },
             { icon: MailIcon, href: "#contact", label: "Email" },
           ].map((social, index) => (
             <motion.a

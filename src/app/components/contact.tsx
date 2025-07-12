@@ -97,13 +97,13 @@ const Contact = () => {
     {
       icon: <GithubIcon className="w-6 h-6" />,
       label: "GitHub",
-      href: "https://github.com/vanshbhatnagar",
+      href: "https://github.com/Vansh41104",
       gradient: "from-gray-600 to-gray-800",
     },
     {
       icon: <LinkedinIcon className="w-6 h-6" />,
       label: "LinkedIn", 
-      href: "https://linkedin.com/in/vanshbhatnagar",
+      href: "https://www.linkedin.com/in/vansh-bhatnagar-66465225b/",
       gradient: "from-blue-600 to-blue-800",
     },
   ]
