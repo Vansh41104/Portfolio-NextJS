@@ -12,15 +12,15 @@ const Hero = () => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
   const words = ["AI/ML Engineer", "GenAI Developer", "System Architect", "Tech Innovator"]
 
-  // Mouse tracking for magnetic effects
+  // Mouse tracking for magnetic effects - disabled on mobile
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
-  const springX = useSpring(mouseX, { stiffness: 400, damping: 40 })
-  const springY = useSpring(mouseY, { stiffness: 400, damping: 40 })
+  const springX = useSpring(mouseX, { stiffness: isMobile ? 0 : 400, damping: isMobile ? 0 : 40 })
+  const springY = useSpring(mouseY, { stiffness: isMobile ? 0 : 400, damping: isMobile ? 0 : 40 })
 
-  // Transform values for magnetic effect
-  const magneticX = useTransform(springX, [-300, 300], [-15, 15])
-  const magneticY = useTransform(springY, [-300, 300], [-15, 15])
+  // Transform values for magnetic effect - disabled on mobile
+  const magneticX = useTransform(springX, [-300, 300], isMobile ? [0, 0] : [-15, 15])
+  const magneticY = useTransform(springY, [-300, 300], isMobile ? [0, 0] : [-15, 15])
 
   // Check if device is mobile
   useEffect(() => {
