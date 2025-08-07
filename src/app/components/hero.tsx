@@ -289,7 +289,7 @@ const Hero = () => {
               top: `${Math.random() * 100}%`,
             }}
             animate={{
-              y: [0, -window.innerHeight, 0],
+              y: [0, -(typeof window !== 'undefined' ? window.innerHeight : 1000), 0],
               opacity: [0, 1, 0],
               scale: [0, 1, 0],
             }}

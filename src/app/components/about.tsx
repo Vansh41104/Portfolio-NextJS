@@ -1,12 +1,12 @@
 "use client"
 
-import type React from "react"
+import React from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useScrollTrigger } from "@/app/hooks/use-scroll-trigger"
 import { SparklesIcon, CodeIcon, BrainCircuitIcon } from "lucide-react"
 
-const About = () => {
+const About = React.memo(() => {
   const { ref, isVisible } = useScrollTrigger({
     threshold: 0.2,
     rootMargin: "-100px 0px",
@@ -198,7 +198,7 @@ const About = () => {
       </div>
     </section>
   )
-}
+})
 
 export default About
 

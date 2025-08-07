@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import React from "react"
 import { motion } from "framer-motion"
 import { BrainCircuitIcon, CloudIcon, CodeIcon, DatabaseIcon, GitBranchIcon, TestTubeIcon } from "lucide-react"
 import { useScrollTrigger } from "@/app/hooks/use-scroll-trigger"
@@ -17,7 +17,7 @@ const skillCategories: SkillCategory[] = [
   {
     title: "Machine Learning",
     icon: <BrainCircuitIcon className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7" />,
-    color: "from-violet-500 via-purple-500 to-indigo-500",
+    color: "from-sky-500 to-blue-500",
     skills: [
       "Scikit-learn", "XGBoost", "CatBoost", 
       "LightGBM", "Random Forest", "Support Vector Machines"
@@ -26,7 +26,7 @@ const skillCategories: SkillCategory[] = [
   {
     title: "Deep Learning & AI",
     icon: <BrainCircuitIcon className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7" />,
-    color: "from-fuchsia-500 via-purple-600 to-violet-600",
+    color: "from-sky-500 to-blue-500",
     skills: [
       "Neural Networks", "Deep Neural Networks", "Recurrent Neural Networks", 
       "Convolutional Neural Networks", "Transformers", "GANs"
@@ -35,7 +35,7 @@ const skillCategories: SkillCategory[] = [
   {
     title: "AI Applications",
     icon: <BrainCircuitIcon className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7" />,
-    color: "from-indigo-500 via-blue-500 to-cyan-500",
+    color: "from-sky-500 to-blue-500",
     skills: [
       "Natural Language Processing", "Computer Vision", "Speech Recognition",
       "Reinforcement Learning", "MLOps", "Model Deployment", "RAG"
@@ -44,31 +44,31 @@ const skillCategories: SkillCategory[] = [
   {
     title: "Backend Development",
     icon: <CodeIcon className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7" />,
-    color: "from-emerald-500 via-teal-500 to-cyan-500",
+    color: "from-sky-500 to-blue-500",
     skills: ["Django", "Flask", "FastAPI","GraphQL", "WebRTC Integration", "REST APIs"],
   },
   {
     title: "Database Management",
     icon: <DatabaseIcon className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7" />,
-    color: "from-green-500 via-emerald-500 to-teal-600",
+    color: "from-sky-500 to-blue-500",
     skills: ["MongoDB", "PostgreSQL", "MySQL", "SQLServer", "pgAdmin", "Lucidchart", "ER/Studio"],
   },
   {
     title: "Cloud & Infrastructure",
     icon: <CloudIcon className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7" />,
-    color: "from-sky-400 via-blue-500 to-indigo-600",
+    color: "from-sky-500 to-blue-500",
     skills: ["AWS", "GCP", "Azure", "Terraform", "Cloud Security", "Serverless", "Linux"],
   },
   {
     title: "DevOps & Automation",
     icon: <GitBranchIcon className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7" />,
-    color: "from-amber-500 via-orange-500 to-red-500",
+    color: "from-sky-500 to-blue-500",
     skills: ["Docker", "Kubernetes", "Jenkins", "Git", "CI/CD"],
   },
   {
     title: "Testing",
     icon: <TestTubeIcon className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7" />,
-    color: "from-rose-500 via-pink-500 to-fuchsia-500",
+    color: "from-sky-500 to-blue-500",
     skills: ["Selenium", "Pytest", "API Testing"],
   },
 ]
@@ -131,7 +131,7 @@ const SkillCard: React.FC<SkillCardProps> = ({ category, index, isVisible }) => 
   )
 }
 
-const Skills = () => {
+const Skills = React.memo(() => {
   const { ref, isVisible } = useScrollTrigger({ threshold: 0.1, once: true });
   
   return (
@@ -219,6 +219,6 @@ const Skills = () => {
       </div>
     </section>
   )
-}
+});
 
 export default Skills

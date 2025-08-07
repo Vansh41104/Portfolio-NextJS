@@ -1,11 +1,11 @@
 "use client"
 
-import type React from "react"
+import React from "react"
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { Button } from "@/app/components/ui/button"
-import { ExternalLinkIcon, GithubIcon, BrainIcon, NewspaperIcon, ActivityIcon, MessageSquareIcon, AppWindowIcon, FingerprintIcon, ShoppingBag, School} from "lucide-react"
+import { ExternalLinkIcon, GithubIcon, BrainIcon, NewspaperIcon, ActivityIcon, MessageSquareIcon, AppWindowIcon, FingerprintIcon, ShoppingBag, School, BrainCircuit} from "lucide-react"
 import { useScrollTrigger } from "@/app/hooks/use-scroll-trigger"
 
 // Define the project type
@@ -27,18 +27,18 @@ const projects: Project[] = [
     image: "/7.png",
     tags: ["Retrieval Augmented Generation", "Conversational AI", "LangChain", "Groq", "Web Scraping"],
     github: "https://github.com/Vansh41104/SaleSpeak",
-    demo: "",
+    demo: "https://www.youtube.com/watch?v=VSc-MrRbV2U",
     icon: <ShoppingBag className="h-6 w-6 sm:h-8 sm:w-8" />,
-    gradient: "from-red-500 to-orange-500",
+    gradient: "from-sky-500 to-blue-500",
   },
   {title:"AI-Tutor ",
     description: "AI-Tutor is an educational platform that leverages web scraping and AI to provide curated learning resources. It uses LangChain to scrape educational content from various sources, processes it with Gemini AI, and delivers personalized learning experiences through a user-friendly interactive 3-d model built with Three.js.",
     image: "/8.png",
     tags: ["Gemini", "Eduactional AI", "Python", "3-D Learning", "ThreeJS", "Web Scraping"],
     github: "https://github.com/Vansh41104/",
-    demo: "",
+    demo: "https://github.com/Vansh41104/",
     icon: <School className="h-6 w-6 sm:h-8 sm:w-8" />,
-    gradient: "from-indigo-500 to-purple-500",
+    gradient: "from-sky-500 to-blue-500",
   },
   {
     title: "LangGraph CyberSecurity Agent",
@@ -49,7 +49,7 @@ const projects: Project[] = [
     github: "https://github.com/Vansh41104/LangGraph-CyberSecurity-Agent",
     demo: "https://hub.docker.com/repository/docker/vansh41104/langgraph-cybersecurity-agent/general",
     icon: <MessageSquareIcon className="h-6 w-6 sm:h-8 sm:w-8" />,
-    gradient: "from-slate-500 to-gray-500",
+    gradient: "from-sky-500 to-blue-500",
   },
   {
     title: "MCHN Monitoring App",
@@ -58,9 +58,42 @@ const projects: Project[] = [
     image: "/5.png",
     tags: ["React Native", "ExpressJS", "Android", "Gradle", "Linux"],
     github: "https://github.com/Vansh41104/",
-    demo: "",
+    demo: "https://github.com/Vansh41104/",
     icon: <FingerprintIcon className="h-6 w-6 sm:h-8 sm:w-8" />,
-    gradient: "from-emerald-500 to-teal-500",
+    gradient: "from-sky-500 to-blue-500",
+  },
+  {
+    title: "VOCE",
+    description:
+      "A sophisticated conversational agent that transforms travelers into local adventurers through natural voice interactions and intelligent travel recommendations, accessible via simple phone calls without requiring apps or internet connection.",
+    image: "/9.png",
+    tags: ["Retrieval Augmented Generation", "Conversational AI", "LangChain", "Groq", "Web Scraping"],
+    github: "https://github.com/HACKTHEMM/VOCE_Team_HackThem_Submission",
+    demo: "https://www.youtube.com/watch?v=cCTfVueSOMY",
+    icon: <ShoppingBag className="h-6 w-6 sm:h-8 sm:w-8" />,
+    gradient: "from-sky-500 to-blue-500",
+  },
+  {
+    title: "CivicTrack",
+    description:
+      "Location-based platform to report and monitor civic issues like potholes, garbage, and water leaks with status tracking, moderation, and analytics.",
+    image: "/11.png",
+    tags: ["nextJS", "Python", "FastAPI", "RestAPI", "PostgreSQL", "LeafletMaps"],
+    github: "https://github.com/HACKTHEMM/OdooXCGC_TEAM_HACKTHEM",
+    demo: "https://www.youtube.com/watch?v=W_R5oUesMf0",
+    icon: <AppWindowIcon className="h-6 w-6 sm:h-8 sm:w-8" />,
+    gradient: "from-sky-500 to-blue-500",
+  },
+  {
+    title: "Stackit",
+    description:
+      "A modern, full-stack question and answer platform built with Next.js, Node.js, Express, and PostgreSQL. StackIt provides a feature-rich environment for users to ask questions, share knowledge, and build a collaborative community.",
+    image: "/10.png",
+    tags: ["NextJS", "NodeJS", "Express", "PostgreSQL", "TailwindCSS", "Clerk"],
+    github: "https://github.com/HACKTHEMM/StackIt",
+    demo: "https://github.com/HACKTHEMM/StackIt",
+    icon: <AppWindowIcon className="h-6 w-6 sm:h-8 sm:w-8" />,
+    gradient: "from-sky-500 to-blue-500",
   },
   {
     title: "News Webpage Semantic Analysis Tool",
@@ -71,18 +104,18 @@ const projects: Project[] = [
     github: "https://github.com/Vansh41104/News_Semantic_Summarizer",
     demo: "https://news-semantic-summarizer.onrender.com",
     icon: <NewspaperIcon className="h-6 w-6 sm:h-8 sm:w-8" />,
-    gradient: "from-blue-500 to-cyan-500",
+    gradient: "from-sky-500 to-blue-500",
   },
   {
     title: "AI Based Grass and Milk Production Predictor",
     description:
       "Improved a ML-based computer vision system to scan farm photos to evaluate the quality of the grass and forecast yield. The solution uses image processing algorithms to scan important features such as colour, texture, and morphology to produce quality indexes and weight prediction with high accuracy.",
-    image: "/2.tiff",
+    image: "/2.png",
     tags: ["Computer Vision", "Machine Learning", "Image Processing", "Python", "PyTorch"],
     github: "https://github.com/Vansh41104/FarmML_Project",
-    demo: "",
+    demo: "https://github.com/Vansh41104/FarmML_Project",
     icon: <ActivityIcon className="h-6 w-6 sm:h-8 sm:w-8" />,
-    gradient: "from-green-500 to-lime-500",
+    gradient: "from-sky-500 to-blue-500",
   },
   {
     title: "AI Based Disease Detector",
@@ -91,9 +124,9 @@ const projects: Project[] = [
     image: "/3.jpeg",
     tags: ["Deep Learning", "CNN", "Medical Imaging", "TensorFlow", "Healthcare AI"],
     github: "https://github.com/Vansh41104/AI-Based-Disease-Detector",
-    demo: "",
+    demo: "https://github.com/Vansh41104/AI-Based-Disease-Detector",
     icon: <BrainIcon className="h-6 w-6 sm:h-8 sm:w-8" />,
-    gradient: "from-pink-500 to-rose-500",
+    gradient: "from-sky-500 to-blue-500",
   },
   {
     title: "Customer Feedback Chatbot",
@@ -102,9 +135,20 @@ const projects: Project[] = [
     image: "/4.png",
     tags: ["NLP", "Chatbot", "Sentiment Analysis", "Python", "Embeddngs", "Re-Rankers"],
     github: "https://github.com/Vansh41104/Customer_Feedback_Chatbot",
-    demo: "",
+    demo: "https://github.com/Vansh41104/Customer_Feedback_Chatbot",
     icon: <AppWindowIcon className="h-6 w-6 sm:h-8 sm:w-8" />,
-    gradient: "from-violet-500 to-fuchsia-500",
+    gradient: "from-sky-500 to-blue-500",
+  },
+  {
+    title: "Dockerized-Notes-App",
+    description:
+      "A note-taking application that is containerized using Docker, allowing for easy deployment and scalability. The app features a user-friendly interface, rich text editing, and supports Markdown for formatting notes.",
+    image: "/4.png",
+    tags: ["Docker", "React", "Django", "Sqlite", "TailwindCSS", "Gunicorn"],
+    github: "https://github.com/Vansh41104/Dockerized-Notes-App",
+    demo: "https://github.com/Vansh41104/Dockerized-Notes-App",
+    icon: <BrainCircuit className="h-6 w-6 sm:h-8 sm:w-8" />,
+    gradient: "from-sky-500 to-blue-500",
   },
 ]
 
@@ -180,7 +224,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
             animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: index * 0.2 + 0.6 }}
           >
-            {project.tags.slice(0, 3).map((tag, tagIndex) => (
+            {project.tags.map((tag, tagIndex) => (
               <span
                 key={tagIndex}
                 className="px-2 sm:px-3 py-1 text-xs bg-foreground/5 hover:bg-foreground/10 rounded-full text-foreground/80 transition-colors"
@@ -188,11 +232,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
                 {tag}
               </span>
             ))}
-            {project.tags.length > 3 && (
-              <span className="px-2 sm:px-3 py-1 text-xs bg-primary/10 rounded-full text-primary/80">
-                +{project.tags.length - 3} more
-              </span>
-            )}
           </motion.div>
 
           {/* Action buttons */}
@@ -233,7 +272,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
   )
 }
 
-const Projects = () => {
+const Projects = React.memo(() => {
   const { ref, isVisible } = useScrollTrigger({ threshold: 0.1, once: true })
 
   return (
@@ -328,6 +367,6 @@ const Projects = () => {
       </div>
     </section>
   )
-}
+})
 
 export default Projects

@@ -3,29 +3,20 @@
 import { useEffect, useState } from "react";
 import Navbar from "@/app/components/navbar";
 import Hero from "@/app/components/hero";
-import About from "@/app/components/about";
-import Skills from "@/app/components/skills";
-import Experience from "@/app/components/experience";
-import Projects from "@/app/components/projects";
-import Achievements from "@/app/components/achievements";
-import Contact from "@/app/components/contact";
-import Footer from "@/app/components/footer";
+import dynamic from "next/dynamic";
 import ScrollProgress from "@/app/components/scroll-progress";
-import LoadingScreen from "@/app/components/loading-screen";
 import { AnimatePresence, motion } from "framer-motion";
 
-export default function Home() {
-  const [loading, setLoading] = useState(true);
-  const [activeSection, setActiveSection] = useState<string>("hero");
+const About = dynamic(() => import("@/app/components/about"), { ssr: false });
+const Skills = dynamic(() => import("@/app/components/skills"), { ssr: false });
+const Experience = dynamic(() => import("@/app/components/experience"), { ssr: false });
+const Projects = dynamic(() => import("@/app/components/projects"), { ssr: false });
+const Achievements = dynamic(() => import("@/app/components/achievements"), { ssr: false });
+const Contact = dynamic(() => import("@/app/components/contact"), { ssr: false });
+const Footer = dynamic(() => import("@/app/components/footer"), { ssr: false });
 
-  useEffect(() => {
-    // Simulate loading time with better progression
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-    
-    return () => clearTimeout(timer);
-  }, []);
+export default function Home() {
+  const [activeSection, setActiveSection] = useState<string>("hero");
 
   useEffect(() => {
     // Enhanced section detection
@@ -48,60 +39,39 @@ export default function Home() {
       }
     };
 
-    if (!loading) {
-      window.addEventListener("scroll", handleScroll, { passive: true });
-      handleScroll(); // Initial check
-    }
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Initial check
     
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading]);
-
-  const handleLoadingComplete = () => {
-    setLoading(false);
-  };
+  }, []);
 
   return (
     <main className="relative">
-      <AnimatePresence mode="wait">
-        {loading ? (
-          <LoadingScreen key="loading" onComplete={handleLoadingComplete} />
-        ) : (
-          <motion.div
-            key="content"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="min-h-screen relative"
-            style={{
-              background: `
-                radial-gradient(circle at 20% 80%, rgba(135, 206, 235, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(64, 224, 208, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(135, 206, 235, 0.1) 0%, transparent 50%),
-                linear-gradient(135deg, #050505 0%, #0a0a0a 50%, #050505 100%)
-              `
-            }}
-          >
-            <Navbar activeSection={activeSection} onSectionChange={setActiveSection} />
-            <ScrollProgress />
-            
-            {/* Smooth page transitions */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, staggerChildren: 0.05 }}
-            >
-              <Hero />
-              <About />
-              <Skills />
-              <Experience />
-              <Projects />
-              <Achievements />
-              <Contact />
-              <Footer />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div
+        className="min-h-screen relative"
+        style={{
+          background: `
+            radial-gradient(circle at 20% 80%, rgba(135, 206, 235, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(64, 224, 208, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, rgba(135, 206, 235, 0.1) 0%, transparent 50%),
+            linear-gradient(135deg, #050505 0%, #0a0a0a 50%, #050505 100%)
+          `
+        }}
+      >
+        <Navbar activeSection={activeSection} onSectionChange={setActiveSection} />
+        <ScrollProgress />
+        {/* Page content rendered statically, no transition */}
+        <div>
+          <Hero />
+          <About />
+          <Skills />
+          <Experience />
+          <Projects />
+          <Achievements />
+          <Contact />
+          <Footer />
+        </div>
+      </div>
       
       {/* Enhanced background effects */}
       <motion.div 

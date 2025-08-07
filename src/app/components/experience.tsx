@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import React from "react"
 import { motion } from "framer-motion"
 import { BriefcaseIcon, CalendarIcon, CheckCircleIcon, TrendingUpIcon, UsersIcon, CodeIcon } from "lucide-react"
 import { useScrollTrigger } from "@/app/hooks/use-scroll-trigger"
@@ -20,7 +20,7 @@ const experiences: Experience[] = [
     title: "AI/ML Intern",
     company: "ShadowFox Technologies",
     period: "Aug 2024 - Sep 2024",
-    gradient: "from-indigo-600 via-purple-600 to-blue-600",
+    gradient: "from-sky-500 to-blue-500",
     icon: <BriefcaseIcon className="w-6 h-6" />,
     achievements: [
       "Machine learning algorithms were used to improve application performance, resulting in 25% reduction processing time and 10% improvement in accuracy.",
@@ -31,7 +31,7 @@ const experiences: Experience[] = [
     title: "Full Stack Intern",
     company: "CodeAlpha",
     period: "Jul 2024 - Aug 2024",
-    gradient: "from-violet-600 via-fuchsia-600 to-pink-600",
+    gradient: "from-sky-500 to-blue-500",
     icon: <CodeIcon className="w-6 h-6" />,
     achievements: [
       "I designed user-friendly mobile applications making it simple to submit forms by combining data and geo-tag functionality, offering 40% faster submissions and 15% less errors. I also utilized such tools as Nginx for smooth server maintenance and Gradle for significantly simplifying build process.",
@@ -42,7 +42,7 @@ const experiences: Experience[] = [
     title: "Cloud Computing Intern",
     company: "Acmegrade",
     period: "Nov 2023 - Feb 2024",
-    gradient: "from-emerald-600 via-teal-600 to-cyan-600",
+    gradient: "from-sky-500 to-blue-500",
     icon: <TrendingUpIcon className="w-6 h-6" />,
     achievements: [
       "Conducted cloud computing trend analysis for AWS, Azure, and GCP to identify the most appropriate market opportunities.",
@@ -147,7 +147,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience, index, isVi
   )
 }
 
-const Experience = () => {
+const Experience = React.memo(() => {
   const { ref, isVisible } = useScrollTrigger({ threshold: 0.1, once: true });
 
   return (
@@ -242,6 +242,6 @@ const Experience = () => {
       </div>
     </section>
   )
-}
+});
 
 export default Experience

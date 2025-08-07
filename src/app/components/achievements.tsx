@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import React from "react"
 
 import { motion } from "framer-motion"
 import { TrophyIcon, CheckCircleIcon } from "lucide-react"
@@ -25,6 +25,20 @@ const achievements: Achievement[] = [
     description: [
       "Developed an interactive monitoring platform with geo-tagging for un-vaccinated children.",
       "Created a comprehensive monitoring system to track day-to-day vaccination drives.",
+    ],
+  },
+  {
+    title: "Finalist at Hack-A-Tone Hackathon",
+    description: [
+      "Achieved 1.5-second response latency despite real-time data retrieval and intent classification",
+      "Implemented Web Scrapping with multi-format document embedding for optimized query responses",
+    ],
+  },
+  {
+    title: "Qualified to the National Round of WCHL(World Computer Hacker League)",
+    description: [
+      "Achieved 2-second response latency despite real-time data retrieval and intent classification",
+      "Implemented RAG architecture with multi-format document embedding for optimized query responses",
     ],
   },
   {
@@ -103,7 +117,7 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, index, i
   )
 }
 
-const Achievements = () => {
+const Achievements = React.memo(() => {
   const { ref, isVisible } = useScrollTrigger({ threshold: 0.2, once: true });
 
   return (
@@ -188,6 +202,6 @@ const Achievements = () => {
       </div>
     </section>
   )
-}
+});
 
 export default Achievements

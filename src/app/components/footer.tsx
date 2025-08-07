@@ -4,8 +4,9 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 import Link from "next/link"
 import { ArrowUpIcon } from "lucide-react"
 import { useState, useEffect } from "react"
+import React from "react"
 
-const Footer = () => {
+const Footer = React.memo(() => {
   const [isMobile, setIsMobile] = useState(false)
 
   // Mouse tracking for magnetic effects
@@ -328,6 +329,6 @@ const Footer = () => {
       </div>
     </footer>
   )
-}
+})
 
 export default Footer

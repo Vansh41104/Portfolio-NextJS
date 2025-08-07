@@ -1,10 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { motion, useScroll, useSpring } from "framer-motion"
 
 const ScrollProgress = () => {
   const [isVisible, setIsVisible] = useState(false)
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null)
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -14,8 +15,10 @@ const ScrollProgress = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show progress bar after scrolling down a bit
-      setIsVisible(window.scrollY > 100)
+      if (debounceTimeout.current) clearTimeout(debounceTimeout.current)
+      debounceTimeout.current = setTimeout(() => {
+        setIsVisible(window.scrollY > 100)
+      }, 50)
     }
 
     window.addEventListener("scroll", handleScroll)

@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import React from "react"
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/app/components/ui/button"
@@ -9,7 +9,7 @@ import { Textarea } from "@/app/components/ui/textarea"
 import { MailIcon, PhoneIcon, MapPinIcon, LinkedinIcon, GithubIcon, SendIcon, CheckCircleIcon, SparklesIcon } from "lucide-react"
 import { useScrollTrigger } from "@/app/hooks/use-scroll-trigger"
 
-const Contact = () => {
+const Contact = React.memo(() => {
   const { ref, isVisible } = useScrollTrigger({ threshold: 0.2, once: true })
 
   const [formState, setFormState] = useState({
@@ -114,7 +114,7 @@ const Contact = () => {
       className="py-16 sm:py-20 lg:py-24 relative overflow-hidden"
       ref={ref as React.RefObject<HTMLElement>}
     >
-      {/* Enhanced background elements matching other sections */}
+      {/* Simplified background elements */}
       <div className="absolute inset-0 -z-10">
         {/* Animated grid pattern */}
         <div className="absolute inset-0 opacity-[0.10]">
@@ -132,59 +132,7 @@ const Contact = () => {
           />
         </div>
 
-        {/* Diagonal pattern overlay */}
-        <div className="absolute inset-0 opacity-[0.06]">
-          <motion.div
-            className="absolute inset-0"
-            animate={{ backgroundPosition: ["0px 0px", "160px 160px"] }}
-            transition={{ duration: 35, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-            style={{
-              backgroundImage: `
-                repeating-linear-gradient(
-                  45deg,
-                  transparent,
-                  transparent 30px,
-                  rgba(64, 224, 208, 0.4) 30px,
-                  rgba(64, 224, 208, 0.4) 32px
-                )
-              `,
-            }}
-          />
-        </div>
-
-        {/* Large animated orbs */}
-        <motion.div
-          className="absolute -top-20 -right-20 w-72 h-72 rounded-full opacity-[0.15]"
-          style={{
-            background: "radial-gradient(circle, rgba(135, 206, 235, 0.3) 0%, transparent 70%)",
-          }}
-          animate={{
-            scale: [1, 1.15, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: "easeInOut",
-          }}
-        />
-
-        <motion.div
-          className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full opacity-[0.15]"
-          style={{
-            background: "radial-gradient(circle, rgba(64, 224, 208, 0.3) 0%, transparent 70%)",
-          }}
-          animate={{
-            scale: [1.15, 1, 1.15],
-            rotate: [360, 180, 0],
-          }}
-          transition={{
-            duration: 22,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: "easeInOut",
-          }}
-        />
-
+        {/* Large animated orb */}
         <motion.div
           className="absolute top-1/3 left-1/2 transform -translate-x-1/2 w-96 h-96 rounded-full opacity-[0.08]"
           style={{
@@ -201,102 +149,8 @@ const Contact = () => {
           }}
         />
 
-        {/* Floating geometric shapes */}
+        {/* Simplified particle system */}
         {Array.from({ length: 15 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute opacity-15"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${15 + Math.random() * 30}px`,
-              height: `${15 + Math.random() * 30}px`,
-              background:
-                i % 3 === 0
-                  ? "linear-gradient(45deg, rgba(135, 206, 235, 0.5), transparent)"
-                  : i % 3 === 1
-                  ? "linear-gradient(45deg, rgba(64, 224, 208, 0.5), transparent)"
-                  : "linear-gradient(45deg, rgba(99, 102, 241, 0.5), transparent)",
-              borderRadius: i % 3 === 0 ? "50%" : "25%",
-            }}
-            animate={{
-              y: [0, -60, 0],
-              x: [0, Math.random() * 40 - 20, 0],
-              rotate: [0, 360],
-              opacity: [0.1, 0.25, 0.1],
-            }}
-            transition={{
-              duration: 12 + Math.random() * 8,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
-              delay: Math.random() * 5,
-            }}
-          />
-        ))}
-
-        {/* Circuit-like lines */}
-        <svg className="absolute inset-0 w-full h-full opacity-8" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="contactLineGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="rgba(135, 206, 235, 0)" />
-              <stop offset="50%" stopColor="rgba(135, 206, 235, 0.6)" />
-              <stop offset="100%" stopColor="rgba(135, 206, 235, 0)" />
-            </linearGradient>
-            <linearGradient id="contactLineGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="rgba(64, 224, 208, 0)" />
-              <stop offset="50%" stopColor="rgba(64, 224, 208, 0.6)" />
-              <stop offset="100%" stopColor="rgba(64, 224, 208, 0)" />
-            </linearGradient>
-          </defs>
-
-          <motion.line
-            x1="0"
-            y1="25%"
-            x2="100%"
-            y2="25%"
-            stroke="url(#contactLineGradient1)"
-            strokeWidth="1.5"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: [0, 1, 0] }}
-            transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-          />
-          <motion.line
-            x1="0"
-            y1="75%"
-            x2="100%"
-            y2="75%"
-            stroke="url(#contactLineGradient1)"
-            strokeWidth="1.5"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: [0, 1, 0] }}
-            transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 3 }}
-          />
-          <motion.line
-            x1="25%"
-            y1="0"
-            x2="25%"
-            y2="100%"
-            stroke="url(#contactLineGradient2)"
-            strokeWidth="1.5"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: [0, 1, 0] }}
-            transition={{ duration: 7, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 1.5 }}
-          />
-          <motion.line
-            x1="75%"
-            y1="0"
-            x2="75%"
-            y2="100%"
-            stroke="url(#contactLineGradient2)"
-            strokeWidth="1.5"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: [0, 1, 0] }}
-            transition={{ duration: 7, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 4.5 }}
-          />
-        </svg>
-
-        {/* Particle system */}
-        {Array.from({ length: 30 }).map((_, i) => (
           <motion.div
             key={`contact-particle-${i}`}
             className="absolute w-1 h-1 rounded-full"
@@ -306,15 +160,15 @@ const Contact = () => {
               top: `${Math.random() * 100}%`,
             }}
             animate={{
-              y: [0, -window.innerHeight * 0.8, 0],
-              opacity: [0, 0.8, 0],
+              y: [0, -window.innerHeight * 0.5, 0],
+              opacity: [0, 0.6, 0],
               scale: [0, 1, 0],
             }}
             transition={{
-              duration: 10 + Math.random() * 6,
+              duration: 8 + Math.random() * 4,
               repeat: Number.POSITIVE_INFINITY,
               ease: "easeInOut",
-              delay: Math.random() * 8,
+              delay: Math.random() * 5,
             }}
           />
         ))}
@@ -324,7 +178,7 @@ const Contact = () => {
           <div
             className="w-full h-full"
             style={{
-              background: "conic-gradient(from 0deg, rgba(135, 206, 235, 0.3), transparent, rgba(64, 224, 208, 0.3))",
+              background: "conic-gradient(from 0deg, rgba(135, 206, 235, 0.3), transparent)",
               borderRadius: "0 0 100% 0",
             }}
           />
@@ -333,7 +187,7 @@ const Contact = () => {
           <div
             className="w-full h-full"
             style={{
-              background: "conic-gradient(from 180deg, rgba(64, 224, 208, 0.3), transparent, rgba(135, 206, 235, 0.3))",
+              background: "conic-gradient(from 180deg, rgba(64, 224, 208, 0.3), transparent)",
               borderRadius: "100% 0 0 0",
             }}
           />
@@ -392,23 +246,20 @@ const Contact = () => {
                   key={index}
                   variants={itemVariants}
                   href={info.href}
-                  className="group relative flex items-center p-4 sm:p-5 rounded-xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] cursor-pointer overflow-hidden"
-                  whileHover={{ x: 10 }}
+                  className="group relative flex items-center p-4 sm:p-5 rounded-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden"
+                  whileHover={{ x: 5 }}
                   style={{
                     background: "rgba(255, 255, 255, 0.03)",
                     backdropFilter: "blur(20px)",
                   }}
                 >
                   {/* Gradient border effect */}
-                  <div className={`absolute -inset-0.5 bg-gradient-to-r ${info.gradient} rounded-xl blur opacity-0 group-hover:opacity-30 transition duration-500 -z-10`}></div>
-                  
-                  {/* Hover glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+                  <div className={`absolute -inset-0.5 bg-gradient-to-r ${info.gradient} rounded-xl blur opacity-0 group-hover:opacity-20 transition duration-300 -z-10`}></div>
                   
                   <motion.div 
                     className={`p-3 sm:p-4 rounded-xl bg-gradient-to-r ${info.gradient} text-white mr-4 sm:mr-5 flex-shrink-0 relative z-10`}
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.3 }}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
                   >
                     {info.icon}
                   </motion.div>
@@ -416,9 +267,6 @@ const Contact = () => {
                     <p className="text-xs sm:text-sm text-muted-foreground mb-1">{info.label}</p>
                     <p className="text-sm sm:text-base text-foreground font-medium break-words group-hover:text-primary transition-colors duration-300">{info.value}</p>
                   </div>
-
-                  {/* Subtle shimmer effect on hover */}
-                  <div className="absolute inset-0 -top-2 -bottom-2 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 group-hover:animate-pulse"></div>
                 </motion.a>
               ))}
             </div>
@@ -433,30 +281,21 @@ const Contact = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative p-4 sm:p-5 rounded-xl text-white transition-all duration-500 overflow-hidden"
+                    className="group relative p-4 sm:p-5 rounded-xl text-white transition-all duration-300 overflow-hidden"
                     style={{
                       background: `linear-gradient(135deg, ${social.gradient.includes('gray') ? 'rgba(75, 85, 99, 0.8)' : 'rgba(37, 99, 235, 0.8)'}, ${social.gradient.includes('gray') ? 'rgba(55, 65, 81, 0.9)' : 'rgba(29, 78, 216, 0.9)'})`,
                       backdropFilter: "blur(10px)",
                     }}
-                    whileHover={{ y: -8, scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ y: -4, scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    {/* Gradient border effect */}
-                    <div className={`absolute -inset-0.5 bg-gradient-to-r ${social.gradient} rounded-xl blur opacity-0 group-hover:opacity-50 transition duration-500 -z-10`}></div>
-                    
-                    {/* Hover shimmer effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12"></div>
-                    
                     <motion.div 
                       className="relative z-10"
-                      whileHover={{ rotate: 12 }}
-                      transition={{ duration: 0.3 }}
+                      whileHover={{ rotate: 5 }}
+                      transition={{ duration: 0.2 }}
                     >
                       {social.icon}
                     </motion.div>
-
-                    {/* Pulse effect */}
-                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/20 to-secondary/20 opacity-0 group-hover:opacity-100 animate-pulse transition-opacity duration-300"></div>
                   </motion.a>
                 ))}
               </div>
@@ -472,23 +311,6 @@ const Contact = () => {
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
             className="relative"
           >
-            {/* Enhanced gradient border effect with animation */}
-            <motion.div 
-              className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-primary rounded-2xl blur opacity-20"
-              animate={{
-                background: [
-                  "linear-gradient(0deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--primary)))",
-                  "linear-gradient(120deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--primary)))",
-                  "linear-gradient(240deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--primary)))",
-                  "linear-gradient(360deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--primary)))"
-                ]
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-            />
             
             <div 
               className="relative rounded-2xl p-4 sm:p-6 lg:p-8 overflow-hidden"
@@ -498,18 +320,7 @@ const Contact = () => {
               }}
             >
               {/* Background pattern overlay */}
-              <div className="absolute inset-0 opacity-5">
-                <div 
-                  className="absolute inset-0"
-                  style={{
-                    backgroundImage: `
-                      linear-gradient(rgba(135, 206, 235, 0.3) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(135, 206, 235, 0.3) 1px, transparent 1px)
-                    `,
-                    backgroundSize: "20px 20px",
-                  }}
-                />
-              </div>
+              
 
               <motion.h3 
                 className="text-xl sm:text-2xl font-bold mb-6 lg:mb-8 bg-gradient-to-r from-primary/90 to-secondary/90 bg-clip-text text-transparent relative z-10"
@@ -723,7 +534,7 @@ const Contact = () => {
       </div>
     </section>
   )
-}
+})
 
 export default Contact
 
