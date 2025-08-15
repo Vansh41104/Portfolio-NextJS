@@ -18,6 +18,17 @@ interface Experience {
 const experiences: Experience[] = [
   {
     title: "AI/ML Intern",
+    company: "NJR I3 Labs Pvt. Ltd",
+    period: "Apr 2025 – July 2025",
+    gradient: "from-sky-500 to-blue-500",
+    icon: <BriefcaseIcon className="w-6 h-6" />,
+    achievements: [
+      "Developed interactive 3D learning interface using Three.js that increased user engagement by 35%. Improved knowledge retention rates by 20% through immersive visualization of complex educational concepts.",
+      "Implemented AI-driven content personalization algorithms with Gemini AI, achieving 85% recommendation accuracy. Reduced average learning completion time by 30% through intelligent learning path optimization.",
+    ],
+  },
+  {
+    title: "AI/ML Intern",
     company: "ShadowFox Technologies",
     period: "Aug 2024 - Sep 2024",
     gradient: "from-sky-500 to-blue-500",
