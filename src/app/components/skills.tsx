@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { BrainCircuitIcon, CloudIcon, CodeIcon, DatabaseIcon, GitBranchIcon, TestTubeIcon } from "lucide-react"
 import { useScrollTrigger } from "@/app/hooks/use-scroll-trigger"
@@ -13,6 +14,7 @@ interface SkillCategory {
   color: string;
 }
 
+// Move static data outside component for better performance
 const skillCategories: SkillCategory[] = [
   {
     title: "Machine Learning",
@@ -81,11 +83,24 @@ interface SkillCardProps {
 }
 
 const SkillCard: React.FC<SkillCardProps> = ({ category, index, isVisible }) => {
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useEffect(() => {
+    if (isVisible) {
+      const timer = setTimeout(() => {
+        setShouldRender(true);
+      }, index * 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible, index]);
+
+  if (!shouldRender && isVisible === false) return null;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 40, scale: 0.95 }}
-      animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: 0.95 }}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      animate={shouldRender ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: 0.95 }}
+      transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
       className="group relative w-full"
     >
       {/* iOS 26 style card - clean and minimal with boundary */}
@@ -95,8 +110,8 @@ const SkillCard: React.FC<SkillCardProps> = ({ category, index, isVisible }) => 
           <motion.div
             className={`p-2.5 sm:p-3 rounded-2xl bg-gradient-to-br ${category.color} text-white mr-3 sm:mr-4 flex-shrink-0 shadow-lg`}
             initial={{ scale: 0.9 }}
-            animate={isVisible ? { scale: 1 } : { scale: 0.9 }}
-            transition={{ duration: 0.5, delay: index * 0.1 + 0.2, ease: [0.22, 1, 0.36, 1] }}
+            animate={shouldRender ? { scale: 1 } : { scale: 0.9 }}
+            transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
           >
             {category.icon}
@@ -112,8 +127,8 @@ const SkillCard: React.FC<SkillCardProps> = ({ category, index, isVisible }) => 
             <motion.span
               key={idx}
               initial={{ opacity: 0, y: 10 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-              transition={{ duration: 0.4, delay: index * 0.1 + idx * 0.04 + 0.3, ease: [0.22, 1, 0.36, 1] }}
+              animate={shouldRender ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+              transition={{ duration: 0.4, delay: idx * 0.04 + 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs sm:text-sm font-medium text-gray-700 bg-white/90 backdrop-blur-md rounded-full cursor-default break-words shadow-sm border border-gray-200/50 transition-all duration-200 hover:bg-white hover:shadow-md hover:-translate-y-0.5"
             >
               {skill}

@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useState, useEffect } from "react"
 
 import { motion } from "framer-motion"
 import { TrophyIcon, CheckCircleIcon } from "lucide-react"
@@ -12,6 +12,7 @@ interface Achievement {
   description: string[];
 }
 
+// Move static data outside component for better performance
 const achievements: Achievement[] = [
   {
     title: "Finalist at Matrix Protocol AI Hackathon",
@@ -65,11 +66,24 @@ interface AchievementCardProps {
 }
 
 const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, index, isVisible }) => {
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useEffect(() => {
+    if (isVisible) {
+      const timer = setTimeout(() => {
+        setShouldRender(true);
+      }, index * 150);
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible, index]);
+
+  if (!shouldRender && isVisible === false) return null;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-      transition={{ duration: 0.8, delay: index * 0.2, ease: "easeOut" }}
+      animate={shouldRender ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
       className="group relative h-full"
     >
       <div className="relative bg-white rounded-3xl border border-gray-200/60 overflow-hidden h-full hover:border-gray-300/80 hover:shadow-lg transition-all duration-300 p-6 lg:p-8">
@@ -78,8 +92,8 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, index, i
           <motion.div
             className="p-2.5 sm:p-3 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-500 text-white mr-3 sm:mr-4 flex-shrink-0 shadow-lg"
             initial={{ scale: 0.9 }}
-            animate={isVisible ? { scale: 1 } : { scale: 0.9 }}
-            transition={{ duration: 0.5, delay: index * 0.2 + 0.2, ease: [0.22, 1, 0.36, 1] }}
+            animate={shouldRender ? { scale: 1 } : { scale: 0.9 }}
+            transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
           >
             <TrophyIcon className="h-5 w-5 lg:h-6 lg:w-6" />
@@ -95,8 +109,8 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, index, i
               key={idx}
               className="flex items-start"
               initial={{ opacity: 0, y: 10 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-              transition={{ duration: 0.4, delay: index * 0.2 + 0.3 + idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              animate={shouldRender ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+              transition={{ duration: 0.4, delay: 0.3 + idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
             >
               <motion.div
                 className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center mt-0.5 mr-3 shadow-sm"

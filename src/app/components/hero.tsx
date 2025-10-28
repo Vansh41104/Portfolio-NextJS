@@ -1,12 +1,12 @@
 ﻿"use client"
 
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 import { Button } from "@/app/components/ui/button"
 import { GithubIcon, LinkedinIcon, MailIcon, FileTextIcon, ArrowRightIcon, SparklesIcon } from "lucide-react"
 import Link from "next/link"
 
-const Hero = () => {
+const Hero = React.memo(() => {
   const [typedText, setTypedText] = useState("")
   const [isMobile, setIsMobile] = useState(false)
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
@@ -147,6 +147,6 @@ const Hero = () => {
       </div>
     </section>
   )
-}
+})
 
 export default Hero

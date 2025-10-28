@@ -123,6 +123,8 @@ const About = React.memo(() => {
                     fill
                     className="object-cover rounded-xl hover:scale-105 transition-transform duration-500" 
                     sizes="(max-width: 640px) 320px, (max-width: 768px) 384px, (max-width: 1024px) 448px, 512px"
+                    loading="lazy"
+                    quality={75}
                   />
                   
                   {/* Overlay effect */}

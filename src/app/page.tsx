@@ -1,19 +1,40 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Navbar from "@/app/components/navbar";
 import Hero from "@/app/components/hero";
 import dynamic from "next/dynamic";
 import ScrollProgress from "@/app/components/scroll-progress";
 import { AnimatePresence, motion } from "framer-motion";
 
-const About = dynamic(() => import("@/app/components/about"), { ssr: false });
-const Skills = dynamic(() => import("@/app/components/skills"), { ssr: false });
-const Experience = dynamic(() => import("@/app/components/experience"), { ssr: false });
-const Projects = dynamic(() => import("@/app/components/projects"), { ssr: false });
-const Achievements = dynamic(() => import("@/app/components/achievements"), { ssr: false });
-const Contact = dynamic(() => import("@/app/components/contact"), { ssr: false });
-const Footer = dynamic(() => import("@/app/components/footer"), { ssr: false });
+const About = dynamic(() => import("@/app/components/about"), { 
+  ssr: false,
+  loading: () => <div className="h-screen" />
+});
+const Skills = dynamic(() => import("@/app/components/skills"), { 
+  ssr: false,
+  loading: () => <div className="h-screen" />
+});
+const Experience = dynamic(() => import("@/app/components/experience"), { 
+  ssr: false,
+  loading: () => <div className="h-screen" />
+});
+const Projects = dynamic(() => import("@/app/components/projects"), { 
+  ssr: false,
+  loading: () => <div className="h-screen" />
+});
+const Achievements = dynamic(() => import("@/app/components/achievements"), { 
+  ssr: false,
+  loading: () => <div className="h-screen" />
+});
+const Contact = dynamic(() => import("@/app/components/contact"), { 
+  ssr: false,
+  loading: () => <div className="h-screen" />
+});
+const Footer = dynamic(() => import("@/app/components/footer"), { 
+  ssr: false,
+  loading: () => <div className="h-20" />
+});
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<string>("hero");

@@ -11,6 +11,16 @@ interface NavbarProps {
   onSectionChange: (section: string) => void
 }
 
+// Move static data outside component for better performance
+const navLinks = [
+  { name: "About", href: "about" },
+  { name: "Skills", href: "skills" },
+  { name: "Experience", href: "experience" },
+  { name: "Projects", href: "projects" },
+  { name: "Achievements", href: "achievements" },
+  { name: "Contact", href: "contact" },
+]
+
 const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
   const [mounted, setMounted] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -30,15 +40,6 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
   if (!mounted) return null
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
-
-  const navLinks = [
-    { name: "About", href: "about" },
-    { name: "Skills", href: "skills" },
-    { name: "Experience", href: "experience" },
-    { name: "Projects", href: "projects" },
-    { name: "Achievements", href: "achievements" },
-    { name: "Contact", href: "contact" },
-  ]
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()

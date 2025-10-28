@@ -1,5 +1,5 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 
@@ -14,12 +14,13 @@ export const metadata: Metadata = {
   title: "Vansh Bhatnagar | AI/ML Engineer &  Developer",
   description:
     "Portfolio of Vansh Bhatnagar, a full-stack developer and machine learning engineer specializing in AI systems and scalable backends.",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
+}
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
 }
 
 export default function RootLayout({

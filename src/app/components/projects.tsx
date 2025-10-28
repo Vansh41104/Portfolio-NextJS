@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { Button } from "@/app/components/ui/button"
@@ -20,6 +20,7 @@ interface Project {
   gradient: string;
 }
 
+// Move static data outside component for better performance
 const projects: Project[] = [
   {
     title:"SaleSpeak- A Conversational Agent ",
@@ -161,12 +162,24 @@ interface ProjectCardProps {
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) => {
   const [isHovered, setIsHovered] = useState(false)
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useEffect(() => {
+    if (isVisible) {
+      const timer = setTimeout(() => {
+        setShouldRender(true);
+      }, index * 150);
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible, index]);
+
+  if (!shouldRender && isVisible === false) return null;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 60, scale: 0.9 }}
-      animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 60, scale: 0.9 }}
-      transition={{ duration: 0.8, delay: index * 0.2, ease: "easeOut" }}
+      animate={shouldRender ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 60, scale: 0.9 }}
+      transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
       className="group relative h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -179,6 +192,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
             alt={project.title}
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
+            quality={75}
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent"></div>
           
@@ -186,8 +202,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
           <motion.div
             className={`absolute top-2 right-2 sm:top-4 sm:right-4 p-2 sm:p-3 rounded-2xl bg-gradient-to-r ${project.gradient} text-white shadow-2xl border border-white/20`}
             initial={{ scale: 0, rotate: -180 }}
-            animate={isVisible ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }}
-            transition={{ duration: 0.6, delay: index * 0.2 + 0.3, type: "spring" }}
+            animate={shouldRender ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }}
+            transition={{ duration: 0.6, delay: 0.3, type: "spring" }}
             whileHover={{ scale: 1.15, rotate: 10 }}
           >
             {project.icon}
@@ -199,8 +215,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
           <motion.h3 
             className="text-base sm:text-lg md:text-xl font-bold text-gradient-primary group-hover:text-primary transition-colors line-clamp-2"
             initial={{ opacity: 0, x: -20 }}
-            animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-            transition={{ duration: 0.6, delay: index * 0.2 + 0.4 }}
+            animate={shouldRender ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
           >
             {project.title}
           </motion.h3>
@@ -208,8 +224,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
           <motion.p 
             className="text-foreground/70 text-xs sm:text-sm leading-relaxed line-clamp-3 sm:line-clamp-4"
             initial={{ opacity: 0 }}
-            animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.2 + 0.5 }}
+            animate={shouldRender ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
           >
             {project.description}
           </motion.p>
@@ -218,8 +234,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
           <motion.div 
             className="flex flex-wrap gap-1 sm:gap-2"
             initial={{ opacity: 0, y: 20 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6, delay: index * 0.2 + 0.6 }}
+            animate={shouldRender ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
           >
             {project.tags.map((tag, tagIndex) => (
               <span
@@ -235,8 +251,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
           <motion.div 
             className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2"
             initial={{ opacity: 0, y: 20 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6, delay: index * 0.2 + 0.7 }}
+            animate={shouldRender ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
           >
             <Button
               asChild
@@ -271,6 +287,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
 
 const Projects = React.memo(() => {
   const { ref, isVisible } = useScrollTrigger({ threshold: 0.1, once: true })
+  const [currentPage, setCurrentPage] = useState(1)
+  const projectsPerPage = 4
+  const totalPages = Math.ceil(projects.length / projectsPerPage)
+  const displayedProjects = projects.slice((currentPage - 1) * projectsPerPage, currentPage * projectsPerPage)
 
   return (
     <section
@@ -303,9 +323,44 @@ const Projects = React.memo(() => {
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-          {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} index={index} isVisible={isVisible} />
+          {displayedProjects.map((project, index) => (
+            <ProjectCard key={project.title} project={project} index={index} isVisible={isVisible} />
           ))}
+        </div>
+
+        <div className="flex justify-center items-center mt-8 gap-2">
+          <Button
+            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            size="sm"
+            className="bg-primary/10 hover:bg-primary/20 text-primary disabled:opacity-50"
+          >
+            Previous
+          </Button>
+          
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+            <Button
+              key={pageNum}
+              onClick={() => setCurrentPage(pageNum)}
+              size="sm"
+              className={`${
+                currentPage === pageNum
+                  ? 'bg-gradient-to-r from-primary to-secondary text-white'
+                  : 'bg-primary/10 hover:bg-primary/20 text-primary'
+              } transition-all duration-300`}
+            >
+              {pageNum}
+            </Button>
+          ))}
+          
+          <Button
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            size="sm"
+            className="bg-primary/10 hover:bg-primary/20 text-primary disabled:opacity-50"
+          >
+            Next
+          </Button>
         </div>
       </div>
     </section>

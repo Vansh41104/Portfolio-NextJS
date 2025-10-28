@@ -1,13 +1,53 @@
 "use client"
 
 import React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/app/components/ui/button"
 import { Input } from "@/app/components/ui/input"
 import { Textarea } from "@/app/components/ui/textarea"
 import { MailIcon, PhoneIcon, MapPinIcon, LinkedinIcon, GithubIcon, SendIcon, CheckCircleIcon, SparklesIcon } from "lucide-react"
 import { useScrollTrigger } from "@/app/hooks/use-scroll-trigger"
+
+// Move static data outside component for better performance
+const contactInfo = [
+  {
+    icon: <MailIcon className="w-6 h-6" />,
+    label: "Email",
+    value: "vanshbhatnagar41104@gmail.com",
+    href: "mailto:vanshbhatnagar41104@gmail.com",
+    gradient: "from-blue-500 to-cyan-500",
+  },
+  {
+    icon: <PhoneIcon className="w-6 h-6" />,
+    label: "Phone",
+    value: "+91 98765 43210",
+    href: "tel:+919876543210",
+    gradient: "from-green-500 to-emerald-500",
+  },
+  {
+    icon: <MapPinIcon className="w-6 h-6" />,
+    label: "Location",
+    value: "India",
+    href: "#",
+    gradient: "from-red-500 to-pink-500",
+  },
+]
+
+const socialLinks = [
+  {
+    icon: <GithubIcon className="w-6 h-6" />,
+    label: "GitHub",
+    href: "https://github.com/Vansh41104",
+    gradient: "from-gray-600 to-gray-800",
+  },
+  {
+    icon: <LinkedinIcon className="w-6 h-6" />,
+    label: "LinkedIn", 
+    href: "https://www.linkedin.com/in/vansh-bhatnagar-66465225b/",
+    gradient: "from-blue-600 to-blue-800",
+  },
+]
 
 const Contact = React.memo(() => {
   const { ref, isVisible } = useScrollTrigger({ threshold: 0.2, once: true })
@@ -90,45 +130,6 @@ const Contact = React.memo(() => {
       transition: { duration: 0.7, ease: "easeOut" },
     },
   }
-
-  const contactInfo = [
-    {
-      icon: <MailIcon className="w-6 h-6" />,
-      label: "Email",
-      value: "vanshbhatnagar41104@gmail.com",
-      href: "mailto:vanshbhatnagar41104@gmail.com",
-      gradient: "from-blue-500 to-cyan-500",
-    },
-    {
-      icon: <PhoneIcon className="w-6 h-6" />,
-      label: "Phone",
-      value: "+91 98765 43210",
-      href: "tel:+919876543210",
-      gradient: "from-green-500 to-emerald-500",
-    },
-    {
-      icon: <MapPinIcon className="w-6 h-6" />,
-      label: "Location",
-      value: "India",
-      href: "#",
-      gradient: "from-red-500 to-pink-500",
-    },
-  ]
-
-  const socialLinks = [
-    {
-      icon: <GithubIcon className="w-6 h-6" />,
-      label: "GitHub",
-      href: "https://github.com/Vansh41104",
-      gradient: "from-gray-600 to-gray-800",
-    },
-    {
-      icon: <LinkedinIcon className="w-6 h-6" />,
-      label: "LinkedIn", 
-      href: "https://www.linkedin.com/in/vansh-bhatnagar-66465225b/",
-      gradient: "from-blue-600 to-blue-800",
-    },
-  ]
 
   return (
     <section

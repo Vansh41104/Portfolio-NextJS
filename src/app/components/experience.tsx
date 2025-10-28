@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { BriefcaseIcon, CalendarIcon, CheckCircleIcon, TrendingUpIcon, UsersIcon, CodeIcon } from "lucide-react"
 import { useScrollTrigger } from "@/app/hooks/use-scroll-trigger"
@@ -15,6 +15,7 @@ interface Experience {
   icon: React.ReactNode;
 }
 
+// Move static data outside component for better performance
 const experiences: Experience[] = [
   {
     title: "AI/ML Intern",
@@ -71,11 +72,24 @@ interface ExperienceCardProps {
 }
 
 const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience, index, isVisible }) => {
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useEffect(() => {
+    if (isVisible) {
+      const timer = setTimeout(() => {
+        setShouldRender(true);
+      }, index * 150);
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible, index]);
+
+  if (!shouldRender && isVisible === false) return null;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-      transition={{ duration: 0.6, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
+      animate={shouldRender ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
       className="relative"
     >
       {/* Timeline line - Hidden on mobile, visible on md+ */}
@@ -85,8 +99,8 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience, index, isVi
       <motion.div
         className={`absolute left-2 md:left-4 top-6 md:top-8 w-3 h-3 md:w-4 md:h-4 rounded-full bg-gradient-to-br ${experience.gradient} z-10 shadow-md`}
         initial={{ scale: 0 }}
-        animate={isVisible ? { scale: 1 } : { scale: 0 }}
-        transition={{ duration: 0.5, delay: index * 0.15 + 0.2, ease: [0.22, 1, 0.36, 1] }}
+        animate={shouldRender ? { scale: 1 } : { scale: 0 }}
+        transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
       />
 
       {/* Content card - iOS 26 style */}
