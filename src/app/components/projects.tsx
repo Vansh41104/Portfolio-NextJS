@@ -171,27 +171,24 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Gradient border effect */}
-      <div className={`absolute -inset-0.5 bg-gradient-to-r ${project.gradient} rounded-2xl blur opacity-0 group-hover:opacity-75 transition-all duration-500`}></div>
-      
-      <div className="relative glass rounded-2xl overflow-hidden h-full hover:scale-105 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500">
+      <div className="relative bg-white rounded-3xl border border-gray-200/60 transition-all duration-300 hover:border-gray-300/80 hover:shadow-lg h-full hover:scale-[1.02]">
         {/* Image section */}
-        <div className="relative h-32 sm:h-40 md:h-48 overflow-hidden">
+        <div className="relative h-32 sm:h-40 md:h-48 overflow-hidden rounded-t-[20px]">
           <Image
             src={project.image}
             alt={project.title}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent"></div>
           
           {/* Floating icon */}
           <motion.div
-            className={`absolute top-2 right-2 sm:top-4 sm:right-4 p-2 sm:p-3 rounded-xl bg-gradient-to-r ${project.gradient} text-white shadow-lg`}
+            className={`absolute top-2 right-2 sm:top-4 sm:right-4 p-2 sm:p-3 rounded-2xl bg-gradient-to-r ${project.gradient} text-white shadow-2xl border border-white/20`}
             initial={{ scale: 0, rotate: -180 }}
             animate={isVisible ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }}
-            transition={{ duration: 0.6, delay: index * 0.2 + 0.3 }}
-            whileHover={{ scale: 1.1, rotate: 10 }}
+            transition={{ duration: 0.6, delay: index * 0.2 + 0.3, type: "spring" }}
+            whileHover={{ scale: 1.15, rotate: 10 }}
           >
             {project.icon}
           </motion.div>
@@ -227,7 +224,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
             {project.tags.map((tag, tagIndex) => (
               <span
                 key={tagIndex}
-                className="px-2 sm:px-3 py-1 text-xs bg-foreground/5 hover:bg-foreground/10 rounded-full text-foreground/80 transition-colors"
+                className="px-2 sm:px-3 py-1 text-xs glass rounded-full text-foreground/90 transition-all duration-300 hover:scale-105 hover:bg-foreground/10 border border-white/10"
               >
                 {tag}
               </span>
@@ -278,65 +275,14 @@ const Projects = React.memo(() => {
   return (
     <section
       id="projects"
-      className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden"
+      className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden bg-[#FAF8F5]"
       ref={ref as React.RefObject<HTMLElement>}
     >
-      {/* Enhanced background elements matching other sections */}
+      {/* Clean minimal background */}
       <div className="absolute inset-0 -z-10">
-        {/* Animated grid pattern */}
-        <div className="absolute inset-0 opacity-[0.08]">
-          <motion.div
-            className="absolute inset-0"
-            animate={{ backgroundPosition: ["0px 0px", "120px 120px"] }}
-            transition={{ duration: 40, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(135, 206, 235, 0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(64, 224, 208, 0.3) 1px, transparent 1px)
-              `,
-              backgroundSize: "120px 120px",
-            }}
-          />
-        </div>
-        
-        {/* Project-themed floating elements */}
-        {Array.from({ length: 15 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute opacity-[0.12]"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${16 + Math.random() * 28}px`,
-              height: `${16 + Math.random() * 28}px`,
-              background: i % 5 === 0 
-                ? "linear-gradient(45deg, rgba(135, 206, 235, 0.6), transparent)"
-                : i % 5 === 1
-                ? "linear-gradient(45deg, rgba(64, 224, 208, 0.6), transparent)"
-                : i % 5 === 2
-                ? "linear-gradient(45deg, rgba(236, 72, 153, 0.6), transparent)"
-                : i % 5 === 3
-                ? "linear-gradient(45deg, rgba(34, 197, 94, 0.6), transparent)"
-                : "linear-gradient(45deg, rgba(168, 85, 247, 0.6), transparent)",
-              borderRadius: i % 4 === 0 ? "50%" : i % 4 === 1 ? "25%" : "0%",
-            }}
-            animate={{
-              y: [0, -70, 0],
-              x: [0, Math.random() * 50 - 25, 0],
-              rotate: [0, 360],
-              opacity: [0.08, 0.18, 0.08],
-            }}
-            transition={{
-              duration: 12 + Math.random() * 12,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
-              delay: Math.random() * 6,
-            }}
-          />
-        ))}
-        
-        <div className="absolute top-1/4 left-0 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-primary/[0.05] rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 bg-secondary/[0.05] rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        {/* Soft gradient orbs */}
+        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-purple-100/30 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -346,14 +292,11 @@ const Projects = React.memo(() => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl
-                         font-bold bg-gradient-to-r from-primary via-secondary to-primary 
-                         bg-clip-text text-transparent
-                         mb-4 sm:mb-6 leading-tight tracking-tight">
-            Featured Projects
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Featured</span> Projects
           </h2>
           <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mb-4 sm:mb-6"></div>
-          <p className="max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-foreground/70 leading-relaxed px-4">
+          <p className="max-w-2xl mx-auto text-base sm:text-lg text-gray-700 leading-relaxed px-4">
             A showcase of innovative solutions combining AI/ML expertise with modern web technologies 
             to solve real-world problems.
           </p>

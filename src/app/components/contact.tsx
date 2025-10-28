@@ -133,87 +133,14 @@ const Contact = React.memo(() => {
   return (
     <section
       id="contact"
-      className="py-16 sm:py-20 lg:py-24 relative overflow-hidden"
+      className="py-16 sm:py-20 lg:py-24 relative overflow-hidden bg-[#FAF8F5]"
       ref={ref as React.RefObject<HTMLElement>}
     >
-      {/* Simplified background elements */}
+      {/* Clean minimal background */}
       <div className="absolute inset-0 -z-10">
-        {/* Animated grid pattern */}
-        <div className="absolute inset-0 opacity-[0.10]">
-          <motion.div
-            className="absolute inset-0"
-            animate={{ backgroundPosition: ["0px 0px", "80px 80px"] }}
-            transition={{ duration: 25, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(135, 206, 235, 0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(135, 206, 235, 0.3) 1px, transparent 1px)
-              `,
-              backgroundSize: "80px 80px",
-            }}
-          />
-        </div>
-
-        {/* Large animated orb */}
-        <motion.div
-          className="absolute top-1/3 left-1/2 transform -translate-x-1/2 w-96 h-96 rounded-full opacity-[0.08]"
-          style={{
-            background: "radial-gradient(circle, rgba(135, 206, 235, 0.25) 0%, transparent 70%)",
-          }}
-          animate={{
-            scale: [1, 1.08, 1],
-            rotate: [0, -360],
-          }}
-          transition={{
-            duration: 30,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: "linear",
-          }}
-        />
-
-        {/* Simplified particle system */}
-        {Array.from({ length: 15 }).map((_, i) => (
-          <motion.div
-            key={`contact-particle-${i}`}
-            className="absolute w-1 h-1 rounded-full"
-            style={{
-              background: i % 2 === 0 ? "rgba(135, 206, 235, 0.5)" : "rgba(64, 224, 208, 0.5)",
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -window.innerHeight * 0.5, 0],
-              opacity: [0, 0.6, 0],
-              scale: [0, 1, 0],
-            }}
-            transition={{
-              duration: 8 + Math.random() * 4,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
-              delay: Math.random() * 5,
-            }}
-          />
-        ))}
-
-        {/* Corner decorative elements */}
-        <div className="absolute top-0 left-0 w-48 h-48 opacity-25">
-          <div
-            className="w-full h-full"
-            style={{
-              background: "conic-gradient(from 0deg, rgba(135, 206, 235, 0.3), transparent)",
-              borderRadius: "0 0 100% 0",
-            }}
-          />
-        </div>
-        <div className="absolute bottom-0 right-0 w-48 h-48 opacity-25">
-          <div
-            className="w-full h-full"
-            style={{
-              background: "conic-gradient(from 180deg, rgba(64, 224, 208, 0.3), transparent)",
-              borderRadius: "100% 0 0 0",
-            }}
-          />
-        </div>
+        {/* Soft gradient orbs */}
+        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-purple-100/30 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -223,31 +150,14 @@ const Contact = React.memo(() => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-12 md:mb-16 relative"
         >
-          <motion.h2 
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-[0.9] tracking-tight bg-gradient-to-r from-primary/90 to-foreground bg-clip-text text-transparent relative"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 1, delay: 0.2 }}
-          >
-            Get In Touch
-          </motion.h2>
-          
-          <motion.div 
-            className="w-16 sm:w-20 h-1 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mb-4 md:mb-6"
-            initial={{ width: 0 }}
-            animate={isVisible ? { width: "5rem" } : { width: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          />
-          
-          <motion.p 
-            className="max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed px-4 font-light"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 1, delay: 0.6 }}
-          >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
+            Get In <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Touch</span>
+          </h2>
+          <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mb-4 md:mb-6"></div>
+          <p className="max-w-2xl mx-auto text-base sm:text-lg text-gray-700 leading-relaxed px-4">
             Have an exciting project in mind? Let's collaborate and create something amazing together. 
             I'm always open to discussing new opportunities and innovative ideas.
-          </motion.p>
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 lg:gap-12 xl:gap-16">
@@ -258,7 +168,7 @@ const Contact = React.memo(() => {
             animate={isVisible ? "visible" : "hidden"}
             className="space-y-6 lg:space-y-8"
           >
-            <motion.h3 variants={itemVariants} className="text-xl sm:text-2xl font-bold mb-6 lg:mb-8 bg-gradient-to-r from-primary/80 to-secondary/80 bg-clip-text text-transparent">
+            <motion.h3 variants={itemVariants} className="text-xl sm:text-2xl font-bold mb-6 lg:mb-8 text-gray-900">
               Contact Information
             </motion.h3>
 
@@ -268,26 +178,18 @@ const Contact = React.memo(() => {
                   key={index}
                   variants={itemVariants}
                   href={info.href}
-                  className="group relative flex items-center p-4 sm:p-5 rounded-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden"
+                  className="group relative flex items-center p-4 sm:p-5 bg-white rounded-3xl border border-gray-200/60 transition-all duration-300 hover:border-gray-300/80 hover:shadow-lg hover:-translate-y-1 cursor-pointer overflow-hidden"
                   whileHover={{ x: 5 }}
-                  style={{
-                    background: "rgba(255, 255, 255, 0.03)",
-                    backdropFilter: "blur(20px)",
-                  }}
                 >
-                  {/* Gradient border effect */}
-                  <div className={`absolute -inset-0.5 bg-gradient-to-r ${info.gradient} rounded-xl blur opacity-0 group-hover:opacity-20 transition duration-300 -z-10`}></div>
-                  
                   <motion.div 
-                    className={`p-3 sm:p-4 rounded-xl bg-gradient-to-r ${info.gradient} text-white mr-4 sm:mr-5 flex-shrink-0 relative z-10`}
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.2 }}
+                    className={`p-3 sm:p-4 rounded-2xl bg-gradient-to-r ${info.gradient} text-white mr-4 sm:mr-5 flex-shrink-0 shadow-lg`}
+                    whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                   >
                     {info.icon}
                   </motion.div>
-                  <div className="min-w-0 flex-1 relative z-10">
-                    <p className="text-xs sm:text-sm text-muted-foreground mb-1">{info.label}</p>
-                    <p className="text-sm sm:text-base text-foreground font-medium break-words group-hover:text-primary transition-colors duration-300">{info.value}</p>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs sm:text-sm text-gray-600 mb-1">{info.label}</p>
+                    <p className="text-sm sm:text-base text-gray-900 font-medium break-words">{info.value}</p>
                   </div>
                 </motion.a>
               ))}
@@ -295,7 +197,7 @@ const Contact = React.memo(() => {
 
             {/* Social Links */}
             <motion.div variants={itemVariants} className="pt-6 lg:pt-8 relative">
-              <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 bg-gradient-to-r from-primary/70 to-secondary/70 bg-clip-text text-transparent">Connect With Me</h4>
+              <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-gray-900">Connect With Me</h4>
               <div className="flex gap-4 sm:gap-5">
                 {socialLinks.map((social, index) => (
                   <motion.a
@@ -303,21 +205,11 @@ const Contact = React.memo(() => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative p-4 sm:p-5 rounded-xl text-white transition-all duration-300 overflow-hidden"
-                    style={{
-                      background: `linear-gradient(135deg, ${social.gradient.includes('gray') ? 'rgba(75, 85, 99, 0.8)' : 'rgba(37, 99, 235, 0.8)'}, ${social.gradient.includes('gray') ? 'rgba(55, 65, 81, 0.9)' : 'rgba(29, 78, 216, 0.9)'})`,
-                      backdropFilter: "blur(10px)",
-                    }}
-                    whileHover={{ y: -4, scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    className={`group relative p-4 sm:p-5 rounded-2xl bg-gradient-to-r ${social.gradient} text-white transition-all duration-300 shadow-lg`}
+                    whileHover={{ y: -4, scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    <motion.div 
-                      className="relative z-10"
-                      whileHover={{ rotate: 5 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {social.icon}
-                    </motion.div>
+                    {social.icon}
                   </motion.a>
                 ))}
               </div>
@@ -334,18 +226,9 @@ const Contact = React.memo(() => {
             className="relative"
           >
             
-            <div 
-              className="relative rounded-2xl p-4 sm:p-6 lg:p-8 overflow-hidden"
-              style={{
-                background: "rgba(255, 255, 255, 0.03)",
-                backdropFilter: "blur(20px)",
-              }}
-            >
-              {/* Background pattern overlay */}
-              
-
+            <div className="relative bg-white rounded-3xl p-4 sm:p-6 lg:p-8 border border-gray-200/60 hover:border-gray-300/80 transition-all duration-300 overflow-hidden">
               <motion.h3 
-                className="text-xl sm:text-2xl font-bold mb-6 lg:mb-8 bg-gradient-to-r from-primary/90 to-secondary/90 bg-clip-text text-transparent relative z-10"
+                className="text-xl sm:text-2xl font-bold mb-6 lg:mb-8 text-gray-900 relative z-10"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
@@ -376,7 +259,7 @@ const Contact = React.memo(() => {
                     </motion.div>
                     
                     <motion.h4 
-                      className="text-lg sm:text-xl font-bold mb-3 bg-gradient-to-r from-primary/90 to-secondary/90 bg-clip-text text-transparent"
+                      className="text-lg sm:text-xl font-bold mb-3 text-gray-900"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4 }}
@@ -385,7 +268,7 @@ const Contact = React.memo(() => {
                     </motion.h4>
                     
                     <motion.p 
-                      className="text-sm sm:text-base text-muted-foreground px-4"
+                      className="text-sm sm:text-base text-gray-700 px-4"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.6 }}
@@ -409,22 +292,16 @@ const Contact = React.memo(() => {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.1 }}
                       >
-                        <label htmlFor="name" className="text-sm font-medium text-foreground/80">Name</label>
-                        <div className="relative">
-                          <Input
-                            id="name"
-                            name="name"
-                            value={formState.name}
-                            onChange={handleChange}
-                            required
-                            className="bg-background/50 backdrop-blur-sm focus:ring-primary/20 transition-all duration-300"
-                            placeholder="Your full name"
-                            style={{
-                              backdropFilter: "blur(10px)",
-                            }}
-                          />
-                          <div className="absolute inset-0 rounded-md bg-gradient-to-r from-primary/5 to-secondary/5 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                        </div>
+                        <label htmlFor="name" className="text-sm font-medium text-gray-700">Name</label>
+                        <Input
+                          id="name"
+                          name="name"
+                          value={formState.name}
+                          onChange={handleChange}
+                          required
+                          className="bg-white border-gray-200 focus:ring-primary/20 transition-all duration-300"
+                          placeholder="Your full name"
+                        />
                       </motion.div>
                       
                       <motion.div 
@@ -433,23 +310,17 @@ const Contact = React.memo(() => {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.2 }}
                       >
-                        <label htmlFor="email" className="text-sm font-medium text-foreground/80">Email</label>
-                        <div className="relative">
-                          <Input
-                            id="email"
-                            name="email"
-                            type="email"
-                            value={formState.email}
-                            onChange={handleChange}
-                            required
-                            className="bg-background/50 backdrop-blur-sm focus:ring-primary/20 transition-all duration-300"
-                            placeholder="your.email@example.com"
-                            style={{
-                              backdropFilter: "blur(10px)",
-                            }}
-                          />
-                          <div className="absolute inset-0 rounded-md bg-gradient-to-r from-primary/5 to-secondary/5 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                        </div>
+                        <label htmlFor="email" className="text-sm font-medium text-gray-700">Email</label>
+                        <Input
+                          id="email"
+                          name="email"
+                          type="email"
+                          value={formState.email}
+                          onChange={handleChange}
+                          required
+                          className="bg-white border-gray-200 focus:ring-primary/20 transition-all duration-300"
+                          placeholder="your.email@example.com"
+                        />
                       </motion.div>
                     </div>
 
@@ -459,22 +330,16 @@ const Contact = React.memo(() => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 }}
                     >
-                      <label htmlFor="subject" className="text-sm font-medium text-foreground/80">Subject</label>
-                      <div className="relative">
-                        <Input
-                          id="subject"
-                          name="subject"
-                          value={formState.subject}
-                          onChange={handleChange}
-                          required
-                          className="bg-background/50 backdrop-blur-sm focus:ring-primary/20 transition-all duration-300"
-                          placeholder="What's this about?"
-                          style={{
-                            backdropFilter: "blur(10px)",
-                          }}
-                        />
-                        <div className="absolute inset-0 rounded-md bg-gradient-to-r from-primary/5 to-secondary/5 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                      </div>
+                      <label htmlFor="subject" className="text-sm font-medium text-gray-700">Subject</label>
+                      <Input
+                        id="subject"
+                        name="subject"
+                        value={formState.subject}
+                        onChange={handleChange}
+                        required
+                        className="bg-white border-gray-200 focus:ring-primary/20 transition-all duration-300"
+                        placeholder="What's this about?"
+                      />
                     </motion.div>
 
                     <motion.div 
@@ -483,23 +348,17 @@ const Contact = React.memo(() => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4 }}
                     >
-                      <label htmlFor="message" className="text-sm font-medium text-foreground/80">Message</label>
-                      <div className="relative">
-                        <Textarea
-                          id="message"
-                          name="message"
-                          value={formState.message}
-                          onChange={handleChange}
-                          required
-                          rows={5}
-                          className="bg-background/50 backdrop-blur-sm focus:ring-primary/20 transition-all duration-300 resize-none"
-                          placeholder="Tell me about your project or idea..."
-                          style={{
-                            backdropFilter: "blur(10px)",
-                          }}
-                        />
-                        <div className="absolute inset-0 rounded-md bg-gradient-to-r from-primary/5 to-secondary/5 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                      </div>
+                      <label htmlFor="message" className="text-sm font-medium text-gray-700">Message</label>
+                      <Textarea
+                        id="message"
+                        name="message"
+                        value={formState.message}
+                        onChange={handleChange}
+                        required
+                        rows={5}
+                        className="bg-white border-gray-200 focus:ring-primary/20 transition-all duration-300 resize-none"
+                        placeholder="Tell me about your project or idea..."
+                      />
                     </motion.div>
 
                     <motion.div
@@ -509,24 +368,14 @@ const Contact = React.memo(() => {
                       className="relative"
                     >
                       <motion.div
-                        whileHover={{ scale: 1.02, y: -2 }}
-                        whileTap={{ scale: 0.98 }}
+                        whileHover={{ scale: 1.03, y: -3 }}
+                        whileTap={{ scale: 0.97 }}
                       >
                         <Button
                           type="submit"
                           disabled={isSubmitting}
-                          className="group relative w-full py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-xl transition-all duration-300 overflow-hidden"
-                          style={{
-                            background: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)))",
-                            boxShadow: "0 10px 25px rgba(var(--primary), 0.3)",
-                          }}
+                          className="group relative w-full py-4 sm:py-5 text-base sm:text-lg font-semibold rounded-2xl transition-all duration-300 overflow-hidden bg-gradient-to-r from-primary to-secondary text-white shadow-lg hover:shadow-xl"
                         >
-                          {/* Animated background overlay */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                          
-                          {/* Shimmer effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 group-hover:animate-pulse"></div>
-                          
                           <div className="relative z-10 flex items-center justify-center">
                             {isSubmitting ? (
                               <motion.div

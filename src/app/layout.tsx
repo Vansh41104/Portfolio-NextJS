@@ -14,6 +14,12 @@ export const metadata: Metadata = {
   title: "Vansh Bhatnagar | AI/ML Engineer &  Developer",
   description:
     "Portfolio of Vansh Bhatnagar, a full-stack developer and machine learning engineer specializing in AI systems and scalable backends.",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
 }
 
 export default function RootLayout({

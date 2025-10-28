@@ -72,41 +72,39 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, index, i
       transition={{ duration: 0.8, delay: index * 0.2, ease: "easeOut" }}
       className="group relative h-full"
     >
-      <div className="relative glass rounded-xl overflow-hidden h-full hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 p-6 lg:p-8">
+      <div className="relative bg-white rounded-3xl border border-gray-200/60 overflow-hidden h-full hover:border-gray-300/80 hover:shadow-lg transition-all duration-300 p-6 lg:p-8">
         
-        <div className="flex items-start mb-4 relative z-10">
+        <div className="flex items-start mb-5 sm:mb-6 relative z-10">
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.2 + 0.3 }}
-            className="flex-shrink-0"
+            className="p-2.5 sm:p-3 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-500 text-white mr-3 sm:mr-4 flex-shrink-0 shadow-lg"
+            initial={{ scale: 0.9 }}
+            animate={isVisible ? { scale: 1 } : { scale: 0.9 }}
+            transition={{ duration: 0.5, delay: index * 0.2 + 0.2, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
           >
-            <TrophyIcon className="h-5 w-5 lg:h-6 lg:w-6 
-                       text-primary
-                       mr-3 mt-1" />
+            <TrophyIcon className="h-5 w-5 lg:h-6 lg:w-6" />
           </motion.div>
-          <h3 className="text-lg lg:text-xl 
-                   font-semibold text-gradient-primary
-                   leading-tight flex-1">
+          <h3 className="text-lg lg:text-xl font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-tight flex-1">
             {achievement.title}
           </h3>
         </div>
         
-        <ul className="space-y-3 ml-8 lg:ml-9 relative z-10">
+        <ul className="space-y-3 sm:space-y-4 relative z-10">
           {achievement.description.map((item, idx) => (
             <motion.li
               key={idx}
               className="flex items-start"
-              initial={{ opacity: 0, x: -20 }}
-              animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-              transition={{ duration: 0.5, delay: index * 0.2 + 0.4 + idx * 0.1 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+              transition={{ duration: 0.4, delay: index * 0.2 + 0.3 + idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
             >
-              <CheckCircleIcon className="h-4 w-4 lg:h-5 lg:w-5 
-                             text-secondary
-                             shrink-0 mt-1 mr-3" />
-              <p className="text-sm lg:text-base 
-                      text-foreground/80
-                      leading-relaxed flex-1">
+              <motion.div
+                className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center mt-0.5 mr-3 shadow-sm"
+                whileHover={{ scale: 1.1 }}
+              >
+                <CheckCircleIcon className="w-3 h-3 text-white" />
+              </motion.div>
+              <p className="text-sm lg:text-base text-gray-700 leading-relaxed flex-1">
                 {item}
               </p>
             </motion.li>
@@ -123,73 +121,28 @@ const Achievements = React.memo(() => {
   return (
     <section
       id="achievements"
-      className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden"
+      className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden bg-[#FAF8F5]"
       ref={ref as React.RefObject<HTMLElement>}
     >
-      {/* Enhanced background elements matching other sections */}
+      {/* Clean minimal background */}
       <div className="absolute inset-0 -z-10">
-        {/* Animated grid pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <motion.div
-            className="absolute inset-0"
-            animate={{ backgroundPosition: ["0px 0px", "60px 60px"] }}
-            transition={{ duration: 25, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(135, 206, 235, 0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(135, 206, 235, 0.3) 1px, transparent 1px)
-              `,
-              backgroundSize: "60px 60px",
-            }}
-          />
-        </div>
-        
-        {/* Floating particles */}
-        {Array.from({ length: 15 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute opacity-20"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${15 + Math.random() * 25}px`,
-              height: `${15 + Math.random() * 25}px`,
-              background: i % 2 === 0 
-                ? "linear-gradient(45deg, rgba(135, 206, 235, 0.6), transparent)"
-                : "linear-gradient(45deg, rgba(64, 224, 208, 0.6), transparent)",
-              borderRadius: i % 3 === 0 ? "50%" : "0%",
-            }}
-            animate={{
-              y: [0, -50, 0],
-              x: [0, Math.random() * 30 - 15, 0],
-              rotate: [0, 360],
-              opacity: [0.1, 0.3, 0.1],
-            }}
-            transition={{
-              duration: 8 + Math.random() * 8,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
-              delay: Math.random() * 5,
-            }}
-          />
-        ))}
-        
-        <div className="absolute top-1/4 right-0 w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 left-0 w-52 h-52 sm:w-68 sm:h-68 md:w-80 md:h-80 bg-secondary/5 rounded-full blur-3xl" />
+        {/* Soft gradient orbs */}
+        <div className="absolute top-1/4 -right-20 w-96 h-96 bg-purple-100/30 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -left-20 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl" />
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gradient-primary mb-3 sm:mb-4">
-            Achievements
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
+            Professional <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Achievements</span>
           </h2>
-          <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mb-6 sm:mb-8"></div>
-          <p className="text-base sm:text-lg text-foreground/80 leading-relaxed max-w-2xl mx-auto">
+          <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mb-4 sm:mb-6"></div>
+          <p className="max-w-2xl mx-auto text-base sm:text-lg text-gray-700 leading-relaxed px-4">
             Recognition and awards for my work in technology and innovation
           </p>
         </motion.div>

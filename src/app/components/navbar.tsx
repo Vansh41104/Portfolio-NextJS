@@ -54,7 +54,7 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
       transition={{ duration: 0.8, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "glass backdrop-blur-2xl border-b border-foreground/5 shadow-lg shadow-primary/5"
+          ? "glass-premium backdrop-blur-3xl border-b border-border shadow-xl"
           : "bg-transparent"
       }`}
     >
@@ -101,9 +101,9 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
                 <Link
                   href={`#${link.href}`}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                  className={`relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:scale-105 interactive-scale ${
                     activeSection === link.href
-                      ? "text-primary bg-primary/10 shadow-lg shadow-primary/20"
+                      ? "text-primary bg-primary/15 shadow-lg shadow-primary/20 border border-primary/20"
                       : "text-foreground/70 hover:text-primary hover:bg-foreground/5"
                   }`}
                 >
@@ -133,7 +133,7 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
           >
             <Button
               asChild
-              className="bg-gradient-to-r from-primary to-secondary text-white hover:scale-105 transition-all duration-300 px-6 py-2 rounded-full font-semibold shadow-lg shadow-primary/20"
+              className="bg-gradient-to-r from-primary via-primary/90 to-secondary text-white hover:scale-105 transition-all duration-300 px-6 py-2 rounded-full font-semibold shadow-lg shadow-primary/30 ios-button border border-primary/20"
             >
               <Link href="#contact">Hire Me</Link>
             </Button>
@@ -170,7 +170,7 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
               animate={{ opacity: 1, height: "auto", y: 0 }}
               exit={{ opacity: 0, height: 0, y: -20 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="md:hidden mt-4 glass rounded-2xl border border-foreground/10 overflow-hidden"
+              className="md:hidden mt-4 glass-premium rounded-2xl border border-white/10 overflow-hidden shadow-xl"
             >
               <div className="p-4 space-y-2">
                 {navLinks.map((link, index) => (

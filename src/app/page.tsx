@@ -46,22 +46,12 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative">
-      <div
-        className="min-h-screen relative"
-        style={{
-          background: `
-            radial-gradient(circle at 20% 80%, rgba(135, 206, 235, 0.15) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(64, 224, 208, 0.15) 0%, transparent 50%),
-            radial-gradient(circle at 40% 40%, rgba(135, 206, 235, 0.1) 0%, transparent 50%),
-            linear-gradient(135deg, #050505 0%, #0a0a0a 50%, #050505 100%)
-          `
-        }}
-      >
+    <main className="relative bg-background overflow-x-hidden">
+      <div className="min-h-screen relative bg-background">
         <Navbar activeSection={activeSection} onSectionChange={setActiveSection} />
         <ScrollProgress />
         {/* Page content rendered statically, no transition */}
-        <div>
+        <div className="overflow-x-hidden">
           <Hero />
           <About />
           <Skills />
@@ -73,20 +63,20 @@ export default function Home() {
         </div>
       </div>
       
-      {/* Enhanced background effects */}
+      {/* Subtle background effects - light theme */}
       <motion.div 
         className="fixed inset-0 -z-50 pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 2, delay: 1 }}
       >
-        {/* Primary floating orb */}
+        {/* Soft gradient orbs for depth */}
         <motion.div 
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/3 rounded-full blur-3xl"
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-200/20 rounded-full blur-3xl"
           animate={{ 
-            x: [0, 100, 0],
-            y: [0, -50, 0],
-            scale: [1, 1.2, 1],
+            x: [0, 50, 0],
+            y: [0, -30, 0],
+            scale: [1, 1.1, 1],
           }}
           transition={{ 
             duration: 20, 
@@ -95,34 +85,18 @@ export default function Home() {
           }}
         />
         
-        {/* Secondary floating orb */}
         <motion.div 
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/3 rounded-full blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-200/20 rounded-full blur-3xl"
           animate={{ 
-            x: [0, -80, 0],
-            y: [0, 60, 0],
-            scale: [1, 0.8, 1],
+            x: [0, -40, 0],
+            y: [0, 40, 0],
+            scale: [1, 0.9, 1],
           }}
           transition={{ 
             duration: 25, 
             repeat: Infinity, 
             ease: "easeInOut",
             delay: 5
-          }}
-        />
-        
-        {/* Tertiary accent orb */}
-        <motion.div 
-          className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-r from-primary/2 to-secondary/2 rounded-full blur-2xl"
-          animate={{ 
-            x: [0, 60, 0],
-            y: [0, -40, 0],
-            rotate: [0, 180, 360]
-          }}
-          transition={{ 
-            duration: 30, 
-            repeat: Infinity, 
-            ease: "linear"
           }}
         />
       </motion.div>
