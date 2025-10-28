@@ -27,26 +27,48 @@ const Contact = React.memo(() => {
     setFormState((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    try {
+      // Using Web3Forms API for form submission
+      const formData = new FormData()
+      formData.append('access_key', '4f3a7f38-980e-4108-a659-67953e68a902')
+      formData.append('name', formState.name)
+      formData.append('email', formState.email)
+      formData.append('subject', formState.subject)
+      formData.append('message', formState.message)
+      
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      })
 
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-    setFormState({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    })
+      const data = await response.json()
 
-    // Reset success message after 5 seconds
-    setTimeout(() => {
-      setIsSubmitted(false)
-    }, 5000)
+      if (data.success) {
+        setIsSubmitted(true)
+        setFormState({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        })
+
+        // Reset success message after 5 seconds
+        setTimeout(() => {
+          setIsSubmitted(false)
+        }, 5000)
+      } else {
+        throw new Error(data.message || 'Form submission failed')
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      alert('Failed to send message. Please try again or contact me directly via email.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const containerVariants = {
