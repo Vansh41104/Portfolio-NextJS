@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { BriefcaseIcon, CalendarIcon, CheckCircleIcon, TrendingUpIcon, UsersIcon, CodeIcon } from "lucide-react"
 import { useScrollTrigger } from "@/app/hooks/use-scroll-trigger"
+import { Button } from "@/app/components/ui/button"
 
 // Define the experience type
 interface Experience {
@@ -166,6 +167,10 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience, index, isVi
 
 const Experience = React.memo(() => {
   const { ref, isVisible } = useScrollTrigger({ threshold: 0.1, once: true });
+  const [currentPage, setCurrentPage] = useState(1);
+  const experiencesPerPage = 2;
+  const totalPages = Math.ceil(experiences.length / experiencesPerPage);
+  const displayedExperiences = experiences.slice((currentPage - 1) * experiencesPerPage, currentPage * experiencesPerPage);
 
   return (
     <section
@@ -198,7 +203,7 @@ const Experience = React.memo(() => {
         </motion.div>
 
         <div className="max-w-5xl mx-auto">
-          {experiences.map((experience, index) => (
+          {displayedExperiences.map((experience, index) => (
             <ExperienceCard 
               key={index} 
               experience={experience} 
@@ -206,6 +211,41 @@ const Experience = React.memo(() => {
               isVisible={isVisible} 
             />
           ))}
+        </div>
+
+        <div className="flex justify-center items-center mt-8 md:mt-12 gap-2">
+          <Button
+            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            size="sm"
+            className="bg-primary/10 hover:bg-primary/20 text-primary disabled:opacity-50"
+          >
+            Previous
+          </Button>
+          
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+            <Button
+              key={pageNum}
+              onClick={() => setCurrentPage(pageNum)}
+              size="sm"
+              className={`${
+                currentPage === pageNum
+                  ? 'bg-gradient-to-r from-primary to-secondary text-white'
+                  : 'bg-primary/10 hover:bg-primary/20 text-primary'
+              } transition-all duration-300`}
+            >
+              {pageNum}
+            </Button>
+          ))}
+          
+          <Button
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            size="sm"
+            className="bg-primary/10 hover:bg-primary/20 text-primary disabled:opacity-50"
+          >
+            Next
+          </Button>
         </div>
       </div>
     </section>

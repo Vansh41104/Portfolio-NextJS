@@ -14,8 +14,8 @@ const contactInfo = [
   {
     icon: <MailIcon className="w-6 h-6" />,
     label: "Email",
-    value: "vanshbhatnagar41104@gmail.com",
-    href: "mailto:vanshbhatnagar41104@gmail.com",
+    value: "vanshbhatnagar445@gmail.com",
+    href: "mailto:vanshbhatnagar445@gmail.com",
     gradient: "from-blue-500 to-cyan-500",
   },
   {
@@ -29,7 +29,7 @@ const contactInfo = [
     icon: <MapPinIcon className="w-6 h-6" />,
     label: "Location",
     value: "India",
-    href: "#",
+    href: "https://maps.app.goo.gl/RQVm6GS8ex7C2SNu9",
     gradient: "from-red-500 to-pink-500",
   },
 ]
@@ -179,6 +179,8 @@ const Contact = React.memo(() => {
                   key={index}
                   variants={itemVariants}
                   href={info.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group relative flex items-center p-4 sm:p-5 bg-white rounded-3xl border border-gray-200/60 transition-all duration-300 hover:border-gray-300/80 hover:shadow-lg hover:-translate-y-1 cursor-pointer overflow-hidden"
                   whileHover={{ x: 5 }}
                 >

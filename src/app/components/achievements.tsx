@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { TrophyIcon, CheckCircleIcon } from "lucide-react"
 import { useScrollTrigger } from "@/app/hooks/use-scroll-trigger"
+import { Button } from "@/app/components/ui/button"
 
 // Define the achievement type
 interface Achievement {
@@ -131,6 +132,10 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, index, i
 
 const Achievements = React.memo(() => {
   const { ref, isVisible } = useScrollTrigger({ threshold: 0.2, once: true });
+  const [currentPage, setCurrentPage] = useState(1);
+  const achievementsPerPage = 2;
+  const totalPages = Math.ceil(achievements.length / achievementsPerPage);
+  const displayedAchievements = achievements.slice((currentPage - 1) * achievementsPerPage, currentPage * achievementsPerPage);
 
   return (
     <section
@@ -162,9 +167,44 @@ const Achievements = React.memo(() => {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16">
-          {achievements.map((achievement, index) => (
+          {displayedAchievements.map((achievement, index) => (
             <AchievementCard key={index} achievement={achievement} index={index} isVisible={isVisible} />
           ))}
+        </div>
+
+        <div className="flex justify-center items-center mt-8 md:mt-12 gap-2">
+          <Button
+            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            size="sm"
+            className="bg-primary/10 hover:bg-primary/20 text-primary disabled:opacity-50"
+          >
+            Previous
+          </Button>
+          
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+            <Button
+              key={pageNum}
+              onClick={() => setCurrentPage(pageNum)}
+              size="sm"
+              className={`${
+                currentPage === pageNum
+                  ? 'bg-gradient-to-r from-primary to-secondary text-white'
+                  : 'bg-primary/10 hover:bg-primary/20 text-primary'
+              } transition-all duration-300`}
+            >
+              {pageNum}
+            </Button>
+          ))}
+          
+          <Button
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            size="sm"
+            className="bg-primary/10 hover:bg-primary/20 text-primary disabled:opacity-50"
+          >
+            Next
+          </Button>
         </div>
       </div>
     </section>
