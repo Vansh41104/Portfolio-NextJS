@@ -65,38 +65,11 @@ const Hero = React.memo(() => {
   }, [mouseX, mouseY, isMobile])
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#FAF8F5]">
       <div className="absolute inset-0 -z-10">
-        {/* Clean gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-background to-secondary/[0.03]" />
-        
-        {/* Subtle accent gradients - no blur */}
-        <motion.div 
-          className="absolute top-20 right-20 w-[500px] h-[500px] rounded-full opacity-[0.08]" 
-          style={{ 
-            background: "radial-gradient(circle, hsl(var(--primary)) 0%, transparent 70%)",
-            x: parallaxX,
-            y: parallaxY
-          }} 
-          animate={{ 
-            scale: [1, 1.1, 1],
-            opacity: [0.08, 0.12, 0.08]
-          }} 
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} 
-        />
-        <motion.div 
-          className="absolute bottom-20 left-20 w-[400px] h-[400px] rounded-full opacity-[0.08]" 
-          style={{ 
-            background: "radial-gradient(circle, hsl(var(--secondary)) 0%, transparent 70%)",
-            x: useTransform(parallaxX, (v) => -v),
-            y: useTransform(parallaxY, (v) => -v)
-          }} 
-          animate={{ 
-            scale: [1.1, 1, 1.1],
-            opacity: [0.08, 0.12, 0.08]
-          }} 
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} 
-        />
+        {/* Soft gradient orbs */}
+        <div className="absolute top-1/4 -right-20 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -left-20 w-96 h-96 bg-purple-100/30 rounded-full blur-3xl" />
       </div>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 flex flex-col items-center justify-center text-center relative z-10">
         <motion.div className="mb-8 sm:mb-10 md:mb-12 pb-3 sm:pb-4 md:pb-6 overflow-visible flex flex-col items-center w-full" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.4 }}>
