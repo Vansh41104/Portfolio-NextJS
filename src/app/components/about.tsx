@@ -37,13 +37,44 @@ const About = React.memo(() => {
   return (
     <section 
       id="about" 
-      className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden bg-[#FAF8F5]"
+      className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden"
     >
-      {/* Clean minimal background */}
-      <div className="absolute inset-0 -z-10">
-        {/* Soft gradient orbs */}
-        <div className="absolute top-1/4 -right-20 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -left-20 w-96 h-96 bg-purple-100/30 rounded-full blur-3xl" />
+      {/* Dynamic liquid glass background */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-background via-background to-accent/10">
+        {/* Animated gradient orbs */}
+        <motion.div 
+          className="absolute top-1/4 -right-20 w-96 h-96 rounded-full blur-3xl opacity-30"
+          style={{
+            background: "radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(147, 51, 234, 0.2) 50%, transparent 100%)",
+          }}
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.4, 0.2],
+            x: [-20, 20, -20],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-1/4 -left-20 w-96 h-96 rounded-full blur-3xl opacity-30"
+          style={{
+            background: "radial-gradient(circle, rgba(147, 51, 234, 0.4) 0%, rgba(59, 130, 246, 0.2) 50%, transparent 100%)",
+          }}
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.4, 0.2],
+            x: [20, -20, 20],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -98,43 +129,46 @@ const About = React.memo(() => {
             className="relative order-1 lg:order-2"
           >
             <div className="relative max-w-xs sm:max-w-sm md:max-w-md mx-auto">
-              {/* Animated border */}
-                <motion.div
-                className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary via-secondary to-primary p-1"
+              {/* Animated border with glass effect */}
+              <motion.div
+                className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary via-secondary to-primary p-1 glass-card"
                 animate={{ 
                   background: [
-                  "linear-gradient(0deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--primary)))",
-                  "linear-gradient(120deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--primary)))",
-                  "linear-gradient(240deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--primary)))",
-                  "linear-gradient(360deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--primary)))"
+                    "linear-gradient(0deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--primary)))",
+                    "linear-gradient(120deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--primary)))",
+                    "linear-gradient(240deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--primary)))",
+                    "linear-gradient(360deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--primary)))"
                   ]
                 }}
                 transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                >
-                <div className="w-full h-full bg-background rounded-2xl"></div>
-                </motion.div>
+              >
+                <div className="w-full h-full bg-background rounded-3xl"></div>
+              </motion.div>
 
-              {/* Image container */}
+              {/* Glass image container */}
               <div className="relative z-10 p-1.5 sm:p-2">
-                <div className="relative aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 to-secondary/10">
+                <div className="relative aspect-square overflow-hidden rounded-2xl glass-premium border border-white/30 shadow-floating">
+                  {/* Glass edge highlight */}
+                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent z-10"></div>
+                  
                   <Image 
                     src="/image.jpg" 
                     alt="Vansh Bhatnagar" 
                     fill
-                    className="object-cover rounded-xl hover:scale-105 transition-transform duration-500" 
+                    className="object-cover rounded-2xl hover:scale-105 transition-transform duration-500" 
                     sizes="(max-width: 640px) 320px, (max-width: 768px) 384px, (max-width: 1024px) 448px, 512px"
                     loading="lazy"
                     quality={75}
                   />
                   
-                  {/* Overlay effect */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent rounded-xl"></div>
+                  {/* Glass overlay effect */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-white/10 rounded-2xl pointer-events-none"></div>
                 </div>
               </div>
 
-              {/* Floating elements */}
+              {/* Floating glass orbs */}
               <motion.div
-                className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-primary/20 rounded-full blur-sm"
+                className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 glass-premium rounded-full shadow-glow-primary border border-primary/30"
                 animate={{ 
                   scale: [1, 1.5, 1],
                   opacity: [0.5, 1, 0.5]
@@ -142,7 +176,7 @@ const About = React.memo(() => {
                 transition={{ duration: 3, repeat: Infinity }}
               />
               <motion.div
-                className="absolute -bottom-2 -left-2 sm:-bottom-4 sm:-left-4 w-4 h-4 sm:w-6 sm:h-6 bg-secondary/20 rounded-full blur-sm"
+                className="absolute -bottom-2 -left-2 sm:-bottom-4 sm:-left-4 w-4 h-4 sm:w-6 sm:h-6 glass-premium rounded-full shadow-glow-secondary border border-secondary/30"
                 animate={{ 
                   scale: [1.2, 0.8, 1.2],
                   opacity: [0.7, 1, 0.7]

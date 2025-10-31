@@ -22,7 +22,7 @@ const experiences: Experience[] = [
     title: "AI/ML Intern",
     company: "NJR I3 Labs Pvt. Ltd",
     period: "Apr 2025 – July 2025",
-    gradient: "from-sky-500 to-blue-500",
+    gradient: "from-sky-700 to-blue-700",
     icon: <BriefcaseIcon className="w-6 h-6" />,
     achievements: [
       "Developed interactive 3D learning interface using Three.js that increased user engagement by 35%. Improved knowledge retention rates by 20% through immersive visualization of complex educational concepts.",
@@ -33,7 +33,7 @@ const experiences: Experience[] = [
     title: "AI/ML Intern",
     company: "ShadowFox Technologies",
     period: "Aug 2024 - Sep 2024",
-    gradient: "from-sky-500 to-blue-500",
+    gradient: "from-sky-700 to-blue-700",
     icon: <BriefcaseIcon className="w-6 h-6" />,
     achievements: [
       "Machine learning algorithms were used to improve application performance, resulting in 25% reduction processing time and 10% improvement in accuracy.",
@@ -44,7 +44,7 @@ const experiences: Experience[] = [
     title: "Full Stack Intern",
     company: "CodeAlpha",
     period: "Jul 2024 - Aug 2024",
-    gradient: "from-sky-500 to-blue-500",
+    gradient: "from-sky-700 to-blue-700",
     icon: <CodeIcon className="w-6 h-6" />,
     achievements: [
       "I designed user-friendly mobile applications making it simple to submit forms by combining data and geo-tag functionality, offering 40% faster submissions and 15% less errors. I also utilized such tools as Nginx for smooth server maintenance and Gradle for significantly simplifying build process.",
@@ -55,7 +55,7 @@ const experiences: Experience[] = [
     title: "Cloud Computing Intern",
     company: "Acmegrade",
     period: "Nov 2023 - Feb 2024",
-    gradient: "from-sky-500 to-blue-500",
+    gradient: "from-sky-700 to-blue-700",
     icon: <TrendingUpIcon className="w-6 h-6" />,
     achievements: [
       "Conducted cloud computing trend analysis for AWS, Azure, and GCP to identify the most appropriate market opportunities.",
@@ -104,27 +104,34 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience, index, isVi
         transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
       />
 
-      {/* Content card - iOS 26 style */}
+      {/* Content card - Enhanced liquid glass style */}
       <div className="ml-8 md:ml-16 mb-8 md:mb-12">
-        <div className="relative bg-white rounded-3xl p-5 md:p-7 border border-gray-200/60 hover:border-gray-300/80 transition-all duration-300 hover:shadow-lg hover:scale-[1.01]">
+        <div className="relative glass-card rounded-3xl p-5 md:p-7 border border-white/30 transition-all duration-500 hover:border-white/50 hover:shadow-floating hover:scale-[1.02] overflow-hidden">
+          {/* Glass edge highlight */}
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
+          
+          {/* Specular highlight */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+
           {/* Header */}
-          <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-start mb-5 md:mb-6">
+          <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-start mb-5 md:mb-6 relative z-10">
             <div className="flex items-start space-x-3 md:space-x-4">
               <motion.div
-                className={`p-2.5 md:p-3 rounded-2xl bg-gradient-to-br ${experience.gradient} text-white shadow-lg flex-shrink-0`}
+                className={`p-2.5 md:p-3 rounded-2xl bg-gradient-to-br ${experience.gradient} text-white shadow-lg flex-shrink-0 border border-white/20 relative overflow-hidden`}
                 initial={{ scale: 0.9 }}
                 animate={isVisible ? { scale: 1 } : { scale: 0.9 }}
                 transition={{ duration: 0.5, delay: index * 0.15 + 0.3, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                whileHover={{ scale: 1.1, rotate: 5 }}
               >
-                <div className="w-5 h-5 md:w-6 md:h-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-80"></div>
+                <div className="w-5 h-5 md:w-6 md:h-6 relative z-10">
                   {experience.icon}
                 </div>
               </motion.div>
               
               <div className="min-w-0 flex-1">
                 <h3 className="text-lg md:text-xl font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-1 break-words tracking-tight">{experience.title}</h3>
-                <p className="text-base md:text-lg font-medium text-gray-700 break-words">{experience.company}</p>
+                <p className="text-base md:text-lg font-medium text-foreground/70 break-words">{experience.company}</p>
               </div>
             </div>
             
@@ -134,13 +141,13 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience, index, isVi
               transition={{ duration: 0.5, delay: index * 0.15 + 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="flex items-center md:ml-4 flex-shrink-0"
             >
-              <CalendarIcon className="w-4 h-4 text-gray-500 mr-2" />
-              <span className="text-xs md:text-sm text-gray-600 font-medium whitespace-nowrap">{experience.period}</span>
+              <CalendarIcon className="w-4 h-4 text-foreground/50 mr-2" />
+              <span className="text-xs md:text-sm text-foreground/60 font-medium whitespace-nowrap">{experience.period}</span>
             </motion.div>
           </div>
 
           {/* Achievements */}
-          <div className="space-y-3 md:space-y-4">
+          <div className="space-y-3 md:space-y-4 relative z-10">
             {experience.achievements.map((achievement, achievementIndex) => (
               <motion.div
                 key={achievementIndex}
@@ -150,15 +157,18 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience, index, isVi
                 className="flex items-start space-x-3"
               >
                 <motion.div
-                  className="flex-shrink-0 w-5 h-5 md:w-5 md:h-5 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center mt-0.5 shadow-sm"
+                  className="flex-shrink-0 w-5 h-5 md:w-5 md:h-5 rounded-full bg-gradient-to-br from-green-700 to-emerald-700 flex items-center justify-center mt-0.5 shadow-sm border border-white/20"
                   whileHover={{ scale: 1.1 }}
                 >
                   <CheckCircleIcon className="w-3 h-3 text-white" />
                 </motion.div>
-                <p className="text-gray-700 text-sm md:text-base leading-relaxed flex-1">{achievement}</p>
+                <p className="text-foreground/70 text-sm md:text-base leading-relaxed flex-1">{achievement}</p>
               </motion.div>
             ))}
           </div>
+
+          {/* Bottom glass edge */}
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
         </div>
       </div>
     </motion.div>
@@ -175,14 +185,43 @@ const Experience = React.memo(() => {
   return (
     <section
       id="experience" 
-      className="py-12 md:py-24 relative overflow-hidden bg-[#FAF8F5]"
+      className="py-12 md:py-24 relative overflow-hidden"
       ref={ref as React.RefObject<HTMLElement>}
     >
-      {/* Clean minimal background */}
-      <div className="absolute inset-0 -z-10">
-        {/* Soft gradient orbs */}
-        <div className="absolute top-1/4 -right-20 w-96 h-96 bg-purple-100/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -left-20 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl" />
+      {/* Dynamic liquid glass background */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-background via-background to-accent/10">
+        {/* Animated gradient orbs */}
+        <motion.div 
+          className="absolute top-1/4 -right-20 w-96 h-96 rounded-full blur-3xl opacity-30"
+          style={{
+            background: "radial-gradient(circle, rgba(147, 51, 234, 0.4) 0%, rgba(59, 130, 246, 0.2) 50%, transparent 100%)",
+          }}
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-1/4 -left-20 w-96 h-96 rounded-full blur-3xl opacity-30"
+          style={{
+            background: "radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(147, 51, 234, 0.2) 50%, transparent 100%)",
+          }}
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -213,36 +252,38 @@ const Experience = React.memo(() => {
           ))}
         </div>
 
-        <div className="flex justify-center items-center mt-8 md:mt-12 gap-2">
+        <div className="flex justify-center items-center mt-8 md:mt-12 gap-2 sm:gap-3">
           <Button
             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
             size="sm"
-            className="bg-primary/10 hover:bg-primary/20 text-primary disabled:opacity-50"
+            className="bg-white/80 backdrop-blur-sm border-2 border-gray-800/20 hover:border-gray-800/40 text-gray-900 hover:text-gray-900 font-semibold disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 hover:bg-white/90 px-4 py-2"
           >
             Previous
           </Button>
           
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-            <Button
-              key={pageNum}
-              onClick={() => setCurrentPage(pageNum)}
-              size="sm"
-              className={`${
-                currentPage === pageNum
-                  ? 'bg-gradient-to-r from-primary to-secondary text-white'
-                  : 'bg-primary/10 hover:bg-primary/20 text-primary'
-              } transition-all duration-300`}
-            >
-              {pageNum}
-            </Button>
-          ))}
+          <div className="flex gap-2">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+              <Button
+                key={pageNum}
+                onClick={() => setCurrentPage(pageNum)}
+                size="sm"
+                className={`transition-all duration-300 hover:scale-110 px-3 py-2 font-semibold ${
+                  currentPage === pageNum
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg border-none hover:from-blue-700 hover:to-cyan-700 hover:text-white'
+                    : 'bg-white/80 backdrop-blur-sm border-2 border-gray-800/20 hover:border-gray-800/40 text-gray-900 hover:bg-white/90 hover:text-gray-900'
+                }`}
+              >
+                {pageNum}
+              </Button>
+            ))}
+          </div>
           
           <Button
             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
             disabled={currentPage === totalPages}
             size="sm"
-            className="bg-primary/10 hover:bg-primary/20 text-primary disabled:opacity-50"
+            className="bg-white/80 backdrop-blur-sm border-2 border-gray-800/20 hover:border-gray-800/40 text-gray-900 hover:text-gray-900 font-semibold disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 hover:bg-white/90 px-4 py-2"
           >
             Next
           </Button>

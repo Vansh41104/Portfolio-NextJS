@@ -26,12 +26,37 @@
     --ring: 215 100% 58%;
     --radius: 1.25rem;
     
-    /* iOS 26 Glass & Depth */
-    --glass-bg: rgba(235, 238, 242, 0.82);
-    --glass-border: rgba(220, 225, 235, 0.5);
+    /* iOS 26 Liquid Glass & Advanced Materials */
+    --glass-bg: rgba(255, 255, 255, 0.65);
+    --glass-bg-hover: rgba(255, 255, 255, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --glass-border-hover: rgba(255, 255, 255, 0.5);
+    --glass-edge: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+    
+    /* Liquid Glass Specular Highlights */
+    --specular-light: rgba(255, 255, 255, 0.9);
+    --specular-medium: rgba(255, 255, 255, 0.6);
+    --specular-subtle: rgba(255, 255, 255, 0.3);
+    
+    /* Advanced Shadow System */
     --shadow-soft: 0 8px 32px rgba(31, 38, 135, 0.08);
     --shadow-medium: 0 16px 48px rgba(31, 38, 135, 0.12);
     --shadow-hard: 0 24px 64px rgba(31, 38, 135, 0.16);
+    --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.08), 
+                     inset 0 1px 1px 0 rgba(255, 255, 255, 0.9),
+                     inset 0 -1px 1px 0 rgba(0, 0, 0, 0.05);
+    --shadow-floating: 0 20px 60px rgba(31, 38, 135, 0.15),
+                       0 8px 24px rgba(31, 38, 135, 0.1);
+    
+    /* Dynamic Blur Levels */
+    --blur-light: 16px;
+    --blur-medium: 24px;
+    --blur-heavy: 40px;
+    
+    /* Refraction & Depth */
+    --depth-1: 10px;
+    --depth-2: 20px;
+    --depth-3: 40px;
   }
 
   .dark {
@@ -56,12 +81,27 @@
     --input: 220 20% 16%;
     --ring: 215 100% 62%;
     
-    /* Dark mode glass */
-    --glass-bg: rgba(35, 40, 50, 0.82);
-    --glass-border: rgba(60, 70, 90, 0.4);
-    --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.3);
-    --shadow-medium: 0 16px 48px rgba(0, 0, 0, 0.4);
-    --shadow-hard: 0 24px 64px rgba(0, 0, 0, 0.5);
+    /* Dark Liquid Glass */
+    --glass-bg: rgba(25, 30, 40, 0.65);
+    --glass-bg-hover: rgba(35, 42, 55, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-border-hover: rgba(255, 255, 255, 0.15);
+    --glass-edge: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+    
+    /* Dark Specular Highlights */
+    --specular-light: rgba(255, 255, 255, 0.2);
+    --specular-medium: rgba(255, 255, 255, 0.12);
+    --specular-subtle: rgba(255, 255, 255, 0.06);
+    
+    /* Dark Shadow System */
+    --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --shadow-medium: 0 16px 48px rgba(0, 0, 0, 0.5);
+    --shadow-hard: 0 24px 64px rgba(0, 0, 0, 0.6);
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.5), 
+                     inset 0 1px 1px 0 rgba(255, 255, 255, 0.1),
+                     inset 0 -1px 1px 0 rgba(0, 0, 0, 0.3);
+    --shadow-floating: 0 20px 60px rgba(0, 0, 0, 0.6),
+                       0 8px 24px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -105,42 +145,97 @@
 }
 
 @layer components {
-  /* iOS 26 Glassmorphism Card */
+  /* ===== iOS 26 Liquid Glass Material System ===== */
+  
+  /* Primary Liquid Glass Card - Main content panels */
   .glass-card {
     background: var(--glass-bg);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(var(--blur-medium)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--blur-medium)) saturate(180%);
     border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow-soft),
-                inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    box-shadow: var(--shadow-glass);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .glass-card:hover {
-    transform: translateY(-4px) scale(1.01);
-    box-shadow: var(--shadow-medium),
-                inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
-    border-color: hsl(var(--primary) / 0.3);
-  }
-
-  /* Premium Glass Effect */
-  .glass-premium {
-    background: var(--glass-bg);
-    backdrop-filter: blur(32px) saturate(200%);
-    -webkit-backdrop-filter: blur(32px) saturate(200%);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow-medium),
-                inset 0 1px 1px 0 rgba(255, 255, 255, 0.1),
-                inset 0 -1px 1px 0 rgba(0, 0, 0, 0.05);
-  }
-
-  /* iOS-style Button */
-  .ios-button {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
   }
 
+  /* Glass Edge Highlight - Creates refractive glass effect */
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--glass-edge);
+    opacity: 0.8;
+  }
+
+  /* Specular Highlight - Mouse-reactive shimmer */
+  .glass-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      var(--specular-light) 0%,
+      var(--specular-subtle) 20%,
+      transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .glass-card:hover::after {
+    opacity: 0.4;
+  }
+
+  .glass-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--shadow-floating),
+                inset 0 1px 1px 0 var(--specular-medium);
+  }
+
+  /* Premium Glass - For navbar and hero panels */
+  .glass-premium {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-heavy)) saturate(200%);
+    -webkit-backdrop-filter: blur(var(--blur-heavy)) saturate(200%);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+    position: relative;
+  }
+
+  /* Floating Panel - Detached from edges */
+  .glass-floating {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-medium)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--blur-medium)) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: calc(var(--radius) * 1.5);
+    box-shadow: var(--shadow-floating);
+    margin: var(--depth-2);
+    transform: translateZ(var(--depth-2));
+  }
+
+  /* Interactive Glass Button */
+  .ios-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  /* Ripple Effect */
   .ios-button::before {
     content: '';
     position: absolute;
@@ -149,9 +244,10 @@
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.4);
     transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .ios-button:active::before {
@@ -159,55 +255,40 @@
     height: 300px;
   }
 
+  .ios-button:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+
   .ios-button:active {
     transform: scale(0.96);
   }
 
-  /* Interactive Scale Effect */
-  .interactive-scale {
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .interactive-scale:active {
-    transform: scale(0.95);
-  }
-
-  /* Gradient Text */
+  /* Gradient Text Effects */
   .text-gradient-primary {
-    @apply bg-gradient-to-r from-primary via-primary to-secondary bg-clip-text text-transparent;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .text-gradient-secondary {
-    @apply bg-gradient-to-r from-secondary via-primary to-primary bg-clip-text text-transparent;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  /* Animated Gradient Background */
-  .gradient-animate {
-    background: linear-gradient(
-      135deg,
-      hsl(var(--primary)) 0%,
-      hsl(var(--secondary)) 50%,
-      hsl(var(--primary)) 100%
+    background: linear-gradient(135deg, 
+      hsl(var(--primary)) 0%, 
+      hsl(var(--secondary)) 100%
     );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     background-size: 200% 200%;
     animation: gradient-shift 8s ease infinite;
   }
 
-  /* Floating Animation */
-  .float-animation {
-    animation: float-subtle 6s ease-in-out infinite;
+  .text-gradient-secondary {
+    background: linear-gradient(135deg, 
+      hsl(var(--secondary)) 0%, 
+      hsl(var(--primary)) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
-  /* Pulse Glow */
-  .pulse-glow {
-    animation: pulse-glow 3s ease-in-out infinite;
-  }
-
-  /* Shimmer Effect */
+  /* Shimmer Effect for Premium Elements */
   .shimmer {
     position: relative;
     overflow: hidden;
@@ -223,10 +304,35 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.3),
       transparent
     );
     animation: shimmer-slide 3s infinite;
+  }
+
+  /* Floating Animation for Hero Elements */
+  .float-animation {
+    animation: float-subtle 6s ease-in-out infinite;
+  }
+
+  /* Pulse Glow for CTA Elements */
+  .pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  /* Interactive Scale Effect */
+  .interactive-scale {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .interactive-scale:active {
+    transform: scale(0.95);
+  }
+
+  /* Parallax Container */
+  .parallax-layer {
+    transform: translateZ(var(--depth-1));
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 

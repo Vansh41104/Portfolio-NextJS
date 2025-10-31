@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/app/components/ui/button"
-import { MenuIcon, XIcon, SparklesIcon } from "lucide-react"
+import { MenuIcon, XIcon, SparklesIcon} from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 interface NavbarProps {
@@ -53,14 +53,16 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "glass-premium backdrop-blur-3xl border-b border-border shadow-xl"
-          : "bg-transparent"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 pt-4"
     >
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
+      <div 
+        className={`container mx-auto transition-all duration-500 rounded-3xl ${
+          isScrolled
+            ? "glass-premium shadow-floating border border-white/20"
+            : "glass-card border border-white/10"
+        }`}
+      >
+        <div className="px-4 sm:px-6 py-4 flex items-center justify-between">
           {/* Logo */}
           <motion.div
             initial={{ x: -50, opacity: 0 }}
@@ -73,21 +75,24 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
               className="group flex items-center space-x-2"
             >
               <motion.div
-                className="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
-                whileHover={{ rotate: 10 }}
+                className="w-10 h-10 bg-gradient-to-br from-primary via-primary to-secondary rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-glow-primary relative overflow-hidden"
+                whileHover={{ rotate: 10, scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <SparklesIcon className="w-5 h-5 text-white" />
+                {/* Glass sheen effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent opacity-60"></div>
+                <SparklesIcon className="w-5 h-5 text-white relative z-10" />
               </motion.div>
               <div className="text-xl font-bold">
                 <span className="text-gradient-primary">Vansh</span>
-                <span className="text-foreground/70">Bhatnagar</span>
+                <span className="text-foreground/70"> Bhatnagar</span>
               </div>
             </Link>
           </motion.div>
 
           {/* Desktop Navigation */}
           <motion.nav
-            className="hidden md:flex items-center space-x-2"
+            className="hidden md:flex items-center space-x-1"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -102,19 +107,31 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
                 <Link
                   href={`#${link.href}`}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className={`relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:scale-105 interactive-scale ${
+                  className={`relative px-4 py-2.5 rounded-2xl text-sm font-medium transition-all duration-300 interactive-scale group ${
                     activeSection === link.href
-                      ? "text-primary bg-primary/15 shadow-lg shadow-primary/20 border border-primary/20"
-                      : "text-foreground/70 hover:text-primary hover:bg-foreground/5"
+                      ? "text-primary"
+                      : "text-foreground/70 hover:text-primary"
                   }`}
                 >
-                  {link.name}
+                  {/* Glass background on hover/active */}
+                  <motion.div
+                    className={`absolute inset-0 rounded-2xl transition-all duration-300 ${
+                      activeSection === link.href 
+                        ? "glass-card border border-primary/30 shadow-lg shadow-primary/10" 
+                        : ""
+                    }`}
+                    whileHover={{ 
+                      scale: 1.05,
+                      backgroundColor: "rgba(255, 255, 255, 0.1)"
+                    }}
+                  />
+                  
+                  <span className="relative z-10">{link.name}</span>
 
-                  {/* Active indicator */}
+                  {/* Active indicator glow */}
                   {activeSection === link.href && (
                     <motion.div
-                      layoutId="activeSection"
-                      className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-lg -z-10"
+                      className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent rounded-2xl -z-10 blur-xl"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.3 }}
@@ -134,9 +151,13 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
           >
             <Button
               asChild
-              className="bg-gradient-to-r from-primary via-primary/90 to-secondary text-white hover:scale-105 transition-all duration-300 px-6 py-2 rounded-full font-semibold shadow-lg shadow-primary/30 ios-button border border-primary/20"
+              className="relative bg-gradient-to-r from-primary via-primary to-secondary text-white hover:scale-105 transition-all duration-300 px-6 py-2.5 rounded-full font-semibold shadow-glow-primary ios-button border-none overflow-hidden"
             >
-              <Link href="#contact">Hire Me</Link>
+              <Link href="#contact">
+                {/* Glass edge highlight */}
+                <span className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent"></span>
+                <span className="relative z-10">Hire Me</span>
+              </Link>
             </Button>
           </motion.div>
 
@@ -151,7 +172,7 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
               variant="ghost"
               size="icon"
               onClick={toggleMenu}
-              className="text-foreground/70 hover:text-primary hover:bg-primary/10 transition-colors rounded-lg"
+              className="text-foreground/70 hover:text-primary hover:bg-primary/10 transition-colors rounded-2xl"
             >
               <motion.div
                 animate={{ rotate: isMenuOpen ? 180 : 0 }}
@@ -171,9 +192,9 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
               animate={{ opacity: 1, height: "auto", y: 0 }}
               exit={{ opacity: 0, height: 0, y: -20 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="md:hidden mt-4 glass-premium rounded-2xl border border-white/10 overflow-hidden shadow-xl"
+              className="md:hidden px-4 pb-4 overflow-hidden"
             >
-              <div className="p-4 space-y-2">
+              <div className="glass-card rounded-2xl border border-white/10 p-4 space-y-2 shadow-medium">
                 {navLinks.map((link, index) => (
                   <motion.div
                     key={link.name}
@@ -184,9 +205,9 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
                     <Link
                       href={`#${link.href}`}
                       onClick={(e) => handleNavClick(e, link.href)}
-                      className={`block px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
+                      className={`block px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
                         activeSection === link.href
-                          ? "text-primary bg-primary/10 shadow-lg shadow-primary/10"
+                          ? "text-primary glass-card border border-primary/20 shadow-lg shadow-primary/10"
                           : "text-foreground/70 hover:text-primary hover:bg-foreground/5"
                       }`}
                     >
@@ -204,10 +225,11 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
                 >
                   <Button
                     asChild
-                    className="w-full bg-gradient-to-r from-primary to-secondary text-white hover:scale-105 transition-all duration-300 py-3 rounded-lg font-semibold"
+                    className="w-full bg-gradient-to-r from-primary to-secondary text-white hover:scale-105 transition-all duration-300 py-3 rounded-xl font-semibold ios-button shadow-glow-primary border-none"
                   >
                     <Link href="#contact" onClick={() => setIsMenuOpen(false)}>
-                      Hire Me
+                      <span className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent"></span>
+                      <span className="relative z-10">Hire Me</span>
                     </Link>
                   </Button>
                 </motion.div>

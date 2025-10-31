@@ -16,21 +16,24 @@ const contactInfo = [
     label: "Email",
     value: "vanshbhatnagar445@gmail.com",
     href: "mailto:vanshbhatnagar445@gmail.com",
-    gradient: "from-blue-500 to-cyan-500",
+    gradient: "from-blue-600 to-cyan-600",
+    iconBg: "from-blue-600/90 to-cyan-600/90",
   },
   {
     icon: <PhoneIcon className="w-6 h-6" />,
     label: "Phone",
     value: "+91 98765 43210",
     href: "tel:+919876543210",
-    gradient: "from-green-500 to-emerald-500",
+    gradient: "from-green-600 to-emerald-600",
+    iconBg: "from-green-600/90 to-emerald-600/90",
   },
   {
     icon: <MapPinIcon className="w-6 h-6" />,
     label: "Location",
     value: "India",
     href: "https://maps.app.goo.gl/RQVm6GS8ex7C2SNu9",
-    gradient: "from-red-500 to-pink-500",
+    gradient: "from-red-600 to-pink-600",
+    iconBg: "from-red-600/90 to-pink-600/90",
   },
 ]
 
@@ -39,13 +42,13 @@ const socialLinks = [
     icon: <GithubIcon className="w-6 h-6" />,
     label: "GitHub",
     href: "https://github.com/Vansh41104",
-    gradient: "from-gray-600 to-gray-800",
+    gradient: "from-gray-700 to-gray-900",
   },
   {
     icon: <LinkedinIcon className="w-6 h-6" />,
     label: "LinkedIn", 
     href: "https://www.linkedin.com/in/vansh-bhatnagar-66465225b/",
-    gradient: "from-blue-600 to-blue-800",
+    gradient: "from-blue-700 to-blue-900",
   },
 ]
 
@@ -134,14 +137,42 @@ const Contact = React.memo(() => {
   return (
     <section
       id="contact"
-      className="py-16 sm:py-20 lg:py-24 relative overflow-hidden bg-[#FAF8F5]"
+      className="py-16 sm:py-20 lg:py-24 relative overflow-hidden"
       ref={ref as React.RefObject<HTMLElement>}
     >
-      {/* Clean minimal background */}
-      <div className="absolute inset-0 -z-10">
-        {/* Soft gradient orbs */}
-        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-purple-100/30 rounded-full blur-3xl" />
+      {/* Dynamic liquid glass background */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-background via-background to-accent/10">
+        <motion.div
+          className="absolute top-20 -left-20 w-96 h-96 rounded-full opacity-20"
+          style={{
+            background: 'radial-gradient(circle, rgba(56, 189, 248, 0.3) 0%, transparent 70%)',
+          }}
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 -right-20 w-96 h-96 rounded-full opacity-20"
+          style={{
+            background: 'radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%)',
+          }}
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1,
+          }}
+        />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -181,26 +212,36 @@ const Contact = React.memo(() => {
                   href={info.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative flex items-center p-4 sm:p-5 bg-white rounded-3xl border border-gray-200/60 transition-all duration-300 hover:border-gray-300/80 hover:shadow-lg hover:-translate-y-1 cursor-pointer overflow-hidden"
+                  className="group relative flex items-center p-4 sm:p-5 glass-card rounded-3xl border border-white/30 transition-all duration-500 hover:border-white/50 hover:shadow-floating hover:-translate-y-1 cursor-pointer overflow-hidden hover:scale-[1.02]"
                   whileHover={{ x: 5 }}
                 >
+                  {/* Glass edge highlight */}
+                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
+                  
+                  {/* Specular highlight */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                  
                   <motion.div 
-                    className={`p-3 sm:p-4 rounded-2xl bg-gradient-to-r ${info.gradient} text-white mr-4 sm:mr-5 flex-shrink-0 shadow-lg`}
-                    whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                    className={`relative p-3 sm:p-4 rounded-2xl bg-gradient-to-br ${info.iconBg} text-white mr-4 sm:mr-5 flex-shrink-0 shadow-lg border border-white/20 overflow-hidden`}
+                    whileHover={{ scale: 1.1, rotate: 5, transition: { duration: 0.2 } }}
                   >
-                    {info.icon}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-80"></div>
+                    <div className="relative z-10">{info.icon}</div>
                   </motion.div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs sm:text-sm text-gray-600 mb-1">{info.label}</p>
-                    <p className="text-sm sm:text-base text-gray-900 font-medium break-words">{info.value}</p>
+                  <div className="min-w-0 flex-1 relative z-10">
+                    <p className="text-xs sm:text-sm text-foreground/60 mb-1">{info.label}</p>
+                    <p className="text-sm sm:text-base text-foreground font-medium break-words">{info.value}</p>
                   </div>
+                  
+                  {/* Bottom glass edge */}
+                  <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
                 </motion.a>
               ))}
             </div>
 
             {/* Social Links */}
             <motion.div variants={itemVariants} className="pt-6 lg:pt-8 relative">
-              <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-gray-900">Connect With Me</h4>
+              <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Connect With Me</h4>
               <div className="flex gap-4 sm:gap-5">
                 {socialLinks.map((social, index) => (
                   <motion.a
@@ -208,11 +249,12 @@ const Contact = React.memo(() => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`group relative p-4 sm:p-5 rounded-2xl bg-gradient-to-r ${social.gradient} text-white transition-all duration-300 shadow-lg`}
-                    whileHover={{ y: -4, scale: 1.05 }}
+                    className={`group relative p-4 sm:p-5 rounded-2xl bg-gradient-to-br ${social.gradient} text-white transition-all duration-300 shadow-lg border border-white/20 overflow-hidden`}
+                    whileHover={{ y: -4, scale: 1.1, rotate: 5 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    {social.icon}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-80"></div>
+                    <div className="relative z-10">{social.icon}</div>
                   </motion.a>
                 ))}
               </div>
@@ -229,9 +271,12 @@ const Contact = React.memo(() => {
             className="relative"
           >
             
-            <div className="relative bg-white rounded-3xl p-4 sm:p-6 lg:p-8 border border-gray-200/60 hover:border-gray-300/80 transition-all duration-300 overflow-hidden">
+            <div className="relative glass-card rounded-3xl p-4 sm:p-6 lg:p-8 border border-white/30 hover:border-white/50 transition-all duration-500 overflow-hidden hover:shadow-floating">
+              {/* Glass edge highlights */}
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
+              
               <motion.h3 
-                className="text-xl sm:text-2xl font-bold mb-6 lg:mb-8 text-gray-900 relative z-10"
+                className="text-xl sm:text-2xl font-bold mb-6 lg:mb-8 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent relative z-10"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.8, delay: 0.6 }}

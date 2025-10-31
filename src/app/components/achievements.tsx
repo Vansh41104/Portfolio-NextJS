@@ -87,17 +87,23 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, index, i
       transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
       className="group relative h-full"
     >
-      <div className="relative bg-white rounded-3xl border border-gray-200/60 overflow-hidden h-full hover:border-gray-300/80 hover:shadow-lg transition-all duration-300 p-6 lg:p-8">
+      <div className="relative glass-card rounded-3xl border border-white/30 overflow-hidden h-full hover:border-white/50 hover:shadow-floating transition-all duration-500 p-6 lg:p-8 group-hover:scale-[1.02]">
+        {/* Glass edge highlight */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
+        
+        {/* Specular highlight */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
         
         <div className="flex items-start mb-5 sm:mb-6 relative z-10">
           <motion.div
-            className="p-2.5 sm:p-3 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-500 text-white mr-3 sm:mr-4 flex-shrink-0 shadow-lg"
+            className="p-2.5 sm:p-3 rounded-2xl bg-gradient-to-br from-sky-700 to-blue-700 text-white mr-3 sm:mr-4 flex-shrink-0 shadow-lg border border-white/20 relative overflow-hidden"
             initial={{ scale: 0.9 }}
             animate={shouldRender ? { scale: 1 } : { scale: 0.9 }}
             transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+            whileHover={{ scale: 1.1, rotate: 10 }}
           >
-            <TrophyIcon className="h-5 w-5 lg:h-6 lg:w-6" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-80"></div>
+            <TrophyIcon className="h-5 w-5 lg:h-6 lg:w-6 relative z-10" />
           </motion.div>
           <h3 className="text-lg lg:text-xl font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-tight flex-1">
             {achievement.title}
@@ -114,17 +120,21 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, index, i
               transition={{ duration: 0.4, delay: 0.3 + idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
             >
               <motion.div
-                className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center mt-0.5 mr-3 shadow-sm"
-                whileHover={{ scale: 1.1 }}
+                className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-green-700 to-emerald-700 flex items-center justify-center mt-0.5 mr-3 shadow-sm border border-white/20"
+                whileHover={{ scale: 1.15, rotate: 180 }}
+                transition={{ duration: 0.3 }}
               >
                 <CheckCircleIcon className="w-3 h-3 text-white" />
               </motion.div>
-              <p className="text-sm lg:text-base text-gray-700 leading-relaxed flex-1">
+              <p className="text-sm lg:text-base text-foreground/70 leading-relaxed flex-1">
                 {item}
               </p>
             </motion.li>
           ))}
         </ul>
+
+        {/* Bottom glass edge */}
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
       </div>
     </motion.div>
   )
@@ -140,14 +150,42 @@ const Achievements = React.memo(() => {
   return (
     <section
       id="achievements"
-      className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden bg-[#FAF8F5]"
+      className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden"
       ref={ref as React.RefObject<HTMLElement>}
     >
-      {/* Clean minimal background */}
-      <div className="absolute inset-0 -z-10">
-        {/* Soft gradient orbs */}
-        <div className="absolute top-1/4 -right-20 w-96 h-96 bg-purple-100/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -left-20 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl" />
+      {/* Dynamic liquid glass background */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-background via-background to-accent/10">
+        <motion.div
+          className="absolute top-20 -left-20 w-96 h-96 rounded-full opacity-20"
+          style={{
+            background: 'radial-gradient(circle, rgba(56, 189, 248, 0.3) 0%, transparent 70%)',
+          }}
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 -right-20 w-96 h-96 rounded-full opacity-20"
+          style={{
+            background: 'radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%)',
+          }}
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1,
+          }}
+        />
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -172,36 +210,38 @@ const Achievements = React.memo(() => {
           ))}
         </div>
 
-        <div className="flex justify-center items-center mt-8 md:mt-12 gap-2">
+        <div className="flex justify-center items-center mt-8 md:mt-12 gap-2 sm:gap-3">
           <Button
             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
             size="sm"
-            className="bg-primary/10 hover:bg-primary/20 text-primary disabled:opacity-50"
+            className="bg-white/80 backdrop-blur-sm border-2 border-gray-800/20 hover:border-gray-800/40 text-gray-900 hover:text-gray-900 font-semibold disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 hover:bg-white/90 px-4 py-2"
           >
             Previous
           </Button>
           
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-            <Button
-              key={pageNum}
-              onClick={() => setCurrentPage(pageNum)}
-              size="sm"
-              className={`${
-                currentPage === pageNum
-                  ? 'bg-gradient-to-r from-primary to-secondary text-white'
-                  : 'bg-primary/10 hover:bg-primary/20 text-primary'
-              } transition-all duration-300`}
-            >
-              {pageNum}
-            </Button>
-          ))}
+          <div className="flex gap-2">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+              <Button
+                key={pageNum}
+                onClick={() => setCurrentPage(pageNum)}
+                size="sm"
+                className={`transition-all duration-300 hover:scale-110 px-3 py-2 font-semibold ${
+                  currentPage === pageNum
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg border-none hover:from-blue-700 hover:to-cyan-700 hover:text-white'
+                    : 'bg-white/80 backdrop-blur-sm border-2 border-gray-800/20 hover:border-gray-800/40 text-gray-900 hover:bg-white/90 hover:text-gray-900'
+                }`}
+              >
+                {pageNum}
+              </Button>
+            ))}
+          </div>
           
           <Button
             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
             disabled={currentPage === totalPages}
             size="sm"
-            className="bg-primary/10 hover:bg-primary/20 text-primary disabled:opacity-50"
+            className="bg-white/80 backdrop-blur-sm border-2 border-gray-800/20 hover:border-gray-800/40 text-gray-900 hover:text-gray-900 font-semibold disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 hover:bg-white/90 px-4 py-2"
           >
             Next
           </Button>

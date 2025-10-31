@@ -64,77 +64,114 @@ const Footer = React.memo(() => {
   return (
     <footer
       id="footer"
-      className="relative overflow-hidden py-8 md:py-12 bg-white"
+      className="relative overflow-hidden py-8 md:py-12"
     >
-      {/* Clean minimal background */}
-      <div className="absolute inset-0 -z-10">
-        {/* Soft gradient orbs */}
-        <div className="absolute -bottom-20 left-1/4 w-96 h-96 bg-blue-100/20 rounded-full blur-3xl" />
-        <div className="absolute -bottom-20 right-1/4 w-96 h-96 bg-purple-100/20 rounded-full blur-3xl" />
+      {/* Dynamic liquid glass background */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-background via-background to-accent/10">
+        <motion.div
+          className="absolute -bottom-20 left-1/4 w-96 h-96 rounded-full opacity-15"
+          style={{
+            background: 'radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, transparent 70%)',
+          }}
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.15, 0.3, 0.15],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute -bottom-20 right-1/4 w-96 h-96 rounded-full opacity-15"
+          style={{
+            background: 'radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, transparent 70%)',
+          }}
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.15, 0.3, 0.15],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1,
+          }}
+        />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0">
-          <motion.div
-            className="text-center md:text-left mb-4 md:mb-0"
-            style={isMobile ? {} : { x: magneticX, y: magneticY }}
-          >
-            <Link href="/" className="text-xl sm:text-2xl font-bold">
-              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                Vanshbhatnagar
-              </span>
-              <span className="text-primary/70">.space</span>
-            </Link>
-            <p className="mt-2 text-sm sm:text-base text-foreground/70 max-w-md mx-auto md:mx-0">
-              Full-stack developer and machine learning engineer specializing in AI systems and scalable backends.
-            </p>
-          </motion.div>
+        <div className="glass-card border-white/20 rounded-2xl p-6 mt-6 md:mt-8 relative overflow-hidden">
+          {/* Glass edge highlight */}
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+          
+          {/* Top section with name and scroll button */}
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0 mb-6 pb-6 border-b border-white/10">
+            <div className="text-center md:text-left">
+              <Link href="/" className="text-xl sm:text-2xl font-bold">
+                <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  Vanshbhatnagar
+                </span>
+                <span className="text-primary/70">.space</span>
+              </Link>
+              <p className="mt-2 text-sm sm:text-base text-foreground/70 max-w-md mx-auto md:mx-0">
+                AI & Generative ML Engineer | RAG, LLMs, Neural Networks | Scalable Backend Systems | 0xGenIgnite Champion | CodeRED 4.0 Runner-up
+              </p>
+            </div>
 
-          <div className="flex flex-col items-center">
-            <motion.button
-              onClick={scrollToTop}
-              className="bg-primary/10 backdrop-blur-sm p-3 sm:p-4 rounded-full text-primary hover:bg-primary hover:text-white transition-all duration-300 mb-4 shadow-lg shadow-primary/25 border border-primary/20"
-              aria-label="Scroll to top"
-              whileHover={{ scale: 1.15, y: -5 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ArrowUpIcon className="h-5 w-5 sm:h-6 sm:w-6" />
-            </motion.button>
+            <div className="flex flex-col items-center">
+              <motion.button
+                onClick={scrollToTop}
+                className="ios-button bg-primary/10 backdrop-blur-sm p-3 sm:p-4 rounded-full text-primary hover:bg-primary hover:text-white transition-all duration-500 shadow-glow-primary border border-white/30 glass-premium relative overflow-hidden group"
+                aria-label="Scroll to top"
+                whileHover={{ scale: 1.15, y: -8, rotate: 5 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
+                <ArrowUpIcon className="h-5 w-5 sm:h-6 sm:w-6 relative z-10" />
+              </motion.button>
+            </div>
           </div>
-        </div>
+          
+          {/* Bottom section with copyright and links */}
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
+            <motion.p
+              className="text-foreground/60 text-xs sm:text-sm text-center md:text-left relative z-10"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+            >
+              &copy; {new Date().getFullYear()} Vansh Bhatnagar. All rights reserved.
+            </motion.p>
 
-        <div className="backdrop-blur-sm mt-6 md:mt-8 pt-6 md:pt-8 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
-          <motion.p
-            className="text-foreground/60 text-xs sm:text-sm text-center md:text-left"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-          >
-            &copy; {new Date().getFullYear()} Vansh Bhatnagar. All rights reserved.
-          </motion.p>
-
-          <motion.div
-            className="flex flex-wrap justify-center md:justify-end space-x-4 sm:space-x-6"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            {[
-              { href: "#about", label: "About" },
-              { href: "#projects", label: "Projects" },
-              { href: "#contact", label: "Contact" },
-            ].map((link, index) => (
-              <motion.div key={index} whileHover={{ y: -2 }}>
-                <Link
-                  href={link.href}
-                  className="text-foreground/60 hover:text-primary text-xs sm:text-sm transition-all duration-300 relative group"
+            <motion.div
+              className="flex flex-wrap justify-center md:justify-end space-x-4 sm:space-x-6 relative z-10"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              {[
+                { href: "#about", label: "About" },
+                { href: "#projects", label: "Projects" },
+                { href: "#contact", label: "Contact" },
+              ].map((link, index) => (
+                <motion.div 
+                  key={index} 
+                  whileHover={{ y: -2, scale: 1.05 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all duration-300 group-hover:w-full" />
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
+                  <Link
+                    href={link.href}
+                    className="text-foreground/60 hover:text-primary text-xs sm:text-sm transition-all duration-300 relative group font-medium"
+                  >
+                    {link.label}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all duration-300 group-hover:w-full shimmer" />
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </div>
     </footer>
