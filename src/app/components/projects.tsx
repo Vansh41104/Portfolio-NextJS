@@ -5,7 +5,7 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { Button } from "@/app/components/ui/button"
-import { ExternalLinkIcon, GithubIcon, BrainIcon, NewspaperIcon, ActivityIcon, MessageSquareIcon, AppWindowIcon, FingerprintIcon, ShoppingBag, School, BrainCircuit} from "lucide-react"
+import { ExternalLinkIcon, GithubIcon, BrainIcon, NewspaperIcon, ActivityIcon, MessageSquareIcon, AppWindowIcon, FingerprintIcon, ShoppingBag, School, BrainCircuit, ChevronLeftIcon, ChevronRightIcon} from "lucide-react"
 import { useScrollTrigger } from "@/app/hooks/use-scroll-trigger"
 
 // Define the project type
@@ -309,10 +309,21 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isVisible }) 
 
 const Projects = React.memo(() => {
   const { ref, isVisible } = useScrollTrigger({ threshold: 0.1, once: true })
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [direction, setDirection] = useState(0)
   const projectsPerPage = 4
-  const totalPages = Math.ceil(projects.length / projectsPerPage)
-  const displayedProjects = projects.slice((currentPage - 1) * projectsPerPage, currentPage * projectsPerPage)
+  
+  const nextSlide = () => {
+    setDirection(1)
+    setCurrentIndex((prev) => (prev + projectsPerPage >= projects.length ? 0 : prev + projectsPerPage))
+  }
+  
+  const prevSlide = () => {
+    setDirection(-1)
+    setCurrentIndex((prev) => (prev - projectsPerPage < 0 ? Math.max(0, projects.length - projectsPerPage) : prev - projectsPerPage))
+  }
+  
+  const displayedProjects = projects.slice(currentIndex, currentIndex + projectsPerPage)
 
   return (
     <section
@@ -406,64 +417,73 @@ const Projects = React.memo(() => {
           </motion.p>
         </motion.div>
 
-        {/* Projects Grid */}
-        <AnimatePresence mode="wait">
-          <motion.div 
-            key={currentPage}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mb-12"
-          >
-            {displayedProjects.map((project, index) => (
-              <ProjectCard key={project.title} project={project} index={index} isVisible={isVisible} />
-            ))}
-          </motion.div>
-        </AnimatePresence>
+        {/* Projects Carousel */}
+        <div className="relative overflow-hidden">
+          <AnimatePresence mode="wait" initial={false} custom={direction}>
+            <motion.div 
+              key={currentIndex}
+              custom={direction}
+              initial={{ opacity: 0, x: direction > 0 ? 1000 : -1000, scale: 0.8 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: direction > 0 ? -1000 : 1000, scale: 0.8 }}
+              transition={{ 
+                duration: 0.6, 
+                ease: [0.32, 0.72, 0, 1],
+                opacity: { duration: 0.4 }
+              }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mb-12"
+            >
+              {displayedProjects.map((project, index) => (
+                <ProjectCard key={`${project.title}-${currentIndex}`} project={project} index={index} isVisible={isVisible} />
+              ))}
+            </motion.div>
+          </AnimatePresence>
 
-        {/* Pagination with Glass Effect */}
-        <motion.div 
-          className="flex justify-center items-center gap-2 sm:gap-3"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-        >
-          <Button
-            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            size="sm"
-            className="bg-white/80 backdrop-blur-sm border-2 border-gray-800/20 hover:border-gray-800/40 text-gray-900 hover:text-gray-900 font-semibold disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 hover:bg-white/90 px-4 py-2"
+          {/* Carousel Navigation */}
+          <motion.div 
+            className="flex justify-center items-center gap-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
           >
-            Previous
-          </Button>
-          
-          <div className="flex gap-2">
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-              <Button
-                key={pageNum}
-                onClick={() => setCurrentPage(pageNum)}
-                size="sm"
-                className={`transition-all duration-300 hover:scale-110 px-3 py-2 font-semibold ${
-                  currentPage === pageNum
-                    ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg border-none hover:from-blue-700 hover:to-cyan-700 hover:text-white'
-                    : 'bg-white/80 backdrop-blur-sm border-2 border-gray-800/20 hover:border-gray-800/40 text-gray-900 hover:bg-white/90 hover:text-gray-900'
-                }`}
-              >
-                {pageNum}
-              </Button>
-            ))}
-          </div>
-          
-          <Button
-            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-            disabled={currentPage === totalPages}
-            size="sm"
-            className="bg-white/80 backdrop-blur-sm border-2 border-gray-800/20 hover:border-gray-800/40 text-gray-900 hover:text-gray-900 font-semibold disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 hover:bg-white/90 px-4 py-2"
-          >
-            Next
-          </Button>
-        </motion.div>
+            <Button
+              onClick={prevSlide}
+              size="lg"
+              className="glass-card border-2 border-white/30 hover:border-white/50 text-gray-900 hover:text-gray-900 font-semibold transition-all duration-300 hover:scale-110 hover:shadow-floating px-6 py-3 rounded-2xl group"
+            >
+              <ChevronLeftIcon className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+              <span className="ml-2">Previous</span>
+            </Button>
+            
+            {/* Carousel Indicators */}
+            <div className="flex gap-2">
+              {Array.from({ length: Math.ceil(projects.length / projectsPerPage) }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    setDirection(i * projectsPerPage > currentIndex ? 1 : -1)
+                    setCurrentIndex(i * projectsPerPage)
+                  }}
+                  className={`transition-all duration-300 rounded-full ${
+                    Math.floor(currentIndex / projectsPerPage) === i
+                      ? 'w-8 h-2 bg-gradient-to-r from-blue-600 to-cyan-600'
+                      : 'w-2 h-2 bg-gray-400 hover:bg-gray-600'
+                  }`}
+                  aria-label={`Go to slide ${i + 1}`}
+                />
+              ))}
+            </div>
+            
+            <Button
+              onClick={nextSlide}
+              size="lg"
+              className="glass-card border-2 border-white/30 hover:border-white/50 text-gray-900 hover:text-gray-900 font-semibold transition-all duration-300 hover:scale-110 hover:shadow-floating px-6 py-3 rounded-2xl group"
+            >
+              <span className="mr-2">Next</span>
+              <ChevronRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </motion.div>
+        </div>
       </div>
     </section>
   )

@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from "react"
 
-import { motion } from "framer-motion"
-import { TrophyIcon, CheckCircleIcon } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
+import { TrophyIcon, CheckCircleIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { useScrollTrigger } from "@/app/hooks/use-scroll-trigger"
 import { Button } from "@/app/components/ui/button"
 
@@ -15,6 +15,13 @@ interface Achievement {
 
 // Move static data outside component for better performance
 const achievements: Achievement[] = [
+  {
+    title: "Winner at 0xGenignite Hackathon held at NIT, Goa",
+    description: [
+      "This optimizes cross-border payments by comparing Stellar blockchain DEX routes with traditional FX providers, offering users 5–15% savings and full fee transparency",
+      "Built on Stellar with Soroban smart contracts, Freighter wallet integration, and Wormhole cross-chain support for secure, auditable, and multi-chain international transactions. ",
+    ],
+  },
   {
     title: "Finalist at Matrix Protocol AI Hackathon",
     description: [
@@ -142,10 +149,21 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, index, i
 
 const Achievements = React.memo(() => {
   const { ref, isVisible } = useScrollTrigger({ threshold: 0.2, once: true });
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
   const achievementsPerPage = 2;
-  const totalPages = Math.ceil(achievements.length / achievementsPerPage);
-  const displayedAchievements = achievements.slice((currentPage - 1) * achievementsPerPage, currentPage * achievementsPerPage);
+  
+  const nextSlide = () => {
+    setDirection(1);
+    setCurrentIndex((prev) => (prev + achievementsPerPage >= achievements.length ? 0 : prev + achievementsPerPage));
+  };
+  
+  const prevSlide = () => {
+    setDirection(-1);
+    setCurrentIndex((prev) => (prev - achievementsPerPage < 0 ? Math.max(0, achievements.length - achievementsPerPage) : prev - achievementsPerPage));
+  };
+  
+  const displayedAchievements = achievements.slice(currentIndex, currentIndex + achievementsPerPage);
 
   return (
     <section
@@ -204,46 +222,65 @@ const Achievements = React.memo(() => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16">
-          {displayedAchievements.map((achievement, index) => (
-            <AchievementCard key={index} achievement={achievement} index={index} isVisible={isVisible} />
-          ))}
+        <div className="relative overflow-hidden">
+          <AnimatePresence mode="wait" initial={false} custom={direction}>
+            <motion.div
+              key={currentIndex}
+              custom={direction}
+              initial={{ opacity: 0, x: direction > 0 ? 1000 : -1000, scale: 0.8 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: direction > 0 ? -1000 : 1000, scale: 0.8 }}
+              transition={{ 
+                duration: 0.6, 
+                ease: [0.32, 0.72, 0, 1],
+                opacity: { duration: 0.4 }
+              }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16"
+            >
+              {displayedAchievements.map((achievement, index) => (
+                <AchievementCard key={`${achievement.title}-${currentIndex}`} achievement={achievement} index={index} isVisible={isVisible} />
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </div>
 
-        <div className="flex justify-center items-center mt-8 md:mt-12 gap-2 sm:gap-3">
+        {/* Carousel Navigation */}
+        <div className="flex justify-center items-center mt-8 md:mt-12 gap-4">
           <Button
-            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            size="sm"
-            className="bg-white/80 backdrop-blur-sm border-2 border-gray-800/20 hover:border-gray-800/40 text-gray-900 hover:text-gray-900 font-semibold disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 hover:bg-white/90 px-4 py-2"
+            onClick={prevSlide}
+            size="lg"
+            className="glass-card border-2 border-white/30 hover:border-white/50 text-gray-900 hover:text-gray-900 font-semibold transition-all duration-300 hover:scale-110 hover:shadow-floating px-6 py-3 rounded-2xl group"
           >
-            Previous
+            <ChevronLeftIcon className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+            <span className="ml-2">Previous</span>
           </Button>
           
+          {/* Carousel Indicators */}
           <div className="flex gap-2">
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-              <Button
-                key={pageNum}
-                onClick={() => setCurrentPage(pageNum)}
-                size="sm"
-                className={`transition-all duration-300 hover:scale-110 px-3 py-2 font-semibold ${
-                  currentPage === pageNum
-                    ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg border-none hover:from-blue-700 hover:to-cyan-700 hover:text-white'
-                    : 'bg-white/80 backdrop-blur-sm border-2 border-gray-800/20 hover:border-gray-800/40 text-gray-900 hover:bg-white/90 hover:text-gray-900'
+            {Array.from({ length: Math.ceil(achievements.length / achievementsPerPage) }, (_, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  setDirection(i * achievementsPerPage > currentIndex ? 1 : -1);
+                  setCurrentIndex(i * achievementsPerPage);
+                }}
+                className={`transition-all duration-300 rounded-full ${
+                  Math.floor(currentIndex / achievementsPerPage) === i
+                    ? 'w-8 h-2 bg-gradient-to-r from-blue-600 to-cyan-600'
+                    : 'w-2 h-2 bg-gray-400 hover:bg-gray-600'
                 }`}
-              >
-                {pageNum}
-              </Button>
+                aria-label={`Go to slide ${i + 1}`}
+              />
             ))}
           </div>
           
           <Button
-            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-            disabled={currentPage === totalPages}
-            size="sm"
-            className="bg-white/80 backdrop-blur-sm border-2 border-gray-800/20 hover:border-gray-800/40 text-gray-900 hover:text-gray-900 font-semibold disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 hover:bg-white/90 px-4 py-2"
+            onClick={nextSlide}
+            size="lg"
+            className="glass-card border-2 border-white/30 hover:border-white/50 text-gray-900 hover:text-gray-900 font-semibold transition-all duration-300 hover:scale-110 hover:shadow-floating px-6 py-3 rounded-2xl group"
           >
-            Next
+            <span className="mr-2">Next</span>
+            <ChevronRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
       </div>

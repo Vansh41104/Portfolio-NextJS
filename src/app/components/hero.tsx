@@ -65,7 +65,7 @@ const Hero = React.memo(() => {
   }, [mouseX, mouseY, isMobile])
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-28">
       {/* Dynamic Liquid Glass Background */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-background via-background to-accent/20">
         {/* Static gradient orbs with glass effect */}
