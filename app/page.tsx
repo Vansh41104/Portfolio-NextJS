@@ -432,13 +432,13 @@ export default function Home() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
-                  { name: "GitHub", handle: "vanshbhatnagar", url: "https://github.com" },
+                  { name: "GitHub", handle: "Vansh41104", url: "https://github.com/Vansh41104" },
                   {
                     name: "LinkedIn",
                     handle: "vansh-bhatnagar-66465225b",
                     url: "https://www.linkedin.com/in/vansh-bhatnagar-66465225b/",
                   },
-                  { name: "Twitter", handle: "@vanshbh041", url: "https://x.com.comanshbh041" },
+                  { name: "Twitter", handle: "@vanshbh041", url: "https://x.com/vanshbh041" },
                   { name: "Portfolio", handle: "vanshbhatnagar.space", url: "https://vanshbhatnagar.space" },
                 ].map((social) => (
                   <Link
