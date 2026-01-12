@@ -61,7 +61,7 @@ export default function Home() {
           ref={(el) => {
             sectionsRef.current[0] = el
           }}
-          className="min-h-[80vh] sm:min-h-screen flex items-center opacity-0 pt-12 sm:pt-0"
+          className="min-h-screen flex items-center opacity-0"
         >
           <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full">
             <div className="lg:col-span-3 space-y-6 sm:space-y-8">
@@ -125,7 +125,7 @@ export default function Home() {
           ref={(el) => {
             sectionsRef.current[1] = el
           }}
-          className="min-h-[70vh] sm:min-h-screen py-14 sm:py-24 opacity-0"
+          className="min-h-screen py-20 sm:py-32 opacity-0"
         >
           <div className="space-y-12 sm:space-y-16">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
@@ -192,7 +192,7 @@ export default function Home() {
           ref={(el) => {
             sectionsRef.current[2] = el
           }}
-          className="min-h-[70vh] sm:min-h-screen py-14 sm:py-24 opacity-0"
+          className="min-h-screen py-20 sm:py-32 opacity-0"
         >
           <div className="space-y-12 sm:space-y-16">
             <h2 className="text-4xl sm:text-5xl font-light">Selected Projects</h2>
@@ -281,7 +281,7 @@ export default function Home() {
           ref={(el) => {
             sectionsRef.current[3] = el
           }}
-          className="min-h-[70vh] sm:min-h-screen py-14 sm:py-24 opacity-0"
+          className="min-h-screen py-20 sm:py-32 opacity-0"
         >
           <div className="space-y-12 sm:space-y-16">
             <h2 className="text-4xl sm:text-5xl font-light">Technical Skills</h2>
@@ -329,7 +329,7 @@ export default function Home() {
           ref={(el) => {
             sectionsRef.current[4] = el
           }}
-          className="min-h-[70vh] sm:min-h-screen py-14 sm:py-24 opacity-0"
+          className="min-h-screen py-20 sm:py-32 opacity-0"
         >
           <div className="space-y-12 sm:space-y-16">
             <h2 className="text-4xl sm:text-5xl font-light">Achievements & Recognition</h2>
@@ -380,13 +380,9 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section
-          id="connect"
-          ref={(el) => {
-            sectionsRef.current[5] = el
-          }}
-          className="py-14 sm:py-24 opacity-0"
-        >
+        <section id="connect" ref={(el) => {
+          sectionsRef.current[5] = el
+        }} className="py-20 sm:py-32 opacity-0">
           <div className="grid lg:grid-cols-2 gap-12 sm:gap-16">
             <div className="space-y-6 sm:space-y-8">
               <h2 className="text-4xl sm:text-5xl font-light">Let's Connect</h2>
