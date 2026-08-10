@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Required for class-based dark mode in Tailwind v4. Without it every `dark:`
+   utility silently no-ops — the tokens below would flip but utilities wouldn't. */
+@custom-variant dark (&:is(.dark *));
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -17,24 +21,23 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+
+  /* The single accent. Reserved for live/active state only: the console caret,
+     the running trace step, the availability dot, focus rings. */
+  --signal: oklch(0.58 0.15 158);
+  --signal-foreground: oklch(0.985 0 0);
+  --signal-soft: oklch(0.58 0.15 158 / 0.12);
+  --signal-line: oklch(0.58 0.15 158 / 0.35);
+
+  /* Console surface — sits slightly off the page background in both themes. */
+  --console: oklch(0.985 0 0);
+  --console-border: oklch(0.9 0 0);
+  --console-glow: oklch(0.58 0.15 158 / 0.06);
 }
 
 .dark {
@@ -52,24 +55,20 @@
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(0.269 0 0);
   --input: oklch(0.269 0 0);
   --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+
+  --signal: oklch(0.78 0.17 158);
+  --signal-foreground: oklch(0.145 0 0);
+  --signal-soft: oklch(0.78 0.17 158 / 0.14);
+  --signal-line: oklch(0.78 0.17 158 / 0.4);
+
+  --console: oklch(0.185 0 0);
+  --console-border: oklch(0.28 0 0);
+  --console-glow: oklch(0.78 0.17 158 / 0.07);
 }
 
 @theme inline {
@@ -92,31 +91,50 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
+
+  --color-signal: var(--signal);
+  --color-signal-foreground: var(--signal-foreground);
+  --color-signal-soft: var(--signal-soft);
+  --color-signal-line: var(--signal-line);
+  --color-console: var(--console);
+  --color-console-border: var(--console-border);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Bind the next/font variables so `font-sans` / `font-mono` actually resolve
+     to Geist rather than falling through to the system stack. */
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+    /* Lenis drives scrolling; native smooth would fight it. */
+    scroll-behavior: auto;
+  }
+
+  /* Anchor targets clear the fixed header when jumped to directly. */
+  section[id],
+  header[id] {
+    scroll-margin-top: 6rem;
+  }
+
+  ::selection {
+    background: var(--signal-soft);
+    color: var(--foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
   }
 }
 
@@ -134,5 +152,173 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  /* Console caret. */
+  .animate-caret {
+    animation: caret 1.1s step-end infinite;
+  }
+
+  @keyframes caret {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  /* Scroll affordance in the hero — a nudge, not a bounce. */
+  .animate-hint-down {
+    animation: hint-down 2.6s ease-in-out infinite;
+  }
+
+  @keyframes hint-down {
+    0%,
+    70%,
+    100% {
+      transform: translateY(0);
+    }
+    80% {
+      transform: translateY(3px);
+    }
+  }
+
+  /* Running trace step. */
+  .animate-trace-pulse {
+    animation: trace-pulse 1.4s ease-in-out infinite;
+  }
+
+  @keyframes trace-pulse {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  /* Availability dot — a soft expanding ring rather than a hard blink. */
+  .animate-ping-soft::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: var(--signal);
+    animation: ping-soft 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  @keyframes ping-soft {
+    0% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    80%,
+    100% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+  }
+
+  /* Brief highlight when a console source chip deep-links to a section. */
+  .is-target-highlight {
+    animation: target-highlight 1.8s ease-out;
+  }
+
+  @keyframes target-highlight {
+    0%,
+    30% {
+      background-color: var(--signal-soft);
+      box-shadow: inset 2px 0 0 var(--signal);
+    }
+    100% {
+      background-color: transparent;
+      box-shadow: inset 2px 0 0 transparent;
+    }
+  }
+
+  /* Cursor-tracked glow. GlowCard writes --mx/--my; without them the gradient
+     stays fully transparent, so touch devices and no-JS get a plain card. */
+  .glow-surface {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .glow-surface::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background: radial-gradient(
+      16rem circle at var(--mx, -100%) var(--my, -100%),
+      var(--signal-soft),
+      transparent 65%
+    );
+  }
+
+  @media (pointer: fine) {
+    .glow-surface:hover::before {
+      opacity: 1;
+    }
+  }
+
+  /* Applied by TechFilter to every [data-techs] node that doesn't match. */
+  [data-dimmed="true"] {
+    opacity: 0.28;
+    filter: saturate(0.4);
+    transition:
+      opacity 0.35s ease,
+      filter 0.35s ease;
+  }
+
+  [data-techs] {
+    transition:
+      opacity 0.35s ease,
+      filter 0.35s ease;
+  }
+
+  .console-glow {
+    box-shadow:
+      0 0 0 1px var(--console-border),
+      0 24px 60px -24px var(--console-glow);
+  }
+
+  /* Fades the top and bottom edges of the console history on overflow. */
+  .mask-fade-y {
+    mask-image: linear-gradient(to bottom, transparent, black 8%, black 92%, transparent);
+  }
+}
+
+/* Motion is decoration here — every animation above has a static resting state,
+   so switching them off costs nothing but the flourish. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-caret,
+  .animate-trace-pulse {
+    animation: none !important;
+    opacity: 1;
+  }
+
+  .animate-ping-soft::after {
+    display: none;
+  }
+
+  /* The glow tracks the pointer rather than animating on its own, but the
+     fade-in is still motion — drop it and leave cards flat. */
+  .glow-surface::before {
+    display: none;
   }
 }
